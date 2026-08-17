@@ -21,6 +21,7 @@ kicad_sch_reader/
   model.py           数据模型（dataclasses）
   parser.py          .kicad_sch 解析与工程加载
   connectivity.py    几何连通域 + 网表归并
+  circuit_ir.py      共享 Circuit IR（KiCad/LCEDA 统一分析层）
   rules.py           审查规则引擎
   kicad_cli.py       kicad-cli 桥接
   report.py          Markdown/JSON 报告
@@ -146,6 +147,23 @@ KiCad 把同一多单元器件的每个 unit 存为独立 `symbol` 节点（同 
 
 回归测试：`python -m unittest tests.test_lceda_epro -v`。
 
+## 6.6 共享 Circuit IR（采纳 ChatGPT 架构评审）
+
+`kicad_sch_reader/circuit_ir.py` 是 KiCad 与 LCEDA 的统一分析层，设计要点：
+
+- 解析器保持格式专属；分析/跨板检查只面向 `BoardIR`；
+- `BoardIR` 图 = components + nets，多 unit 按位号折叠、引脚保留来源 sheet；
+- `IRNet.kind ∈ signal|power|ground|interface`，结构证据优先、命名正则兜底；
+- `IRFinding` / `IREvidence` 是所有发现的通用对象，证据等级为
+  `direct|calculated|datasheet|declared|inferred|ai`；
+- 跨板连接只输出 `candidate|detected`，`declared/confirmed` 必须由用户或
+  项目 metadata 显式声明；
+- 适配器：`board_from_kicad(project)` / `board_from_lceda(report)`；
+- `scripts/multi_project_cross_check.py` 已全部改走 IR。
+
+详细设计见 `docs/shared-circuit-ir.md`，回归测试见
+`tests/test_circuit_ir.py`。
+
 ## 7. 跨板连接器核对
 
 `link-check` 命令（与 lceda-sch-reader 同语义）对两个工程中的连接器逐 pin
@@ -160,6 +178,15 @@ python kicad-sch-reader.py link-check ^
 实测 MainBoard `J102` ↔ PowerBoard `J103` 16/16 全一致，因此能识别出
 两板通过连接器相连；但同名网络仍然只是**候选证据**，物理对插关系与
 连接器型号需人工确认（与 lceda-sch-reader 的边界说明一致）。
+
+KiCad 与 LCEDA 混合检查使用共享 IR：
+
+```bat
+python scripts\multi_project_cross_check.py ^
+  --kicad examples\Lock-In-Amplifier_MainBoard_V0.1 ^
+  --kicad examples\Lock-In-Amplifier_PowerBoard_V0.1 ^
+  --lceda examples\LIA_DigitalBoard_RevA\ProPrj_XC7A35TCSG325_EmoeSOM_2026-05-18.epro
+```
 
 ## 8. 路线图
 

@@ -80,4 +80,6 @@ KiCad CLI 已按此实现；LCEDA 脚本使用 `POWER_RE + --power-net + SHORT/�
 python scripts\multi_project_cross_check.py --kicad <工程A> --kicad <工程B> --lceda <xxx.epro>
 ```
 
-输出候选连接器对、score、evidence，不自动确认。
+输出候选连接器对、score、evidence，不自动确认。脚本内部先把 KiCad/LCEDA
+统一为 `kicad_sch_reader.circuit_ir.BoardIR`，分析/汇报时优先引用 IR 中的
+canonical net 与 `net.kind`，不要直接读两种格式的原始字典。

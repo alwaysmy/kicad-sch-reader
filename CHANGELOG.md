@@ -2,6 +2,37 @@
 
 本项目采用语义化版本。所有重要变更按时间倒序记录。
 
+## [0.1.1] - 2026-08-18
+
+### 新增
+
+- 共享 Circuit IR：`kicad_sch_reader/circuit_ir.py`
+  - `BoardIR`（components/nets/pins/connections）统一 KiCad 与 LCEDA 数据源
+  - net kind：`signal|power|ground|interface`，结构证据优先、命名正则兜底
+  - `IREvidence` / `IRFinding` / `IRCrossLink` / `IRSystem` 多板工程层
+  - 跨板证据等级：`candidate|detected|declared|confirmed`，工具只自动产生
+    前两级
+  - 适配器 `board_from_kicad()` / `board_from_lceda()`
+  - 设计文档：`docs/shared-circuit-ir.md`
+- `scripts/multi_project_cross_check.py`：KiCad + LCEDA 混合多板检查，内部
+  全部改走共享 IR；报告每行增加 evidence 列
+- LCEDA 多单元器件自动判定：
+  - 同页/跨页同 `Unique ID` + 不同 title → `MULTI_UNIT_CONFIRMED`
+  - 同 `Unique ID` + 同 title → `POSSIBLE_REUSED_INSTANCE`
+  - 其余跨页重复 → `MULTI_UNIT_UNVERIFIED`
+- `--trace-skip-power` / `--power-net`：trace 的电源网络跳过与用户命名补充
+- `skill/SKILL.md`：手册查阅协议、电源判断层级、跨板证据等级
+- 测试：`tests/test_circuit_ir.py`（7 项共享 IR 回归）
+
+### 验证
+
+- 单元测试 24/24 通过（含 CBB 展开、共享 IR、旋转实验台）
+- KiCad 官方网表交叉验证：
+  - MainBoard common=735/735、missing=0、name_mismatch=0、precision=1.0
+  - PowerBoard common=313/313、missing=0、name_mismatch=0、precision=1.0
+- 混合多板检查：3 板 / 72 候选连接对，MainBoard J102 ↔ PowerBoard J103
+  保持 `detected(score=1.0, 16/16)`
+
 ## [0.1.0] - 2026-08-17
 
 ### 新增

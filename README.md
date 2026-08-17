@@ -18,6 +18,8 @@ KiCad 10 的 s-expression 格式重新实现，同时补充了审查规则与官
 - 设计审查规则：重复位号、缺封装/缺值、悬空引脚、单引脚网络、网络名冲突、
   去耦电容检查、分层引脚完整性、DNP 清单
 - 集成官方 `kicad-cli sch erc`，生成 Markdown/JSON 审查报告
+- 共享 Circuit IR：KiCad/LCEDA 都归一为 `BoardIR`（components/nets/evidence），
+  跨板检查只面向统一图结构（`kicad_sch_reader/circuit_ir.py`）
 - 无第三方依赖（仅 Python 标准库）；KiCad CLI 仅用于 ERC/BOM/网表导出
 
 ## 快速开始
@@ -78,6 +80,15 @@ python scripts\lceda_epro_review.py ^
 输出 CBB 内部器件逐 pin 连接，并让 `--trace-net/--trace-ref` 直接穿透到
 CBB 内部器件。
 
+KiCad + LCEDA 多工程跨板候选核对（统一走 Circuit IR）：
+
+```bat
+python scripts\multi_project_cross_check.py ^
+  --kicad examples\Lock-In-Amplifier_MainBoard_V0.1 ^
+  --kicad examples\Lock-In-Amplifier_PowerBoard_V0.1 ^
+  --lceda examples\LIA_DigitalBoard_RevA\ProPrj_XC7A35TCSG325_EmoeSOM_2026-05-18.epro
+```
+
 ## 已知限制
 
 - 网络命名已按 KiCad 官方约定生成：电源/全局名不带前缀，普通标签为
@@ -86,5 +97,5 @@ CBB 内部器件。
 - KiCad 文本变量（如 `${...}`）暂不展开。
 - 本工具只读，不会修改任何工程文件。
 
-更多细节见 `DEVELOPMENT.md`、`docs/kicad-tools-survey.md`、
-`docs/lceda-sch-reader-design-review.md`。
+更多细节见 `DEVELOPMENT.md`、`docs/shared-circuit-ir.md`、
+`docs/kicad-tools-survey.md`、`docs/lceda-sch-reader-design-review.md`。

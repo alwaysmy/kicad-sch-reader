@@ -344,7 +344,8 @@ def _fmt_component(db, c):
 POWER_RE = lceda_reader.POWER_NET_RE
 
 
-def review_epro(epro_path, board_name=None, out_md=None, out_json=None):
+def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
+                trace_nets=None, trace_refs=None):
     db = EproDB(epro_path)
     if board_name is None:
         candidates = [n for n in db.boards if "LIA" in n or "锁定" in n]
@@ -360,6 +361,7 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None):
     flat_components = []
     net_members = defaultdict(list)
     pin_net_map = {}
+    child_page_registry = []
 
     cbb_symbol_titles = {
         u: s.get("title")
@@ -415,6 +417,17 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None):
                         findings.append(("error", "CBB_PAGE_LOAD_FAILED", title, str(c.get("designator")),
                                          f"CBB 子页 {page.get('display_title')} 无法解析"))
                         continue
+                    child_page_registry.append({
+                        "instance": str(c.get("designator")),
+                        "module": module_name,
+                        "parent_sheet": title,
+                        "child_title": child_title,
+                        "page_id": int(page["id"]),
+                        "page_name": page.get("display_title") or page.get("name") or str(page.get("id")),
+                        "child_sheet": child_sheet,
+                        "child_pinmap": child_pinmap or {},
+                        "child_endp": child_endp or {},
+                    })
                     # Child port components carry Name=VIN/VOUT/... and are
                     # matched to the CBB symbol pin names.
                     port_names = {
@@ -424,7 +437,17 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None):
                     }
                     port_net_map = {}
                     for pin_name, port_comp in port_names.items():
-                        port_net_map[pin_name] = port_comp.get("net") or pin_name
+                        px, py = port_comp.get("x"), port_comp.get("y")
+                        physical_net = None
+                        if px is not None and py is not None:
+                            physical_net = child_endp.get((px, py))
+                            if physical_net is None:
+                                # exact-coordinate fallback with small tolerance
+                                for (ex, ey), net in child_endp.items():
+                                    if abs(ex - px) <= 1e-6 and abs(ey - py) <= 1e-6:
+                                        physical_net = net
+                                        break
+                        port_net_map[pin_name] = physical_net or port_comp.get("net") or pin_name
                     # child_net -> parent net, through the CBB symbol pins.
                     net_bridge = {}
                     for pin_name, child_net in port_net_map.items():
@@ -494,12 +517,117 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None):
             for n in names[1:]:
                 aunion(names[0], n)
     net_members = defaultdict(list)
+    canonical_pin_net_map = {}
     for key, netstr in list(pin_net_map.items()):
         if not netstr:
+            canonical_pin_net_map[key] = ""
             continue
         names = [n for n in str(netstr).split(",") if n]
         canonical = afind(names[0])
+        canonical_pin_net_map[key] = canonical
         net_members[canonical].append({"sheet": key[0], "ref": str(key[1]), "pin": str(key[2])})
+
+    comp_lookup = defaultdict(list)
+    for comp in flat_components:
+        if comp.get("designator"):
+            comp_lookup[comp["designator"]].append(comp)
+
+    def member_detail(member):
+        ref = member.get("ref", "")
+        comps = comp_lookup.get(ref, [])
+        comp = next((c for c in comps if c.get("sheet") == member.get("sheet")),
+                    comps[0] if comps else {})
+        return {
+            **member,
+            "device": comp.get("device_title") or comp.get("value") or comp.get("title") or "",
+            "footprint": comp.get("footprint") or "",
+            "module_instance": comp.get("module_instance") or "",
+        }
+
+    def trace_net(net):
+        target = afind(str(net)) if net else ""
+        return [member_detail(m) for m in net_members.get(target, [])]
+
+    def trace_ref(ref):
+        edges = []
+        seen = set()
+        for key, netstr in list(pin_net_map.items()):
+            sheet, ref_key, pin_key = key
+            if str(ref_key).lower() != str(ref).lower() or not netstr:
+                continue
+            canonical = canonical_pin_net_map.get(key, "")
+            for member in net_members.get(canonical, []):
+                edge_key = (sheet, str(ref_key), str(pin_key), member["sheet"], member["ref"], member["pin"], canonical)
+                if edge_key in seen:
+                    continue
+                seen.add(edge_key)
+                edges.append({
+                    "from_sheet": sheet,
+                    "from_ref": str(ref_key),
+                    "from_pin": str(pin_key),
+                    "net": canonical,
+                    "to_sheet": member["sheet"],
+                    "to_ref": member["ref"],
+                    "to_pin": member["pin"],
+                    "to_device": member_detail(member)["device"],
+                    "to_module_instance": member.get("module_instance", ""),
+                })
+        return edges
+
+    # CBB 内部展开明细：器件、封装、每个引脚的展平网络。
+    module_by_ref = {m["designator"]: m for m in modules}
+    cbb_detail = []
+    for reg in child_page_registry:
+        child_title = reg["child_title"]
+        instance = reg["instance"]
+        module_meta = module_by_ref.get(instance, {})
+        comps = []
+        for comp in flat_components:
+            if comp.get("sheet") != child_title:
+                continue
+            pins = []
+            for key, net in canonical_pin_net_map.items():
+                if key[0] == child_title and str(key[1]) == str(comp.get("designator")):
+                    pins.append({"pin": str(key[2]), "net": net})
+            comps.append({**comp, "pins": sorted(pins, key=lambda p: (len(p["pin"]), p["pin"]))})
+        child_sheet = reg["child_sheet"]
+        ports = []
+        port_names = {
+            cc.get("attrs", {}).get("Name"): cc
+            for cc in child_sheet["components"]
+            if cc.get("attrs", {}).get("Name") and not cc.get("designator")
+        }
+        for port_name, port_comp in sorted(port_names.items()):
+            child_net = port_comp.get("net") or port_name
+            parent_net = module_meta.get("port_nets", {}).get(port_name)
+            # 内部器件跟踪必须以“母图网络”为目标：短路桥会把
+            # VCC_1V5/VCC_1V35_DDR、D+/USB_D_P 等合并成同一展平网络。
+            target = afind(str(parent_net or child_net)) if (parent_net or child_net) else ""
+            members = [
+                member_detail(m) for m in net_members.get(target, [])
+                if m["sheet"] == child_title and m["ref"]
+            ]
+            ports.append({
+                "name": port_name,
+                "child_net": child_net,
+                "parent_net": parent_net,
+                "flat_net": target,
+                "internal_members": members,
+            })
+        cbb_detail.append({
+            "instance": instance,
+            "module": reg["module"],
+            "parent_sheet": reg["parent_sheet"],
+            "page_name": reg["page_name"],
+            "components": comps,
+            "ports": ports,
+        })
+
+    trace_results = {}
+    for net in (trace_nets or []):
+        trace_results.setdefault("nets", {})[net] = trace_net(net)
+    for ref in (trace_refs or []):
+        trace_results.setdefault("refs", {})[ref] = trace_ref(ref)
 
     # 2) Checks over flattened components.
     by_ref = defaultdict(list)
@@ -554,6 +682,9 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None):
         "main_schematic": main_sch.get("name"),
         "pages": len(main_sch.get("sheets", [])),
         "cbb_modules": modules,
+        "cbb_detail": cbb_detail,
+        "flat_components": flat_components,
+        "trace_results": trace_results,
         "flat_component_count": len(flat_components),
         "bom_line_count": len(bom),
         "net_count": len(net_members),
@@ -592,7 +723,36 @@ def _write_markdown(report, findings, path):
         ports = ", ".join(f"{p}={m['port_nets'].get(p) or '?'}" for p in m["pins"])
         lines.append(f"| {m['sheet']} | {m['designator']} | {m['module']} | {ports} | {m['pos']} |")
     lines.append("")
-    lines.append("## 2. 设计审查发现")
+    lines.append("## 2. CBB 内部展开明细")
+    lines.append("")
+    for detail in report.get("cbb_detail", []):
+        lines.append(f"### {detail['instance']} — {detail['module']}（{detail['page_name']}）")
+        lines.append("")
+        lines.append("**端口 → 内部网络/器件：**")
+        lines.append("")
+        lines.append("| 端口 | 子图网络 | 母图网络 | 展平网络 | 内部连接 |")
+        lines.append("| --- | --- | --- | --- | --- |")
+        for port in detail["ports"]:
+            members = ", ".join(
+                f"{m['ref']}.{m['pin']}({m['device']})" for m in port["internal_members"][:12]
+            )
+            lines.append(
+                f"| {port['name']} | {port['child_net']} | {port['parent_net'] or '?'} | "
+                f"{port['flat_net']} | {members or '—'} |"
+            )
+        lines.append("")
+        lines.append("**内部器件引脚连接：**")
+        lines.append("")
+        lines.append("| 位号 | 器件/值 | 封装 | 引脚→展平网络 |")
+        lines.append("| --- | --- | --- | --- |")
+        for comp in detail["components"]:
+            pins = ", ".join(f"{p['pin']}={p['net'] or 'NC'}" for p in comp["pins"])
+            lines.append(
+                f"| {comp['designator']} | {comp.get('device_title') or comp.get('value') or comp.get('title') or '?'} | "
+                f"{comp.get('footprint') or '—'} | {pins or '—'} |"
+            )
+        lines.append("")
+    lines.append("## 3. 设计审查发现")
     lines.append("")
     if not findings:
         lines.append("未发现问题。")
@@ -610,7 +770,26 @@ def _write_markdown(report, findings, path):
                 loc += f" / {ref}"
             lines.append(f"| {i} | `{loc}` | {code} | {msg} |")
         lines.append("")
-    lines.append("## 3. 展平 BOM（含 CBB 内部器件）")
+    for net, members in (report.get("trace_results", {}).get("nets") or {}).items():
+        lines.append(f"### trace net: {net}（{len(members)} 个引脚）")
+        lines.append("")
+        lines.append("| 图纸/CBB页 | 位号.引脚 | 器件 |")
+        lines.append("| --- | --- | --- |")
+        for m in members:
+            lines.append(f"| {m['sheet']} | {m['ref']}.{m['pin']} | {m['device']} |")
+        lines.append("")
+    for ref, edges in (report.get("trace_results", {}).get("refs") or {}).items():
+        lines.append(f"### trace ref: {ref}（{len(edges)} 条边）")
+        lines.append("")
+        lines.append("| from | 网络 | to | to 器件 | CBB 实例 |")
+        lines.append("| --- | --- | --- | --- | --- |")
+        for e in edges:
+            lines.append(
+                f"| {e['from_ref']}.{e['from_pin']} | {e['net']} | "
+                f"{e['to_ref']}.{e['to_pin']} | {e['to_device']} | {e['to_module_instance']} |"
+            )
+        lines.append("")
+    lines.append("## 4. 展平 BOM（含 CBB 内部器件）")
     lines.append("")
     lines.append(f"共 {report['bom_line_count']} 行 / {report['flat_component_count']} 个位号。")
     lines.append("")
@@ -628,8 +807,11 @@ def main(argv=None):
     ap.add_argument("--board", help="审查的板名（默认自动选择含 LIA/锁定 的板）")
     ap.add_argument("--out-md")
     ap.add_argument("--out-json")
+    ap.add_argument("--trace-net", action="append", default=[], help="追踪网络并列出 CBB 内部器件")
+    ap.add_argument("--trace-ref", action="append", default=[], help="追踪位号并列出 CBB 内部器件")
     args = ap.parse_args(argv)
-    review_epro(args.epro, board_name=args.board, out_md=args.out_md, out_json=args.out_json)
+    review_epro(args.epro, board_name=args.board, out_md=args.out_md, out_json=args.out_json,
+                trace_nets=args.trace_net, trace_refs=args.trace_ref)
 
 
 if __name__ == "__main__":

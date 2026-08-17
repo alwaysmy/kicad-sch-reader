@@ -46,9 +46,12 @@
   - 兼容 lceda-sch-reader 的 parse_sheet/连通域函数
   - CBB 展开：识别 symbolType=17 复用模块、应用 `.eins` 位号/器件覆盖、
     以端口名连接母图与 CBB 子图网络
+  - CBB 内部展开明细：端口→内部网络→内部器件逐 pin 连接
+  - `--trace-net` / `--trace-ref`：trace 可穿透 CBB 端口显示内部器件
   - 修复 `lceda_reader._collect_pinmap_data` 对 symbolType=17 的漏读
   - LIA_DigitalBoard_RevA 审查报告：
     `reports/LIA_DigitalBoard_RevA.lceda-review.md` / `.json`
+- 新增 `tests/test_lceda_epro.py`：7 项 CBB 展开/trace 回归测试
 
 ### 调研与设计输入
 

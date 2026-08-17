@@ -57,7 +57,17 @@
 4. **引脚坐标变换**：合成最小旋转实验台（tests/fixtures/mini.kicad_sch）
    证明 KiCad 10 需要 y 取反 + 顺时针旋转 + 旋转后镜像，已被文档记录。
 
-## 5. 审查报告位置
+## 5. CBB 展开与 trace 验收
+
+- `scripts/lceda_epro_review.py --trace-net VCC_1V5 --trace-ref U6` 可穿透
+  CBB 端口：
+  - `trace VCC_1V5` 显示 CBB1 内部 `U6.SW/VFB`、`L5`、`C37/C40/C41/C42`、
+    `R33/R34`；
+  - `trace VCC_1V0` 显示 CBB3 内部 `U7.LX1/FB1`、`L1`、`R17/R18`、`C18/C21`。
+- `tests/test_lceda_epro.py` 固化 7 项 CBB 回归断言（模块数量、`.eins`
+  位号覆盖、端口桥、内部器件 trace、无重复位号/无 CBB 悬空、pin type 告警）。
+
+## 6. 审查报告位置
 
 - `reports/Lock-In-Amplifier_MainBoard_V0.1.review.md` / `.json`
 - `reports/Lock-In-Amplifier_PowerBoard_V0.1.review.md` / `.json`

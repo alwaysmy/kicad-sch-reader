@@ -131,6 +131,21 @@ KiCad 把同一多单元器件的每个 unit 存为独立 `symbol` 节点（同 
 3. 在 `tests/test_reader.py` 增加一个能稳定复现的断言；
 4. 对 `examples/` 两个工程重跑 `review`，确认误报在可接受范围。
 
+## 6.5 LCEDA `.epro` CBB 展开与 trace
+
+`scripts/lceda_epro_review.py` 复用 lceda-sch-reader 的解析/连通域函数，
+但补上了 CBB 所需的四件事：
+
+1. `.eins` 覆盖应用：CBB 子图内部仍是 U1/L1/C1 等模板位号，必须按
+   `INSTANCE/<base64>.eins` 的 OVERRIDE 表映射到母板位号/器件/封装。
+2. `symbolType=17` 引脚参与 pinmap（原 lceda_reader 只放行 22）。
+3. `.esym` 引脚坐标减去 HEAD origin（TPS563201 CBB 的 origin 不为 0）。
+4. 端口桥接以**物理端点**而不是端口 Name 建桥；端口 trace 的目标用
+   “母图网络”而不是子图网络，否则 SHORT 短路桥会把 VCC_1V5/
+   VCC_1V35_DDR 合并后找不到内部器件。
+
+回归测试：`python -m unittest tests.test_lceda_epro -v`。
+
 ## 7. 跨板连接器核对
 
 `link-check` 命令（与 lceda-sch-reader 同语义）对两个工程中的连接器逐 pin

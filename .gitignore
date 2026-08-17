@@ -7,6 +7,11 @@ _t*.bat
 _t*.py
 _t*.log
 _t*_*.txt
+_v*.bat
+_v*.py
+_v*.log
+_v*_*.txt
+v*_*.txt
 _cleanup_log.txt
 _cleanup.bat
 examples/

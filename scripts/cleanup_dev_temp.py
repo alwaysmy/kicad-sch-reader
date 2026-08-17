@@ -15,6 +15,8 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 PATTERNS = [
     "_s*.bat", "_s*.py", "_s*_*.txt", "_s*.log",
     "_t*.bat", "_t*.py", "_t*.log", "_t*.txt", "_t*.json",
+    "_v*.bat", "_v*.py", "_v*.log", "_v*.txt", "_v*_*.txt",
+    "v*_*.txt", "v*.txt",
     "t9*_*.txt", "t9*.txt", "t10*_*.txt", "t10*.txt",
     "_run_cleanup.bat", "_cleanup.bat", "_cleanup_run.bat", "_cleanup_log.txt",
     "_python_alive.py", "_python_alive.txt", "_run_test.bat",

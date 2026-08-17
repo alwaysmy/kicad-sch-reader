@@ -66,6 +66,18 @@ python -m unittest tests.test_reader -v
 python tests\validate_examples.py
 ```
 
+## LCEDA `.epro` / CBB 审查（附带工具）
+
+```bat
+python scripts\lceda_epro_review.py ^
+  examples\LIA_DigitalBoard_RevA\ProPrj_XC7A35TCSG325_EmoeSOM_2026-05-18.epro ^
+  --trace-net VCC_1V5 --trace-ref U6
+```
+
+会展开 CBB 复用模块：应用 `.eins` 位号覆盖、连接模块端口与子图网络，
+输出 CBB 内部器件逐 pin 连接，并让 `--trace-net/--trace-ref` 直接穿透到
+CBB 内部器件。
+
 ## 已知限制
 
 - 网络命名已按 KiCad 官方约定生成：电源/全局名不带前缀，普通标签为

@@ -1,8 +1,0 @@
-rc=1
-STDOUT:
-
-STDERR:
-Traceback (most recent call last):
-  File "D:\MyProjects\AI\schematics_review_tool\_t99.py", line 25, in <module>
-    run(["git", "-C", str(lceda), "status", "--short"], env=env)
-TypeError: run() got an unexpected keyword argument 'env'

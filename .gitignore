@@ -15,3 +15,5 @@ reports/*.net
 reports/bom_*.csv
 reports/erc_*.json
 reports/validation/*.net
+
+_t*.json

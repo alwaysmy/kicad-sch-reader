@@ -1,1 +1,0 @@
-python  "D:\MyProjects\AI\schematics_review_tool\_t99f.py"                                                                                                      17216

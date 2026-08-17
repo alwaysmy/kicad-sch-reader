@@ -345,7 +345,8 @@ POWER_RE = lceda_reader.POWER_NET_RE
 
 
 def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
-                trace_nets=None, trace_refs=None):
+                trace_nets=None, trace_refs=None, trace_skip_power=False,
+                power_net_patterns=None):
     db = EproDB(epro_path)
     if board_name is None:
         candidates = [n for n in db.boards if "LIA" in n or "锁定" in n]
@@ -548,6 +549,26 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         target = afind(str(net)) if net else ""
         return [member_detail(m) for m in net_members.get(target, [])]
 
+    extra_power_patterns = [re.compile(p) for p in (power_net_patterns or [])]
+
+    def is_power_net_name(name):
+        if not name:
+            return False
+        name = str(name)
+        # 层级 1：LCEDA 自己的电源/地正则。
+        if POWER_RE.match(name):
+            return True
+        # 层级 2：用户补充命名模式（非规范命名时使用）。
+        for pat in extra_power_patterns:
+            if pat.search(name):
+                return True
+        # 层级 3：SHORT 别名或明显的电源/地标识。
+        if name.startswith("SHORT") or name.split(",")[0].strip().upper() in (
+            "GND", "AGND", "DGND", "VCC", "VDD", "VSS", "VBUS", "PWR", "VREF"
+        ):
+            return True
+        return False
+
     def trace_ref(ref):
         edges = []
         seen = set()
@@ -556,6 +577,8 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
             if str(ref_key).lower() != str(ref).lower() or not netstr:
                 continue
             canonical = canonical_pin_net_map.get(key, "")
+            if trace_skip_power and is_power_net_name(canonical):
+                continue
             for member in net_members.get(canonical, []):
                 edge_key = (sheet, str(ref_key), str(pin_key), member["sheet"], member["ref"], member["pin"], canonical)
                 if edge_key in seen:
@@ -640,15 +663,37 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         if len(comps) > 1:
             uids = {c.get("uid") or "" for c in comps}
             titles = {c.get("title") or "" for c in comps}
-            # 多单元器件（相同 Unique ID + 不同 title 后缀，如 .B14/.B34）是合法的。
-            if not (len(uids) == 1 and next(iter(uids)) and len(titles) > 1):
+            # 脚本自动识别多单元器件：相同 Unique ID + 不同 title 后缀
+            # （例如 XC7A35T-2CSG325C.B14 / .B34 / .POWER）。
+            same_uid = len(uids) == 1 and bool(next(iter(uids)))
+            if same_uid and len(titles) > 1:
+                findings.append(("info", "MULTI_UNIT_CONFIRMED", page, ref,
+                                 f"位号 {ref} 在同一页出现 {len(comps)} 次，已自动识别为多单元器件"
+                                 f"（Unique ID={next(iter(uids))}）"))
+            elif same_uid and len(titles) == 1:
+                findings.append(("warning", "POSSIBLE_REUSED_INSTANCE", page, ref,
+                                 f"位号 {ref} 同页出现 {len(comps)} 次且 Unique ID/title 相同，"
+                                 f"可能是分层复用或复制残留，需人工确认"))
+            else:
                 findings.append(("error", "DUPLICATE_DESIGNATOR", page, ref,
                                  f"位号 {ref} 在同一页/同一 CBB 实例内出现 {len(comps)} 次"))
     for ref, comps in sorted(by_ref.items()):
         pages = {c.get("sheet", "") for c in comps}
         if len(comps) > 1 and len(pages) > 1:
-            findings.append(("info", "MULTI_UNIT_OR_REUSED_REF", comps[0].get("sheet", ""), ref,
-                             f"位号 {ref} 跨 {len(pages)} 页出现（多单元器件或复用，需人工确认）"))
+            uids = {c.get("uid") or "" for c in comps}
+            titles = {c.get("title") or "" for c in comps}
+            same_uid = len(uids) == 1 and bool(next(iter(uids)))
+            if same_uid and len(titles) > 1:
+                findings.append(("info", "MULTI_UNIT_CONFIRMED", comps[0].get("sheet", ""), ref,
+                                 f"位号 {ref} 跨 {len(pages)} 页出现，已自动识别为多单元器件"
+                                 f"（Unique ID={next(iter(uids))}）"))
+            elif same_uid and len(titles) == 1:
+                findings.append(("warning", "POSSIBLE_REUSED_INSTANCE", comps[0].get("sheet", ""), ref,
+                                 f"位号 {ref} 跨 {len(pages)} 页出现且 Unique ID/title 相同，"
+                                 f"可能是分层复用，需人工确认物理位置"))
+            else:
+                findings.append(("info", "MULTI_UNIT_UNVERIFIED", comps[0].get("sheet", ""), ref,
+                                 f"位号 {ref} 跨 {len(pages)} 页出现但无法自动判定多单元，需人工确认"))
         else:
             comp = comps[0]
             if not comp.get("device_uuid") and not comp.get("symbol_uuid", "").startswith("CBB"):
@@ -684,6 +729,10 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         "cbb_modules": modules,
         "cbb_detail": cbb_detail,
         "flat_components": flat_components,
+        "pin_net_map": {
+            f"{key[0]}||{key[1]}||{key[2]}": canonical_pin_net_map.get(key, "")
+            for key in canonical_pin_net_map
+        },
         "trace_results": trace_results,
         "flat_component_count": len(flat_components),
         "bom_line_count": len(bom),
@@ -809,9 +858,12 @@ def main(argv=None):
     ap.add_argument("--out-json")
     ap.add_argument("--trace-net", action="append", default=[], help="追踪网络并列出 CBB 内部器件")
     ap.add_argument("--trace-ref", action="append", default=[], help="追踪位号并列出 CBB 内部器件")
+    ap.add_argument("--trace-skip-power", action="store_true", help="trace-ref 时跳过电源/地网络")
+    ap.add_argument("--power-net", action="append", default=[], help="补充电源网络命名正则（非规范命名时使用）")
     args = ap.parse_args(argv)
     review_epro(args.epro, board_name=args.board, out_md=args.out_md, out_json=args.out_json,
-                trace_nets=args.trace_net, trace_refs=args.trace_ref)
+                trace_nets=args.trace_net, trace_refs=args.trace_ref,
+                trace_skip_power=args.trace_skip_power, power_net_patterns=args.power_net)
 
 
 if __name__ == "__main__":

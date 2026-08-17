@@ -141,132 +141,135 @@
 | 4 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CBB2.D-` | CBB_PIN_TYPE_SUSPECT | CBB 模块 _CBB_接口_通用TypeC-5V带数据供电 引脚 D- 标记为 IN，但按名称应为输出/双向 |
 | 5 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::SYS_POWER / CBB1.VOUT` | CBB_PIN_TYPE_SUSPECT | CBB 模块 _CBB_SMPS_TPS563201_BUCK_2L 引脚 VOUT 标记为 IN，但按名称应为输出/双向 |
 
-### 提示（122）
+### 提示（125）
 
 | # | 位置 | 代码 | 说明 |
 | --- | --- | --- | --- |
 | 1 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::SYS_POWER / CBB3.GND` | CBB_PIN_TYPE_SUSPECT | CBB 模块 _CBB_SMPS_EA3059_4CH_BUCK_2L_TINY 引脚 GND 类型为 BI，建议确认 |
-| 2 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / U1` | MULTI_UNIT_OR_REUSED_REF | 位号 U1 跨 4 页出现（多单元器件或复用，需人工确认） |
-| 3 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG) / U5` | SINGLE_PIN_NET | 网络 DBG_SPI_CLK 仅 U5.PB13/SPI2SCK/UART3CTS/CAN2TX 一个引脚 |
-| 4 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG) / U5` | SINGLE_PIN_NET | 网络 DBG_SPI_CS 仅 U5.PB12/SPI2NSS/CAN2RX 一个引脚 |
-| 5 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG) / U5` | SINGLE_PIN_NET | 网络 DBG_SPI_MISO 仅 U5.PB14/SPI2MISO/UART3RTS 一个引脚 |
-| 6 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG) / U5` | SINGLE_PIN_NET | 网络 DBG_SPI_MOSI 仅 U5.PB15/SPI2MOSI/UART1TX2 一个引脚 |
-| 7 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / R110` | SINGLE_PIN_NET | 网络 FPGA_CCLK 仅 R110.1 一个引脚 |
-| 8 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / R116` | SINGLE_PIN_NET | 网络 FPGA_M0 仅 R116.1 一个引脚 |
-| 9 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / U15` | SINGLE_PIN_NET | 网络 FPGA_QSPI_DQ0 仅 U15.DI 一个引脚 |
-| 10 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / U15` | SINGLE_PIN_NET | 网络 FPGA_QSPI_DQ1 仅 U15.DO 一个引脚 |
-| 11 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / U15` | SINGLE_PIN_NET | 网络 FPGA_QSPI_DQ2 仅 U15.IO2 一个引脚 |
-| 12 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / U15` | SINGLE_PIN_NET | 网络 FPGA_QSPI_DQ3 仅 U15.IO3 一个引脚 |
-| 13 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / R25` | SINGLE_PIN_NET | 网络 FPGA_TDO 仅 R25.1 一个引脚 |
-| 14 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / R30` | SINGLE_PIN_NET | 网络 INIT_B 仅 R30.1 一个引脚 |
-| 15 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L10N_T1_34 仅 CN7.35 一个引脚 |
-| 16 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L10P_T1_34 仅 CN7.33 一个引脚 |
-| 17 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L12N_T1_MRCC_34 仅 CN7.39 一个引脚 |
-| 18 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L12P_T1_MRCC_34 仅 CN7.41 一个引脚 |
-| 19 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L13N_T2_MRCC_14 仅 CN7.71 一个引脚 |
-| 20 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L13N_T2_MRCC_34 仅 CN7.28 一个引脚 |
-| 21 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L13P_T2_MRCC_14 仅 CN7.69 一个引脚 |
-| 22 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L13P_T2_MRCC_34 仅 CN7.26 一个引脚 |
-| 23 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L14N_T2_SRCC_34 仅 CN7.43 一个引脚 |
-| 24 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L14P_T2_SRCC_34 仅 CN7.45 一个引脚 |
-| 25 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L15N_T2_DQS_34 仅 CN7.34 一个引脚 |
-| 26 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L15P_T2_DQS_34 仅 CN7.32 一个引脚 |
-| 27 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L16N_T2_34 仅 CN7.36 一个引脚 |
-| 28 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / TP3` | SINGLE_PIN_NET | 网络 IO_L16N_T2_A15_D31_14 仅 TP3.1 一个引脚 |
-| 29 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L16P_T2_34 仅 CN7.38 一个引脚 |
-| 30 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / TP4` | SINGLE_PIN_NET | 网络 IO_L16P_T2_CSI_B_14 仅 TP4.1 一个引脚 |
-| 31 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L17N_T2_34 仅 CN7.49 一个引脚 |
-| 32 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L17N_T2_A13_D29_14 仅 CN7.77 一个引脚 |
-| 33 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L17P_T2_34 仅 CN7.51 一个引脚 |
-| 34 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L17P_T2_A14_D30_14 仅 CN7.75 一个引脚 |
-| 35 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L18N_T2_34 仅 CN7.44 一个引脚 |
-| 36 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L18P_T2_34 仅 CN7.42 一个引脚 |
-| 37 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L19N_T3_A09_D25_VREF_14 仅 CN7.63 一个引脚 |
-| 38 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L19P_T3_A10_D26_14 仅 CN7.65 一个引脚 |
-| 39 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L20N_T3_34 仅 CN7.46 一个引脚 |
-| 40 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L20N_T3_A07_D23_14 仅 CN7.76 一个引脚 |
-| 41 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L20P_T3_34 仅 CN7.48 一个引脚 |
-| 42 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L20P_T3_A08_D24_14 仅 CN7.78 一个引脚 |
-| 43 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L21N_T3_DQS_34 仅 CN7.55 一个引脚 |
-| 44 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L21N_T3_DQS_A06_D22_14 仅 CN7.74 一个引脚 |
-| 45 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L21P_T3_DQS_14 仅 CN7.72 一个引脚 |
-| 46 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L21P_T3_DQS_34 仅 CN7.53 一个引脚 |
-| 47 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L22N_T3_34 仅 CN7.61 一个引脚 |
-| 48 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L22P_T3_34 仅 CN7.59 一个引脚 |
-| 49 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L23N_T3_34 仅 CN7.52 一个引脚 |
-| 50 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L23N_T3_A02_D18_14 仅 CN7.66 一个引脚 |
-| 51 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L23P_T3_34 仅 CN7.54 一个引脚 |
-| 52 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L23P_T3_A03_D19_14 仅 CN7.68 一个引脚 |
-| 53 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L24N_T3_34 仅 CN7.56 一个引脚 |
-| 54 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L24N_T3_A00_D16_14 仅 CN7.64 一个引脚 |
-| 55 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L24P_T3_34 仅 CN7.58 一个引脚 |
-| 56 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L24P_T3_A01_D17_14 仅 CN7.62 一个引脚 |
-| 57 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L3N_T0_DQS_34 仅 CN7.14 一个引脚 |
-| 58 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L3P_T0_DQS_34 仅 CN7.12 一个引脚 |
-| 59 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L4N_T0_34 仅 CN7.19 一个引脚 |
-| 60 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L4P_T0_34 仅 CN7.21 一个引脚 |
-| 61 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L5N_T0_34 仅 CN7.25 一个引脚 |
-| 62 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L5P_T0_34 仅 CN7.23 一个引脚 |
-| 63 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L6N_T0_VREF_34 仅 CN7.31 一个引脚 |
-| 64 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L6P_T0_34 仅 CN7.29 一个引脚 |
-| 65 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L7N_T1_34 仅 CN7.18 一个引脚 |
-| 66 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L7P_T1_34 仅 CN7.16 一个引脚 |
-| 67 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L9N_T1_DQS_34 仅 CN7.24 一个引脚 |
-| 68 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L9P_T1_DQS_34 仅 CN7.22 一个引脚 |
-| 69 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::CLOCK / C15` | SINGLE_PIN_NET | 网络 MGT_CLK0_N 仅 C15.2 一个引脚 |
-| 70 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::CLOCK / C14` | SINGLE_PIN_NET | 网络 MGT_CLK0_P 仅 C14.2 一个引脚 |
-| 71 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 MGT_RX3_N 仅 CN7.15 一个引脚 |
-| 72 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 MGT_RX3_P 仅 CN7.13 一个引脚 |
-| 73 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 MGT_TX3_N 仅 CN7.6 一个引脚 |
-| 74 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 MGT_TX3_P 仅 CN7.8 一个引脚 |
-| 75 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A0 仅 U24.A0 一个引脚 |
-| 76 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A1 仅 U24.A1 一个引脚 |
-| 77 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A10 仅 U24.A10/AP 一个引脚 |
-| 78 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A11 仅 U24.A11 一个引脚 |
-| 79 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A12 仅 U24.A12/BC# 一个引脚 |
-| 80 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A13 仅 U24.A13 一个引脚 |
-| 81 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A14 仅 U24.A14 一个引脚 |
-| 82 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A15 仅 U24.NC 一个引脚 |
-| 83 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A2 仅 U24.A2 一个引脚 |
-| 84 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A3 仅 U24.A3 一个引脚 |
-| 85 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A4 仅 U24.A4 一个引脚 |
-| 86 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A5 仅 U24.A5 一个引脚 |
-| 87 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A6 仅 U24.A6 一个引脚 |
-| 88 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A7 仅 U24.A7 一个引脚 |
-| 89 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A8 仅 U24.A8 一个引脚 |
-| 90 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A9 仅 U24.A9 一个引脚 |
-| 91 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_BA0 仅 U24.BA0 一个引脚 |
-| 92 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_BA1 仅 U24.BA1 一个引脚 |
-| 93 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_BA2 仅 U24.BA2 一个引脚 |
-| 94 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_CAS_B 仅 U24.CAS# 一个引脚 |
-| 95 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_CKE 仅 U24.CKE 一个引脚 |
-| 96 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_CS_B 仅 U24.CS# 一个引脚 |
-| 97 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DM0 仅 U24.LDM 一个引脚 |
-| 98 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DM1 仅 U24.UDM 一个引脚 |
-| 99 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ0 仅 U24.DQ0 一个引脚 |
-| 100 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ1 仅 U24.DQ1 一个引脚 |
-| 101 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ10 仅 U24.DQ10 一个引脚 |
-| 102 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ11 仅 U24.DQ11 一个引脚 |
-| 103 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ12 仅 U24.DQ12 一个引脚 |
-| 104 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ13 仅 U24.DQ13 一个引脚 |
-| 105 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ14 仅 U24.DQ14 一个引脚 |
-| 106 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ15 仅 U24.DQ15 一个引脚 |
-| 107 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ2 仅 U24.DQ2 一个引脚 |
-| 108 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ3 仅 U24.DQ3 一个引脚 |
-| 109 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ4 仅 U24.DQ4 一个引脚 |
-| 110 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ5 仅 U24.DQ5 一个引脚 |
-| 111 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ6 仅 U24.DQ6 一个引脚 |
-| 112 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ7 仅 U24.DQ7 一个引脚 |
-| 113 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ8 仅 U24.DQ8 一个引脚 |
-| 114 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ9 仅 U24.DQ9 一个引脚 |
-| 115 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQS0_N 仅 U24.LDQS# 一个引脚 |
-| 116 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQS0_P 仅 U24.LDQS 一个引脚 |
-| 117 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQS1_N 仅 U24.UDQS# 一个引脚 |
-| 118 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQS1_P 仅 U24.UDQS 一个引脚 |
-| 119 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_ODT 仅 U24.ODT 一个引脚 |
-| 120 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_RAS_B 仅 U24.RAS# 一个引脚 |
-| 121 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_WE_B 仅 U24.WE# 一个引脚 |
-| 122 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / R29` | SINGLE_PIN_NET | 网络 PROGRAM_B 仅 R29.1 一个引脚 |
+| 2 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::BANK14_15_BANK34 / U1` | MULTI_UNIT_CONFIRMED | 位号 U1 在同一页出现 3 次，已自动识别为多单元器件（Unique ID=gge3） |
+| 3 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA POWER / U1` | MULTI_UNIT_CONFIRMED | 位号 U1 在同一页出现 2 次，已自动识别为多单元器件（Unique ID=gge3） |
+| 4 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | MULTI_UNIT_CONFIRMED | 位号 U24 在同一页出现 2 次，已自动识别为多单元器件（Unique ID=gge344） |
+| 5 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / U1` | MULTI_UNIT_CONFIRMED | 位号 U1 跨 4 页出现，已自动识别为多单元器件（Unique ID=gge3） |
+| 6 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG) / U5` | SINGLE_PIN_NET | 网络 DBG_SPI_CLK 仅 U5.PB13/SPI2SCK/UART3CTS/CAN2TX 一个引脚 |
+| 7 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG) / U5` | SINGLE_PIN_NET | 网络 DBG_SPI_CS 仅 U5.PB12/SPI2NSS/CAN2RX 一个引脚 |
+| 8 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG) / U5` | SINGLE_PIN_NET | 网络 DBG_SPI_MISO 仅 U5.PB14/SPI2MISO/UART3RTS 一个引脚 |
+| 9 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG) / U5` | SINGLE_PIN_NET | 网络 DBG_SPI_MOSI 仅 U5.PB15/SPI2MOSI/UART1TX2 一个引脚 |
+| 10 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / R110` | SINGLE_PIN_NET | 网络 FPGA_CCLK 仅 R110.1 一个引脚 |
+| 11 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / R116` | SINGLE_PIN_NET | 网络 FPGA_M0 仅 R116.1 一个引脚 |
+| 12 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / U15` | SINGLE_PIN_NET | 网络 FPGA_QSPI_DQ0 仅 U15.DI 一个引脚 |
+| 13 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / U15` | SINGLE_PIN_NET | 网络 FPGA_QSPI_DQ1 仅 U15.DO 一个引脚 |
+| 14 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / U15` | SINGLE_PIN_NET | 网络 FPGA_QSPI_DQ2 仅 U15.IO2 一个引脚 |
+| 15 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / U15` | SINGLE_PIN_NET | 网络 FPGA_QSPI_DQ3 仅 U15.IO3 一个引脚 |
+| 16 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / R25` | SINGLE_PIN_NET | 网络 FPGA_TDO 仅 R25.1 一个引脚 |
+| 17 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / R30` | SINGLE_PIN_NET | 网络 INIT_B 仅 R30.1 一个引脚 |
+| 18 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L10N_T1_34 仅 CN7.35 一个引脚 |
+| 19 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L10P_T1_34 仅 CN7.33 一个引脚 |
+| 20 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L12N_T1_MRCC_34 仅 CN7.39 一个引脚 |
+| 21 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L12P_T1_MRCC_34 仅 CN7.41 一个引脚 |
+| 22 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L13N_T2_MRCC_14 仅 CN7.71 一个引脚 |
+| 23 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L13N_T2_MRCC_34 仅 CN7.28 一个引脚 |
+| 24 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L13P_T2_MRCC_14 仅 CN7.69 一个引脚 |
+| 25 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L13P_T2_MRCC_34 仅 CN7.26 一个引脚 |
+| 26 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L14N_T2_SRCC_34 仅 CN7.43 一个引脚 |
+| 27 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L14P_T2_SRCC_34 仅 CN7.45 一个引脚 |
+| 28 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L15N_T2_DQS_34 仅 CN7.34 一个引脚 |
+| 29 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L15P_T2_DQS_34 仅 CN7.32 一个引脚 |
+| 30 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L16N_T2_34 仅 CN7.36 一个引脚 |
+| 31 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / TP3` | SINGLE_PIN_NET | 网络 IO_L16N_T2_A15_D31_14 仅 TP3.1 一个引脚 |
+| 32 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L16P_T2_34 仅 CN7.38 一个引脚 |
+| 33 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / TP4` | SINGLE_PIN_NET | 网络 IO_L16P_T2_CSI_B_14 仅 TP4.1 一个引脚 |
+| 34 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L17N_T2_34 仅 CN7.49 一个引脚 |
+| 35 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L17N_T2_A13_D29_14 仅 CN7.77 一个引脚 |
+| 36 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L17P_T2_34 仅 CN7.51 一个引脚 |
+| 37 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L17P_T2_A14_D30_14 仅 CN7.75 一个引脚 |
+| 38 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L18N_T2_34 仅 CN7.44 一个引脚 |
+| 39 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L18P_T2_34 仅 CN7.42 一个引脚 |
+| 40 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L19N_T3_A09_D25_VREF_14 仅 CN7.63 一个引脚 |
+| 41 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L19P_T3_A10_D26_14 仅 CN7.65 一个引脚 |
+| 42 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L20N_T3_34 仅 CN7.46 一个引脚 |
+| 43 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L20N_T3_A07_D23_14 仅 CN7.76 一个引脚 |
+| 44 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L20P_T3_34 仅 CN7.48 一个引脚 |
+| 45 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L20P_T3_A08_D24_14 仅 CN7.78 一个引脚 |
+| 46 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L21N_T3_DQS_34 仅 CN7.55 一个引脚 |
+| 47 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L21N_T3_DQS_A06_D22_14 仅 CN7.74 一个引脚 |
+| 48 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L21P_T3_DQS_14 仅 CN7.72 一个引脚 |
+| 49 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L21P_T3_DQS_34 仅 CN7.53 一个引脚 |
+| 50 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L22N_T3_34 仅 CN7.61 一个引脚 |
+| 51 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L22P_T3_34 仅 CN7.59 一个引脚 |
+| 52 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L23N_T3_34 仅 CN7.52 一个引脚 |
+| 53 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L23N_T3_A02_D18_14 仅 CN7.66 一个引脚 |
+| 54 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L23P_T3_34 仅 CN7.54 一个引脚 |
+| 55 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L23P_T3_A03_D19_14 仅 CN7.68 一个引脚 |
+| 56 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L24N_T3_34 仅 CN7.56 一个引脚 |
+| 57 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L24N_T3_A00_D16_14 仅 CN7.64 一个引脚 |
+| 58 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L24P_T3_34 仅 CN7.58 一个引脚 |
+| 59 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L24P_T3_A01_D17_14 仅 CN7.62 一个引脚 |
+| 60 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L3N_T0_DQS_34 仅 CN7.14 一个引脚 |
+| 61 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L3P_T0_DQS_34 仅 CN7.12 一个引脚 |
+| 62 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L4N_T0_34 仅 CN7.19 一个引脚 |
+| 63 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L4P_T0_34 仅 CN7.21 一个引脚 |
+| 64 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L5N_T0_34 仅 CN7.25 一个引脚 |
+| 65 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L5P_T0_34 仅 CN7.23 一个引脚 |
+| 66 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L6N_T0_VREF_34 仅 CN7.31 一个引脚 |
+| 67 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L6P_T0_34 仅 CN7.29 一个引脚 |
+| 68 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L7N_T1_34 仅 CN7.18 一个引脚 |
+| 69 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L7P_T1_34 仅 CN7.16 一个引脚 |
+| 70 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L9N_T1_DQS_34 仅 CN7.24 一个引脚 |
+| 71 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 IO_L9P_T1_DQS_34 仅 CN7.22 一个引脚 |
+| 72 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::CLOCK / C15` | SINGLE_PIN_NET | 网络 MGT_CLK0_N 仅 C15.2 一个引脚 |
+| 73 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::CLOCK / C14` | SINGLE_PIN_NET | 网络 MGT_CLK0_P 仅 C14.2 一个引脚 |
+| 74 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 MGT_RX3_N 仅 CN7.15 一个引脚 |
+| 75 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 MGT_RX3_P 仅 CN7.13 一个引脚 |
+| 76 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 MGT_TX3_N 仅 CN7.6 一个引脚 |
+| 77 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB / CN7` | SINGLE_PIN_NET | 网络 MGT_TX3_P 仅 CN7.8 一个引脚 |
+| 78 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A0 仅 U24.A0 一个引脚 |
+| 79 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A1 仅 U24.A1 一个引脚 |
+| 80 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A10 仅 U24.A10/AP 一个引脚 |
+| 81 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A11 仅 U24.A11 一个引脚 |
+| 82 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A12 仅 U24.A12/BC# 一个引脚 |
+| 83 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A13 仅 U24.A13 一个引脚 |
+| 84 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A14 仅 U24.A14 一个引脚 |
+| 85 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A15 仅 U24.NC 一个引脚 |
+| 86 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A2 仅 U24.A2 一个引脚 |
+| 87 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A3 仅 U24.A3 一个引脚 |
+| 88 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A4 仅 U24.A4 一个引脚 |
+| 89 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A5 仅 U24.A5 一个引脚 |
+| 90 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A6 仅 U24.A6 一个引脚 |
+| 91 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A7 仅 U24.A7 一个引脚 |
+| 92 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A8 仅 U24.A8 一个引脚 |
+| 93 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_A9 仅 U24.A9 一个引脚 |
+| 94 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_BA0 仅 U24.BA0 一个引脚 |
+| 95 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_BA1 仅 U24.BA1 一个引脚 |
+| 96 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_BA2 仅 U24.BA2 一个引脚 |
+| 97 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_CAS_B 仅 U24.CAS# 一个引脚 |
+| 98 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_CKE 仅 U24.CKE 一个引脚 |
+| 99 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_CS_B 仅 U24.CS# 一个引脚 |
+| 100 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DM0 仅 U24.LDM 一个引脚 |
+| 101 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DM1 仅 U24.UDM 一个引脚 |
+| 102 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ0 仅 U24.DQ0 一个引脚 |
+| 103 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ1 仅 U24.DQ1 一个引脚 |
+| 104 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ10 仅 U24.DQ10 一个引脚 |
+| 105 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ11 仅 U24.DQ11 一个引脚 |
+| 106 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ12 仅 U24.DQ12 一个引脚 |
+| 107 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ13 仅 U24.DQ13 一个引脚 |
+| 108 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ14 仅 U24.DQ14 一个引脚 |
+| 109 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ15 仅 U24.DQ15 一个引脚 |
+| 110 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ2 仅 U24.DQ2 一个引脚 |
+| 111 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ3 仅 U24.DQ3 一个引脚 |
+| 112 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ4 仅 U24.DQ4 一个引脚 |
+| 113 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ5 仅 U24.DQ5 一个引脚 |
+| 114 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ6 仅 U24.DQ6 一个引脚 |
+| 115 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ7 仅 U24.DQ7 一个引脚 |
+| 116 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ8 仅 U24.DQ8 一个引脚 |
+| 117 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQ9 仅 U24.DQ9 一个引脚 |
+| 118 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQS0_N 仅 U24.LDQS# 一个引脚 |
+| 119 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQS0_P 仅 U24.LDQS 一个引脚 |
+| 120 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQS1_N 仅 U24.UDQS# 一个引脚 |
+| 121 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_DQS1_P 仅 U24.UDQS 一个引脚 |
+| 122 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_ODT 仅 U24.ODT 一个引脚 |
+| 123 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_RAS_B 仅 U24.RAS# 一个引脚 |
+| 124 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM / U24` | SINGLE_PIN_NET | 网络 PL_DDR_WE_B 仅 U24.WE# 一个引脚 |
+| 125 | `EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG / R29` | SINGLE_PIN_NET | 网络 PROGRAM_B 仅 R29.1 一个引脚 |
 
 ### trace net: VCC_1V5（32 个引脚）
 
@@ -691,335 +694,6 @@
 | U6.VFB | VCC_1V35_DDR | C42.1 | CC0402JRNPO9BN100 |  |
 | U6.VFB | VCC_1V35_DDR | R34.2 | 0402WGF1002TCE |  |
 | U6.VFB | VCC_1V35_DDR | R33.2 | RC-02K9101FT |  |
-
-### trace ref: CBB1（324 条边）
-
-| from | 网络 | to | to 器件 | CBB 实例 |
-| --- | --- | --- | --- | --- |
-| CBB1.VIN | VCC_5V | F2.1 | SMD0603-050-12 |  |
-| CBB1.VIN | VCC_5V | F5.1 | SMD0603-050-12 |  |
-| CBB1.VIN | VCC_5V | R111.1 | RC0402FR-0710KL |  |
-| CBB1.VIN | VCC_5V | R112.1 | RC0402FR-0710KL |  |
-| CBB1.VIN | VCC_5V | FB7.2 | BLM18PG121SN1D |  |
-| CBB1.VIN | VCC_5V | C207.2 | GRM188Z71A106KA73D |  |
-| CBB1.VIN | VCC_5V | CBB1.VIN |  |  |
-| CBB1.VIN | VCC_5V | CBB3.VIN |  |  |
-| CBB1.VIN | VCC_5V | R111.2 | RC0402FR-0710KL |  |
-| CBB1.VIN | VCC_5V | R112.2 | RC0402FR-0710KL |  |
-| CBB1.VIN | VCC_5V | C170.2 | CC0402KRX7R9BB103 |  |
-| CBB1.VIN | VCC_5V | CBB3.EN1 |  |  |
-| CBB1.VIN | VCC_5V | CBB3.EN2 |  |  |
-| CBB1.VIN | VCC_5V | CBB3.EN3 |  |  |
-| CBB1.VIN | VCC_5V | CBB3.EN4 |  |  |
-| CBB1.VIN | VCC_5V | U6.VIN | TPS563201DDCR |  |
-| CBB1.VIN | VCC_5V | C38.2 | GRM21BR61E226ME44L |  |
-| CBB1.VIN | VCC_5V | C39.2 | CC0603KRX7R9BB105 |  |
-| CBB1.VIN | VCC_5V | R32.2 | 0402WGF1002TCE |  |
-| CBB1.VIN | VCC_5V | U7.VCC | EA3059 |  |
-| CBB1.VIN | VCC_5V | U7.VIN2 | EA3059 |  |
-| CBB1.VIN | VCC_5V | U7.EN2 | EA3059 |  |
-| CBB1.VIN | VCC_5V | U7.EN1 | EA3059 |  |
-| CBB1.VIN | VCC_5V | U7.VIN1 | EA3059 |  |
-| CBB1.VIN | VCC_5V | U7.VIN4 | EA3059 |  |
-| CBB1.VIN | VCC_5V | U7.EN4 | EA3059 |  |
-| CBB1.VIN | VCC_5V | U7.EN3 | EA3059 |  |
-| CBB1.VIN | VCC_5V | U7.VIN3 | EA3059 |  |
-| CBB1.VIN | VCC_5V | C22.2 | GRM188R61A226ME15D |  |
-| CBB1.VIN | VCC_5V | C27.2 | GRM188R61A226ME15D |  |
-| CBB1.VIN | VCC_5V | C28.2 | GRM188R61A226ME15D |  |
-| CBB1.VIN | VCC_5V | C29.2 | GRM188R61A226ME15D |  |
-| CBB1.VIN | VCC_5V | C30.2 | GRM155R61A225KE95D |  |
-| CBB1.VIN | VCC_5V | C20.2 | GRM21BZ71A226ME15L |  |
-| CBB1.VIN | VCC_5V | C19.2 | GRM21BZ71A226ME15L |  |
-| CBB1.VIN | VCC_5V | F4.2 | SMD0603-050-12 |  |
-| CBB1.VIN | VCC_5V | R11.2 | 0402WGF6200TCE |  |
-| CBB1.VOUT | VCC_1V35_DDR | SHORTe5713.Pin1 |  |  |
-| CBB1.VOUT | VCC_1V35_DDR | C178.2 | CC0402KRX7R6BB474 |  |
-| CBB1.VOUT | VCC_1V35_DDR | C177.2 | CC0402KRX7R6BB474 |  |
-| CBB1.VOUT | VCC_1V35_DDR | C179.2 | GRM188Z71A475KE15D |  |
-| CBB1.VOUT | VCC_1V35_DDR | U24.VDDQ | MT41K256M16TW-107 IT:P |  |
-| CBB1.VOUT | VCC_1V35_DDR | U24.VDD | MT41K256M16TW-107 IT:P |  |
-| CBB1.VOUT | VCC_1V35_DDR | C103.2 | GRM155R70J105KA12D |  |
-| CBB1.VOUT | VCC_1V35_DDR | C105.2 | GRM155R70J105KA12D |  |
-| CBB1.VOUT | VCC_1V35_DDR | C106.2 | GRM155R70J105KA12D |  |
-| CBB1.VOUT | VCC_1V35_DDR | C107.2 | GRM155R70J105KA12D |  |
-| CBB1.VOUT | VCC_1V35_DDR | C112.2 | GRM155R70J105KA12D |  |
-| CBB1.VOUT | VCC_1V35_DDR | C113.2 | GRM155R70J105KA12D |  |
-| CBB1.VOUT | VCC_1V35_DDR | C118.2 | GRM155R70J105KA12D |  |
-| CBB1.VOUT | VCC_1V35_DDR | C119.2 | GRM155R70J105KA12D |  |
-| CBB1.VOUT | VCC_1V35_DDR | C120.2 | GRM155R70J105KA12D |  |
-| CBB1.VOUT | VCC_1V35_DDR | R94.2 | 0402WGF1001TCE |  |
-| CBB1.VOUT | VCC_1V35_DDR | C33.2 | GRM155Z71A105KE01D |  |
-| CBB1.VOUT | VCC_1V35_DDR | C58.2 | GRM155R70J105KA12D |  |
-| CBB1.VOUT | VCC_1V35_DDR | SHORTe13473.Pin1 |  |  |
-| CBB1.VOUT | VCC_1V35_DDR | CBB1.VOUT |  |  |
-| CBB1.VOUT | VCC_1V35_DDR | L5.2 | FTC252010S4R7MBCA |  |
-| CBB1.VOUT | VCC_1V35_DDR | C40.2 | GRM21BR61E226ME44L |  |
-| CBB1.VOUT | VCC_1V35_DDR | C41.2 | GRM21BR61E226ME44L |  |
-| CBB1.VOUT | VCC_1V35_DDR | C42.2 | CC0402JRNPO9BN100 |  |
-| CBB1.VOUT | VCC_1V35_DDR | R33.1 | RC-02K9101FT |  |
-| CBB1.VOUT | VCC_1V35_DDR | U6.SW | TPS563201DDCR |  |
-| CBB1.VOUT | VCC_1V35_DDR | U6.VFB | TPS563201DDCR |  |
-| CBB1.VOUT | VCC_1V35_DDR | L5.1 | FTC252010S4R7MBCA |  |
-| CBB1.VOUT | VCC_1V35_DDR | C37.2 | CL05B104KB54PNC |  |
-| CBB1.VOUT | VCC_1V35_DDR | C42.1 | CC0402JRNPO9BN100 |  |
-| CBB1.VOUT | VCC_1V35_DDR | R34.2 | 0402WGF1002TCE |  |
-| CBB1.VOUT | VCC_1V35_DDR | R33.2 | RC-02K9101FT |  |
-| CBB1.GND | DXN_0 | C23.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | SHORTe9223.Pin1 |  |  |
-| CBB1.GND | DXN_0 | SHORTe9262.Pin1 |  |  |
-| CBB1.GND | DXN_0 | SHORTe9275.Pin1 |  |  |
-| CBB1.GND | DXN_0 | SHORTe9301.Pin1 |  |  |
-| CBB1.GND | DXN_0 | SHORTe9314.Pin1 |  |  |
-| CBB1.GND | DXN_0 | C25.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C26.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | R23.1 | 0402WGF5100TCE |  |
-| CBB1.GND | DXN_0 | U15.GND | W25Q128JVSIQ |  |
-| CBB1.GND | DXN_0 | C160.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | SHORTe18015.Pin1 |  |  |
-| CBB1.GND | DXN_0 | SHORTe18028.Pin1 |  |  |
-| CBB1.GND | DXN_0 | R115.2 | 0402WGF1001TCE |  |
-| CBB1.GND | DXN_0 | C161.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C162.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C163.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C164.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C165.1 | GRM188Z71A475KE15D |  |
-| CBB1.GND | DXN_0 | C166.1 | GRM188Z71A475KE15D |  |
-| CBB1.GND | DXN_0 | C180.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C181.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C182.1 | GRM188Z71A475KE15D |  |
-| CBB1.GND | DXN_0 | C178.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C177.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C179.1 | GRM188Z71A475KE15D |  |
-| CBB1.GND | DXN_0 | U24.VSSQ | MT41K256M16TW-107 IT:P |  |
-| CBB1.GND | DXN_0 | U24.VSS | MT41K256M16TW-107 IT:P |  |
-| CBB1.GND | DXN_0 | R5.2 | 0402WGF2400TCE |  |
-| CBB1.GND | DXN_0 | C97.1 | CC0402KRX7R9BB103 |  |
-| CBB1.GND | DXN_0 | C98.1 | CC0402KRX7R9BB103 |  |
-| CBB1.GND | DXN_0 | C103.1 | GRM155R70J105KA12D |  |
-| CBB1.GND | DXN_0 | C105.1 | GRM155R70J105KA12D |  |
-| CBB1.GND | DXN_0 | C106.1 | GRM155R70J105KA12D |  |
-| CBB1.GND | DXN_0 | C107.1 | GRM155R70J105KA12D |  |
-| CBB1.GND | DXN_0 | C112.1 | GRM155R70J105KA12D |  |
-| CBB1.GND | DXN_0 | C113.1 | GRM155R70J105KA12D |  |
-| CBB1.GND | DXN_0 | C118.1 | GRM155R70J105KA12D |  |
-| CBB1.GND | DXN_0 | C119.1 | GRM155R70J105KA12D |  |
-| CBB1.GND | DXN_0 | C120.1 | GRM155R70J105KA12D |  |
-| CBB1.GND | DXN_0 | R95.1 | 0402WGF1001TCE |  |
-| CBB1.GND | DXN_0 | C34.1 | GRM155Z71A105KE01D |  |
-| CBB1.GND | DXN_0 | R60.1 | 0402WGF4701TCE |  |
-| CBB1.GND | DXN_0 | C58.1 | GRM155R70J105KA12D |  |
-| CBB1.GND | DXN_0 | C2.1 | GRM188Z71A475KE15D |  |
-| CBB1.GND | DXN_0 | C3.1 | GRM188Z71A475KE15D |  |
-| CBB1.GND | DXN_0 | C4.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C5.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C7.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | C6.1 | CC0402KRX7R6BB474 |  |
-| CBB1.GND | DXN_0 | SHORTe1172.Pin1 |  |  |
-| CBB1.GND | DXN_0 | SHORTe1173.Pin1 |  |  |
-| CBB1.GND | DXN_0 | SHORTe1174.Pin1 |  |  |
-| CBB1.GND | DXN_0 | SHORTe1175.Pin1 |  |  |
-| CBB1.GND | DXN_0 | SHORTe1176.Pin1 |  |  |
-| CBB1.GND | DXN_0 | SHORTe1177.Pin1 |  |  |
-| CBB1.GND | DXN_0 | C185.1 | GRM188Z71A475KE15D |  |
-| CBB1.GND | DXN_0 | C186.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C187.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C188.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C189.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C193.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C197.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C194.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C195.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C198.1 | GRM188Z71A475KE15D |  |
-| CBB1.GND | DXN_0 | C199.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C200.1 | GRM188Z71A475KE15D |  |
-| CBB1.GND | DXN_0 | C24.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | CN7.80 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.5 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.11 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.70 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.17 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.60 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.27 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.50 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.37 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.40 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.47 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.30 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.57 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.20 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.67 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.10 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.73 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.4 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.79 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CN7.2 | X0802FVS-80AS-LPV01 |  |
-| CBB1.GND | DXN_0 | CBB4.GND |  |  |
-| CBB1.GND | DXN_0 | CBB2.GND |  |  |
-| CBB1.GND | DXN_0 | C1.1 | CC0603KRX7R9BB105 |  |
-| CBB1.GND | DXN_0 | C8.1 | CC0603KRX7R9BB105 |  |
-| CBB1.GND | DXN_0 | D1.GND | USBLC6-2P6_C49451919 |  |
-| CBB1.GND | DXN_0 | D2.GND | USBLC6-2P6_C49451919 |  |
-| CBB1.GND | DXN_0 | R7.1 | 0603WAJ0512T5E |  |
-| CBB1.GND | DXN_0 | R6.1 | 0603WAJ0512T5E |  |
-| CBB1.GND | DXN_0 | USB1.GND | TYPEC-304-ACP16 |  |
-| CBB1.GND | DXN_0 | USB1.SHELL | TYPEC-304-ACP16 |  |
-| CBB1.GND | DXN_0 | R9.1 | 0603WAJ0512T5E |  |
-| CBB1.GND | DXN_0 | R8.1 | 0603WAJ0512T5E |  |
-| CBB1.GND | DXN_0 | USB2.GND | TYPEC-304-ACP16 |  |
-| CBB1.GND | DXN_0 | USB2.SHELL | TYPEC-304-ACP16 |  |
-| CBB1.GND | DXN_0 | R92.1 | 0402WGF220JTCE |  |
-| CBB1.GND | DXN_0 | C157.1 | GRM155R61A106ME11D |  |
-| CBB1.GND | DXN_0 | C158.1 | GRM155R61A106ME11D |  |
-| CBB1.GND | DXN_0 | C159.1 | GRM155R61A106ME11D |  |
-| CBB1.GND | DXN_0 | OSC2.GND | 8132H-50.000ML33DTL |  |
-| CBB1.GND | DXN_0 | C170.1 | CC0402KRX7R9BB103 |  |
-| CBB1.GND | DXN_0 | C171.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C173.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C174.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C175.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | C176.1 | GRM155Z71A225KE01D |  |
-| CBB1.GND | DXN_0 | U4.GND | TLV73312PQDRVRQ1 |  |
-| CBB1.GND | DXN_0 | U4.EP | TLV73312PQDRVRQ1 |  |
-| CBB1.GND | DXN_0 | C206.1 | GRM188Z71A106KA73D |  |
-| CBB1.GND | DXN_0 | C207.1 | GRM188Z71A106KA73D |  |
-| CBB1.GND | DXN_0 | C43.1 | CC0402KRX7R9BB103 |  |
-| CBB1.GND | DXN_0 | CBB1.GND |  |  |
-| CBB1.GND | DXN_0 | CBB3.GND |  |  |
-| CBB1.GND | DXN_0 | C57.1 | GRM188Z71A475KE15D |  |
-| CBB1.GND | DXN_0 | U6.GND | TPS563201DDCR |  |
-| CBB1.GND | DXN_0 | C40.1 | GRM21BR61E226ME44L |  |
-| CBB1.GND | DXN_0 | C41.1 | GRM21BR61E226ME44L |  |
-| CBB1.GND | DXN_0 | R34.1 | 0402WGF1002TCE |  |
-| CBB1.GND | DXN_0 | C38.1 | GRM21BR61E226ME44L |  |
-| CBB1.GND | DXN_0 | C39.1 | CC0603KRX7R9BB105 |  |
-| CBB1.GND | DXN_0 | U7.GND3 | EA3059 |  |
-| CBB1.GND | DXN_0 | U7.AGND | EA3059 |  |
-| CBB1.GND | DXN_0 | U7.GND2 | EA3059 |  |
-| CBB1.GND | DXN_0 | U7.GND1 | EA3059 |  |
-| CBB1.GND | DXN_0 | U7.GND4 | EA3059 |  |
-| CBB1.GND | DXN_0 | U7.EP | EA3059 |  |
-| CBB1.GND | DXN_0 | R31.1 | 0402WGF1003TCE |  |
-| CBB1.GND | DXN_0 | C45.1 | GRM21BR61E226ME44L |  |
-| CBB1.GND | DXN_0 | C22.1 | GRM188R61A226ME15D |  |
-| CBB1.GND | DXN_0 | C27.1 | GRM188R61A226ME15D |  |
-| CBB1.GND | DXN_0 | C28.1 | GRM188R61A226ME15D |  |
-| CBB1.GND | DXN_0 | C29.1 | GRM188R61A226ME15D |  |
-| CBB1.GND | DXN_0 | C30.1 | GRM155R61A225KE95D |  |
-| CBB1.GND | DXN_0 | R27.2 | 0402WGF1003TCE |  |
-| CBB1.GND | DXN_0 | C35.1 | GRM21BR61E226ME44L |  |
-| CBB1.GND | DXN_0 | R20.2 | 0402WGF1003TCE |  |
-| CBB1.GND | DXN_0 | C32.1 | GRM21BR61E226ME44L |  |
-| CBB1.GND | DXN_0 | R18.2 | 0402WGF1003TCE |  |
-| CBB1.GND | DXN_0 | C18.1 | GRM21BR61E226ME44L |  |
-| CBB1.GND | DXN_0 | C20.1 | GRM21BZ71A226ME15L |  |
-| CBB1.GND | DXN_0 | C19.1 | GRM21BZ71A226ME15L |  |
-| CBB1.GND | DXN_0 | SW6.3 | SKRPACE010 |  |
-| CBB1.GND | DXN_0 | SW6.4 | SKRPACE010 |  |
-| CBB1.GND | DXN_0 | D7.A | ESD5Z3.3_SOD523 |  |
-| CBB1.GND | DXN_0 | LED5.C | NCD0603G1 |  |
-| CBB1.GND | DXN_0 | C13.1 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C46.1 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | U10.GND | AT24C16M5/TR |  |
-| CBB1.GND | DXN_0 | U12.GND | TMP112AIDRLR |  |
-| CBB1.GND | DXN_0 | U12.ADD0 | TMP112AIDRLR |  |
-| CBB1.GND | DXN_0 | X2.GND | XL2EL89COI-111YLC-8M |  |
-| CBB1.GND | DXN_0 | U5.VSS/GND | CH32V305GBU6 |  |
-| CBB1.GND | DXN_0 | U5.EP | CH32V305GBU6 |  |
-| CBB1.GND | DXN_0 | C201.1 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C202.1 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C203.1 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C204.1 | 0402CG100J500NT |  |
-| CBB1.GND | DXN_0 | C205.1 | 0402CG100J500NT |  |
-| CBB1.GND | DXN_0 | LED6.C | NCD0603G1 |  |
-| CBB1.GND | DXN_0 | U3.VSS_3 | CH32V307RCT6 |  |
-| CBB1.GND | DXN_0 | U3.VSS_2 | CH32V307RCT6 |  |
-| CBB1.GND | DXN_0 | U3.VSS_1 | CH32V307RCT6 |  |
-| CBB1.GND | DXN_0 | U3.VSS_4 | CH32V307RCT6 |  |
-| CBB1.GND | DXN_0 | U3.VSSA | CH32V307RCT6 |  |
-| CBB1.GND | DXN_0 | C48.2 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C49.2 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C51.1 | 0402CG100J500NT |  |
-| CBB1.GND | DXN_0 | C52.1 | 0402CG100J500NT |  |
-| CBB1.GND | DXN_0 | R2.1 | RC0402FR-0710KL |  |
-| CBB1.GND | DXN_0 | X1.GND | XL2EL89COI-111YLC-8M |  |
-| CBB1.GND | DXN_0 | R3.2 | RC0402FR-0710KL |  |
-| CBB1.GND | DXN_0 | C53.1 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C54.2 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C55.2 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C56.2 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | H5.3 | PinHeader_1x03_P2.54mm_Vertical |  |
-| CBB1.GND | DXN_0 | C50.2 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | CARD1.VSS | TF PUSH |  |
-| CBB1.GND | DXN_0 | CARD1.10 | TF PUSH |  |
-| CBB1.GND | DXN_0 | CARD1.11 | TF PUSH |  |
-| CBB1.GND | DXN_0 | CARD1.12 | TF PUSH |  |
-| CBB1.GND | DXN_0 | CARD1.13 | TF PUSH |  |
-| CBB1.GND | DXN_0 | U9.4 | WAFER-GH1.25-4PWB |  |
-| CBB1.GND | DXN_0 | U9.5 | WAFER-GH1.25-4PWB |  |
-| CBB1.GND | DXN_0 | U9.6 | WAFER-GH1.25-4PWB |  |
-| CBB1.GND | DXN_0 | CN1.3 | HX-GH1.25-3PWT |  |
-| CBB1.GND | DXN_0 | CN1.5 | HX-GH1.25-3PWT |  |
-| CBB1.GND | DXN_0 | CN1.4 | HX-GH1.25-3PWT |  |
-| CBB1.GND | DXN_0 | CN2.3 | HX-GH1.25-3PWT |  |
-| CBB1.GND | DXN_0 | CN2.5 | HX-GH1.25-3PWT |  |
-| CBB1.GND | DXN_0 | CN2.4 | HX-GH1.25-3PWT |  |
-| CBB1.GND | DXN_0 | U11.GND | TPT75176HL1-DF6R |  |
-| CBB1.GND | DXN_0 | U11.EP | TPT75176HL1-DF6R |  |
-| CBB1.GND | DXN_0 | C12.1 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | D4.GND | USBLC6-2P6_C49451919 |  |
-| CBB1.GND | DXN_0 | R13.1 | 0402WGF6200TCE |  |
-| CBB1.GND | DXN_0 | D3.1 | SMF6.5CA_C19077501 |  |
-| CBB1.GND | DXN_0 | D5.1 | SMF6.5CA_C19077501 |  |
-| CBB1.GND | DXN_0 | R14.1 | RT0402BRD0710KL |  |
-| CBB1.GND | DXN_0 | R16.1 | RT0402BRD0710KL |  |
-| CBB1.GND | DXN_0 | D11.K | SMF15CA_C19077510 |  |
-| CBB1.GND | DXN_0 | D12.K | SMF15CA_C19077510 |  |
-| CBB1.GND | DXN_0 | C9.2 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | D6.GND | RCLAMP0524P_C907837 |  |
-| CBB1.GND | DXN_0 | D9.A | ESD5Z3.3T1G-MS |  |
-| CBB1.GND | DXN_0 | U16.10 | ZX-SH1.0-8PWT |  |
-| CBB1.GND | DXN_0 | U16.9 | ZX-SH1.0-8PWT |  |
-| CBB1.GND | DXN_0 | U16.6 | ZX-SH1.0-8PWT |  |
-| CBB1.GND | DXN_0 | D10.GND | RCLAMP0522P.TCT |  |
-| CBB1.GND | DXN_0 | D13.GND | RCLAMP0524P_C907837 |  |
-| CBB1.GND | DXN_0 | U2.GND | TPT3232E-TS3R |  |
-| CBB1.GND | DXN_0 | U2.TIN2 | TPT3232E-TS3R |  |
-| CBB1.GND | DXN_0 | U2.RIN2 | TPT3232E-TS3R |  |
-| CBB1.GND | DXN_0 | C16.1 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C17.1 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | C47.1 | CC0402KRX7R9BB104 |  |
-| CBB1.GND | DXN_0 | D14.GND | RCLAMP0524P_C907837 |  |
-| CBB1.GND | DXN_0 | H2.1 | M2.5螺丝安装孔_金属化 |  |
-| CBB1.GND | DXN_0 | H3.1 | M2.5螺丝安装孔_金属化 |  |
-| CBB1.GND | DXN_0 | H4.1 | M2.5螺丝安装孔_金属化 |  |
-| CBB1.GND | DXN_0 | H1.1 | M2.5螺丝安装孔_金属化 |  |
-| CBB1.EN | VCC_1V8 | C23.2 | GRM155Z71A225KE01D |  |
-| CBB1.EN | VCC_1V8 | SHORTe23043.Pin1 |  |  |
-| CBB1.EN | VCC_1V8 | C197.2 | GRM155Z71A225KE01D |  |
-| CBB1.EN | VCC_1V8 | C194.2 | GRM155Z71A225KE01D |  |
-| CBB1.EN | VCC_1V8 | C195.2 | GRM155Z71A225KE01D |  |
-| CBB1.EN | VCC_1V8 | C198.2 | GRM188Z71A475KE15D |  |
-| CBB1.EN | VCC_1V8 | C24.2 | GRM155Z71A225KE01D |  |
-| CBB1.EN | VCC_1V8 | FB6.1 | BLM15PD121SN1D |  |
-| CBB1.EN | VCC_1V8 | C171.2 | GRM155Z71A225KE01D |  |
-| CBB1.EN | VCC_1V8 | R4.1 | RC0402FR-0710KL |  |
-| CBB1.EN | VCC_1V8 | CBB3.VOUT2 |  |  |
-| CBB1.EN | VCC_1V8 | R4.2 | RC0402FR-0710KL |  |
-| CBB1.EN | VCC_1V8 | C43.2 | CC0402KRX7R9BB103 |  |
-| CBB1.EN | VCC_1V8 | CBB1.EN |  |  |
-| CBB1.EN | VCC_1V8 | U6.EN | TPS563201DDCR |  |
-| CBB1.EN | VCC_1V8 | R32.1 | 0402WGF1002TCE |  |
-| CBB1.EN | VCC_1V8 | L2.1 | AFE201612S1R5MBT |  |
-| CBB1.EN | VCC_1V8 | R19.1 | 0402WGF2003TCE |  |
-| CBB1.EN | VCC_1V8 | C31.2 | 0402B221K500NT |  |
-| CBB1.EN | VCC_1V8 | C32.2 | GRM21BR61E226ME44L |  |
-| CBB1.EN | VCC_1V8 | U7.FB2 | EA3059 |  |
-| CBB1.EN | VCC_1V8 | U7.LX2 | EA3059 |  |
-| CBB1.EN | VCC_1V8 | L2.2 | AFE201612S1R5MBT |  |
-| CBB1.EN | VCC_1V8 | R19.2 | 0402WGF2003TCE |  |
-| CBB1.EN | VCC_1V8 | R20.1 | 0402WGF1003TCE |  |
-| CBB1.EN | VCC_1V8 | C31.1 | 0402B221K500NT |  |
 
 ## 4. 展平 BOM（含 CBB 内部器件）
 

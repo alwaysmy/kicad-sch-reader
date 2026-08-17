@@ -233,11 +233,24 @@ def cmd_find(args) -> None:
         _print_json(rows)
 
 
-def _is_power_net(net: Net) -> bool:
+def _is_power_net(net: Net, extra_patterns=None) -> bool:
+    # 优先使用结构证据而不是名字猜测：电源符号、电源引脚。
     if net.power_names:
         return True
-    return bool(re.match(r"^(GND|AGND|DGND|VCC|VDD|VSS|VBUS|PWR_|VREF|REF|\+?-?\d+(\.\d+)?V[A-Z0-9_]*)$",
-                         net.name, re.IGNORECASE))
+    if any(p.pin_type.lower() in ("power_in", "power_out") for p in net.pins):
+        return True
+    if any(p.ref.startswith("#PWR") for p in net.pins):
+        return True
+    if re.match(r"^(GND|AGND|DGND|VCC|VDD|VSS|VBUS|PWR_|VREF|REF|\+?-?\d+(\.\d+)?V[A-Z0-9_]*)$",
+                net.name, re.IGNORECASE):
+        return True
+    for pattern in (extra_patterns or []):
+        try:
+            if re.search(pattern, net.name, re.IGNORECASE):
+                return True
+        except re.error:
+            continue
+    return False
 
 
 def cmd_trace(args) -> None:
@@ -260,7 +273,7 @@ def cmd_trace(args) -> None:
     while queue:
         ref, depth = queue.popleft()
         for net in ref_net.get(ref, []):
-            if args.no_power and _is_power_net(net):
+            if args.no_power and _is_power_net(net, getattr(args, "power_net", None)):
                 continue
             if id(net) in visited_nets:
                 continue
@@ -521,6 +534,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("ref")
     p.add_argument("--depth", type=int, default=4)
     p.add_argument("--no-power", action="store_true", help="跳过电源/地网络")
+    p.add_argument("--power-net", action="append", default=[], help="补充电源网络命名正则")
     p.set_defaults(func=cmd_trace)
 
     p = sub.add_parser("review", help="运行设计审查并生成 Markdown/JSON 报告")

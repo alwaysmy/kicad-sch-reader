@@ -1,0 +1,2956 @@
+{
+  "boards": [
+    {
+      "name": "Lock-In-Amplifier_MainBoard_V0.1",
+      "format": "kicad",
+      "root": "D:\\MyProjects\\AI\\schematics_review_tool\\examples\\Lock-In-Amplifier_MainBoard_V0.1",
+      "connectors": {
+        "J101": {
+          "ref": "J101",
+          "lib_id": "Connector_Generic:Conn_02x40_Odd_Even",
+          "sheet": "/",
+          "pin_count": 60,
+          "pins": {
+            "1": "+5VP",
+            "2": "GND",
+            "3": "+5VP",
+            "4": "GND",
+            "5": "GND",
+            "10": "GND",
+            "11": "GND",
+            "12": "/Internal Reference Source/DAC_CLK",
+            "13": "GND",
+            "14": "/Internal Reference Source/DAC_D13",
+            "15": "GND",
+            "16": "/Internal Reference Source/DAC_D12",
+            "17": "GND",
+            "18": "/Internal Reference Source/DAC_D11",
+            "19": "/Internal Reference Source/DAC_PD",
+            "20": "GND",
+            "22": "/Internal Reference Source/DAC_D10",
+            "24": "/Internal Reference Source/DAC_D9",
+            "25": "/Internal Reference Source/DAC_D0",
+            "26": "/Internal Reference Source/DAC_D8",
+            "27": "GND",
+            "28": "/Internal Reference Source/DAC_D4",
+            "29": "/Internal Reference Source/DAC_D1",
+            "30": "GND",
+            "31": "/Internal Reference Source/DAC_D2",
+            "32": "/Internal Reference Source/DAC_D5",
+            "33": "/Internal Reference Source/DAC_D3",
+            "34": "/Internal Reference Source/DAC_D6",
+            "35": "/Reference Input Scheme/LOCK_IND",
+            "36": "/Internal Reference Source/DAC_D7",
+            "37": "GND",
+            "39": "/Reference Input Scheme/REFIN_CMP",
+            "40": "GND",
+            "41": "/Reference Input Scheme/REF_SW",
+            "42": "/Precision ADC Block/ADC_START",
+            "43": "/Reference Input Scheme/REF_CAL_1",
+            "44": "/Precision ADC Block/ADC_MISO",
+            "45": "/Reference Input Scheme/REF_CAL_2",
+            "46": "/Precision ADC Block/ADC_DRDY",
+            "47": "GND",
+            "48": "/Precision ADC Block/ADC_SCLK",
+            "49": "/Precision ADC Block/ADC_MOSI",
+            "50": "GND",
+            "51": "/Precision ADC Block/ADC_CS",
+            "52": "/Internal Reference Source/SRC_ATT_A0",
+            "53": "/Precision ADC Block/ADC_RESET",
+            "54": "/Internal Reference Source/SRC_ATT_A1",
+            "56": "/Internal Reference Source/SRC_ATT_A2",
+            "57": "GND",
+            "58": "/Internal Reference Source/SRC_ATT_EN",
+            "60": "GND",
+            "67": "GND",
+            "70": "GND",
+            "73": "GND",
+            "75": "/Analog Front End/GAIN_SW_A0",
+            "76": "/Analog Front End/IN_SW_C1",
+            "77": "/Analog Front End/GAIN_SW_A1",
+            "78": "/Analog Front End/IN_SW_C2",
+            "79": "GND",
+            "80": "GND"
+          }
+        },
+        "J102": {
+          "ref": "J102",
+          "lib_id": "Connector_Generic:Conn_01x16",
+          "sheet": "/",
+          "pin_count": 16,
+          "pins": {
+            "1": "+12VA",
+            "2": "GND",
+            "3": "-12VA",
+            "4": "GND",
+            "5": "+5VA",
+            "6": "GND",
+            "7": "-5VA",
+            "8": "GND",
+            "9": "+3.3V",
+            "10": "GND",
+            "11": "GND",
+            "12": "GND",
+            "13": "GND",
+            "14": "+5VP",
+            "15": "+5VP",
+            "16": "+5VP"
+          }
+        },
+        "J202": {
+          "ref": "J202",
+          "lib_id": "Connector:Conn_Coaxial",
+          "sheet": "/2cbef686-8f02-4c5f-bcf6-217497882ee3",
+          "pin_count": 2,
+          "pins": {
+            "1": "N$157",
+            "2": "GND"
+          }
+        },
+        "J201": {
+          "ref": "J201",
+          "lib_id": "Connector:Conn_Coaxial",
+          "sheet": "/2cbef686-8f02-4c5f-bcf6-217497882ee3",
+          "pin_count": 2,
+          "pins": {
+            "1": "N$46",
+            "2": "GND"
+          }
+        },
+        "J701": {
+          "ref": "J701",
+          "lib_id": "Connector:Conn_Coaxial",
+          "sheet": "/69c97752-28d7-4ad3-888a-2beb501d4b85",
+          "pin_count": 2,
+          "pins": {
+            "1": "/Internal Reference Source/SRC_OUT",
+            "2": "GND"
+          }
+        },
+        "J401": {
+          "ref": "J401",
+          "lib_id": "Connector:Conn_Coaxial",
+          "sheet": "/c46f7bf0-b3e5-4206-aa8d-e6d0679b809b",
+          "pin_count": 2,
+          "pins": {
+            "1": "N$64",
+            "2": "N$61"
+          }
+        }
+      }
+    },
+    {
+      "name": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "format": "kicad",
+      "root": "D:\\MyProjects\\AI\\schematics_review_tool\\examples\\Lock-In-Amplifier_PowerBoard_V0.1",
+      "connectors": {
+        "J101": {
+          "ref": "J101",
+          "lib_id": "Connector_Generic:Conn_01x04",
+          "sheet": "/",
+          "pin_count": 4,
+          "pins": {
+            "1": "N$5",
+            "2": "N$5",
+            "3": "GND",
+            "4": "GND"
+          }
+        },
+        "J102": {
+          "ref": "J102",
+          "lib_id": "Connector:Barrel_Jack",
+          "sheet": "/",
+          "pin_count": 2,
+          "pins": {
+            "1": "N$5",
+            "2": "GND"
+          }
+        },
+        "J103": {
+          "ref": "J103",
+          "lib_id": "Connector_Generic:Conn_01x16",
+          "sheet": "/",
+          "pin_count": 16,
+          "pins": {
+            "1": "+12VA",
+            "2": "GND",
+            "3": "-12VA",
+            "4": "GND",
+            "5": "+5VA",
+            "6": "GND",
+            "7": "-5VA",
+            "8": "GND",
+            "9": "+3.3V",
+            "10": "GND",
+            "11": "GND",
+            "12": "GND",
+            "13": "GND",
+            "14": "+5VP",
+            "15": "+5VP",
+            "16": "+5VP"
+          }
+        }
+      }
+    },
+    {
+      "name": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "format": "lceda",
+      "root": "examples\\LIA_DigitalBoard_RevA\\ProPrj_XC7A35TCSG325_EmoeSOM_2026-05-18.epro",
+      "connectors": {
+        "CN7": {
+          "ref": "CN7",
+          "lib_id": "X0802FVS-80AS-LPV01",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+          "pin_count": 80,
+          "pins": {
+            "1": "VCC_5V_BTBIN",
+            "2": "DXN_0",
+            "3": "VCC_5V_BTBIN",
+            "4": "DXN_0",
+            "5": "DXN_0",
+            "6": "MGT_TX3_N",
+            "7": "MGT_EXTCLK0_P",
+            "8": "MGT_TX3_P",
+            "9": "MGT_EXTCLK0_N",
+            "10": "DXN_0",
+            "11": "DXN_0",
+            "12": "IO_L3P_T0_DQS_34",
+            "13": "MGT_RX3_P",
+            "14": "IO_L3N_T0_DQS_34",
+            "15": "MGT_RX3_N",
+            "16": "IO_L7P_T1_34",
+            "17": "DXN_0",
+            "18": "IO_L7N_T1_34",
+            "19": "IO_L4N_T0_34",
+            "20": "DXN_0",
+            "21": "IO_L4P_T0_34",
+            "22": "IO_L9P_T1_DQS_34",
+            "23": "IO_L5P_T0_34",
+            "24": "IO_L9N_T1_DQS_34",
+            "25": "IO_L5N_T0_34",
+            "26": "IO_L13P_T2_MRCC_34",
+            "27": "DXN_0",
+            "28": "IO_L13N_T2_MRCC_34",
+            "29": "IO_L6P_T0_34",
+            "30": "DXN_0",
+            "31": "IO_L6N_T0_VREF_34",
+            "32": "IO_L15P_T2_DQS_34",
+            "33": "IO_L10P_T1_34",
+            "34": "IO_L15N_T2_DQS_34",
+            "35": "IO_L10N_T1_34",
+            "36": "IO_L16N_T2_34",
+            "37": "DXN_0",
+            "38": "IO_L16P_T2_34",
+            "39": "IO_L12N_T1_MRCC_34",
+            "40": "DXN_0",
+            "41": "IO_L12P_T1_MRCC_34",
+            "42": "IO_L18P_T2_34",
+            "43": "IO_L14N_T2_SRCC_34",
+            "44": "IO_L18N_T2_34",
+            "45": "IO_L14P_T2_SRCC_34",
+            "46": "IO_L20N_T3_34",
+            "47": "DXN_0",
+            "48": "IO_L20P_T3_34",
+            "49": "IO_L17N_T2_34",
+            "50": "DXN_0",
+            "51": "IO_L17P_T2_34",
+            "52": "IO_L23N_T3_34",
+            "53": "IO_L21P_T3_DQS_34",
+            "54": "IO_L23P_T3_34",
+            "55": "IO_L21N_T3_DQS_34",
+            "56": "IO_L24N_T3_34",
+            "57": "DXN_0",
+            "58": "IO_L24P_T3_34",
+            "59": "IO_L22P_T3_34",
+            "60": "DXN_0",
+            "61": "IO_L22N_T3_34",
+            "62": "IO_L24P_T3_A01_D17_14",
+            "63": "IO_L19N_T3_A09_D25_VREF_14",
+            "64": "IO_L24N_T3_A00_D16_14",
+            "65": "IO_L19P_T3_A10_D26_14",
+            "66": "IO_L23N_T3_A02_D18_14",
+            "67": "DXN_0",
+            "68": "IO_L23P_T3_A03_D19_14",
+            "69": "IO_L13P_T2_MRCC_14",
+            "70": "DXN_0",
+            "71": "IO_L13N_T2_MRCC_14",
+            "72": "IO_L21P_T3_DQS_14",
+            "73": "DXN_0",
+            "74": "IO_L21N_T3_DQS_A06_D22_14",
+            "75": "IO_L17P_T2_A14_D30_14",
+            "76": "IO_L20N_T3_A07_D23_14",
+            "77": "IO_L17N_T2_A13_D29_14",
+            "78": "IO_L20P_T3_A08_D24_14",
+            "79": "DXN_0",
+            "80": "DXN_0"
+          }
+        },
+        "D1": {
+          "ref": "D1",
+          "lib_id": "USBLC6-2P6_C49451919",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+          "pin_count": 4,
+          "pins": {
+            "GND": "DXN_0",
+            "I/O1": "CH32_USB2_D_P",
+            "I/O2": "CH32_USB2_D_N",
+            "VBUS": "VBUS_5V_DBG"
+          }
+        },
+        "D2": {
+          "ref": "D2",
+          "lib_id": "USBLC6-2P6_C49451919",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+          "pin_count": 4,
+          "pins": {
+            "GND": "DXN_0",
+            "I/O1": "USB2_D_N",
+            "I/O2": "USB2_D_P",
+            "VBUS": "VBUS_5V_USB"
+          }
+        },
+        "USB1": {
+          "ref": "USB1",
+          "lib_id": "TYPEC-304-ACP16",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB/CBB:CBB4:P1",
+          "pin_count": 7,
+          "pins": {
+            "D+": "USB2_D_P",
+            "D-": "USB2_D_N",
+            "CC1": "CBB4/CC1",
+            "CC2": "CBB4/CC2",
+            "GND": "DXN_0",
+            "VBUS": "VBUS_5V_USB",
+            "SHELL": "DXN_0"
+          }
+        },
+        "USB2": {
+          "ref": "USB2",
+          "lib_id": "TYPEC-304-ACP16",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB/CBB:CBB2:P1",
+          "pin_count": 7,
+          "pins": {
+            "D+": "CH32_USB2_D_P",
+            "D-": "CH32_USB2_D_N",
+            "CC1": "CBB2/CC1",
+            "CC2": "CBB2/CC2",
+            "GND": "DXN_0",
+            "VBUS": "VBUS_5V_DBG",
+            "SHELL": "DXN_0"
+          }
+        },
+        "U4": {
+          "ref": "U4",
+          "lib_id": "TLV73312PQDRVRQ1",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::SYS_POWER",
+          "pin_count": 6,
+          "pins": {
+            "EN": "MGTAVTT_1V2",
+            "EP": "DXN_0",
+            "IN": "MGTAVTT_1V2",
+            "NC": "MGTAVTT_1V2",
+            "GND": "DXN_0",
+            "OUT": "MGTAVTT_1V2"
+          }
+        },
+        "H5": {
+          "ref": "H5",
+          "lib_id": "PinHeader_1x03_P2.54mm_Vertical",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG)",
+          "pin_count": 3,
+          "pins": {
+            "1": "DBG_MCU_SWCLK",
+            "2": "DBG_MCU_SWDIO",
+            "3": "DXN_0"
+          }
+        },
+        "U9": {
+          "ref": "U9",
+          "lib_id": "WAFER-GH1.25-4PWB",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::Conn&Interface",
+          "pin_count": 6,
+          "pins": {
+            "1": "VCC_SCEEN_LPOWER",
+            "2": "SCREEN_UART_TX_R",
+            "3": "SCREEN_UART_RX_R",
+            "4": "DXN_0",
+            "5": "DXN_0",
+            "6": "DXN_0"
+          }
+        },
+        "CN1": {
+          "ref": "CN1",
+          "lib_id": "HX-GH1.25-3PWT",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::Conn&Interface",
+          "pin_count": 5,
+          "pins": {
+            "1": "RS485_A_R",
+            "2": "RS485_B_R",
+            "3": "DXN_0",
+            "4": "DXN_0",
+            "5": "DXN_0"
+          }
+        },
+        "CN2": {
+          "ref": "CN2",
+          "lib_id": "HX-GH1.25-3PWT",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::Conn&Interface",
+          "pin_count": 5,
+          "pins": {
+            "1": "RS232_RX_R",
+            "2": "RS232_TX_R",
+            "3": "DXN_0",
+            "4": "DXN_0",
+            "5": "DXN_0"
+          }
+        },
+        "D4": {
+          "ref": "D4",
+          "lib_id": "USBLC6-2P6_C49451919",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::Conn&Interface",
+          "pin_count": 4,
+          "pins": {
+            "GND": "DXN_0",
+            "I/O1": "SCREEN_UART_TX_R",
+            "I/O2": "SCREEN_UART_RX_R",
+            "VBUS": "VCC_SCEEN_LPOWER"
+          }
+        },
+        "D6": {
+          "ref": "D6",
+          "lib_id": "RCLAMP0524P_C907837",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::Conn&Interface",
+          "pin_count": 6,
+          "pins": {
+            "NC": "FPGA_TCK_R",
+            "GND": "DXN_0",
+            "I/O1": "FPGA_TCK_R",
+            "I/O2": "FPGA_TCK_R",
+            "I/O3": "FPGA_TCK_R",
+            "I/O4": "FPGA_TCK_R"
+          }
+        },
+        "U16": {
+          "ref": "U16",
+          "lib_id": "ZX-SH1.0-8PWT",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::Conn&Interface",
+          "pin_count": 10,
+          "pins": {
+            "1": "MCU_SWCLK",
+            "2": "MCU_SWCLK",
+            "3": "JTAG_VREF",
+            "4": "FPGA_TCK_R",
+            "5": "FPGA_TCK_R",
+            "6": "DXN_0",
+            "7": "FPGA_TCK_R",
+            "8": "FPGA_TCK_R",
+            "9": "DXN_0",
+            "10": "DXN_0"
+          }
+        },
+        "D13": {
+          "ref": "D13",
+          "lib_id": "RCLAMP0524P_C907837",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::Conn&Interface",
+          "pin_count": 6,
+          "pins": {
+            "NC": "SDIO_CLK",
+            "GND": "DXN_0",
+            "I/O1": "SDIO_CLK",
+            "I/O2": "SDIO_CLK",
+            "I/O3": "SDIO_CLK",
+            "I/O4": "SDIO_CLK"
+          }
+        },
+        "D14": {
+          "ref": "D14",
+          "lib_id": "RCLAMP0524P_C907837",
+          "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::Conn&Interface",
+          "pin_count": 5,
+          "pins": {
+            "NC": "SDCARD_CD",
+            "GND": "DXN_0",
+            "I/O2": "SDCARD_CD",
+            "I/O3": "SDCARD_CD",
+            "I/O4": "SDCARD_CD"
+          }
+        }
+      }
+    }
+  ],
+  "connections": [
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "common_pins": 16,
+      "exact_pins": 16,
+      "diff_count": 0,
+      "score": 1.0,
+      "confidence": "detected",
+      "diffs": []
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "score": 0.5,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "score": 0.5,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "score": 0.5,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "score": 0.5,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "+12VA"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "score": 0.5,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "score": 0.5,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "+12VA"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "score": 0.5,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "score": 0.5,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "+12VA"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "common_pins": 12,
+      "exact_pins": 5,
+      "diff_count": 7,
+      "score": 0.4167,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "+12VA"
+        },
+        {
+          "pin": "12",
+          "a_net": "/Internal Reference Source/DAC_CLK",
+          "b_net": "GND"
+        },
+        {
+          "pin": "14",
+          "a_net": "/Internal Reference Source/DAC_D13",
+          "b_net": "+5VP"
+        },
+        {
+          "pin": "15",
+          "a_net": "GND",
+          "b_net": "+5VP"
+        },
+        {
+          "pin": "16",
+          "a_net": "/Internal Reference Source/DAC_D12",
+          "b_net": "+5VP"
+        },
+        {
+          "pin": "3",
+          "a_net": "+5VP",
+          "b_net": "-12VA"
+        },
+        {
+          "pin": "5",
+          "a_net": "GND",
+          "b_net": "+5VA"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "common_pins": 4,
+      "exact_pins": 1,
+      "diff_count": 3,
+      "score": 0.25,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "3",
+          "a_net": "+5VP",
+          "b_net": "GND"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "common_pins": 4,
+      "exact_pins": 1,
+      "diff_count": 3,
+      "score": 0.25,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "GND"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "GND"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "+12VA"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "GND"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "b_format": "kicad",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN7",
+      "b_lib": "X0802FVS-80AS-LPV01",
+      "common_pins": 60,
+      "exact_pins": 0,
+      "diff_count": 60,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "10",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "11",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "12",
+          "a_net": "/Internal Reference Source/DAC_CLK",
+          "b_net": "IO_L3P_T0_DQS_34"
+        },
+        {
+          "pin": "13",
+          "a_net": "GND",
+          "b_net": "MGT_RX3_P"
+        },
+        {
+          "pin": "14",
+          "a_net": "/Internal Reference Source/DAC_D13",
+          "b_net": "IO_L3N_T0_DQS_34"
+        },
+        {
+          "pin": "15",
+          "a_net": "GND",
+          "b_net": "MGT_RX3_N"
+        },
+        {
+          "pin": "16",
+          "a_net": "/Internal Reference Source/DAC_D12",
+          "b_net": "IO_L7P_T1_34"
+        },
+        {
+          "pin": "17",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "18",
+          "a_net": "/Internal Reference Source/DAC_D11",
+          "b_net": "IO_L7N_T1_34"
+        },
+        {
+          "pin": "19",
+          "a_net": "/Internal Reference Source/DAC_PD",
+          "b_net": "IO_L4N_T0_34"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "20",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "22",
+          "a_net": "/Internal Reference Source/DAC_D10",
+          "b_net": "IO_L9P_T1_DQS_34"
+        },
+        {
+          "pin": "24",
+          "a_net": "/Internal Reference Source/DAC_D9",
+          "b_net": "IO_L9N_T1_DQS_34"
+        },
+        {
+          "pin": "25",
+          "a_net": "/Internal Reference Source/DAC_D0",
+          "b_net": "IO_L5N_T0_34"
+        },
+        {
+          "pin": "26",
+          "a_net": "/Internal Reference Source/DAC_D8",
+          "b_net": "IO_L13P_T2_MRCC_34"
+        },
+        {
+          "pin": "27",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "28",
+          "a_net": "/Internal Reference Source/DAC_D4",
+          "b_net": "IO_L13N_T2_MRCC_34"
+        },
+        {
+          "pin": "29",
+          "a_net": "/Internal Reference Source/DAC_D1",
+          "b_net": "IO_L6P_T0_34"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN7",
+      "b_lib": "X0802FVS-80AS-LPV01",
+      "common_pins": 16,
+      "exact_pins": 0,
+      "diff_count": 16,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "10",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "11",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "12",
+          "a_net": "GND",
+          "b_net": "IO_L3P_T0_DQS_34"
+        },
+        {
+          "pin": "13",
+          "a_net": "GND",
+          "b_net": "MGT_RX3_P"
+        },
+        {
+          "pin": "14",
+          "a_net": "+5VP",
+          "b_net": "IO_L3N_T0_DQS_34"
+        },
+        {
+          "pin": "15",
+          "a_net": "+5VP",
+          "b_net": "MGT_RX3_N"
+        },
+        {
+          "pin": "16",
+          "a_net": "+5VP",
+          "b_net": "IO_L7P_T1_34"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "+5VA",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "6",
+          "a_net": "GND",
+          "b_net": "MGT_TX3_N"
+        },
+        {
+          "pin": "7",
+          "a_net": "-5VA",
+          "b_net": "MGT_EXTCLK0_P"
+        },
+        {
+          "pin": "8",
+          "a_net": "GND",
+          "b_net": "MGT_TX3_P"
+        },
+        {
+          "pin": "9",
+          "a_net": "+3.3V",
+          "b_net": "MGT_EXTCLK0_N"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U16",
+      "b_lib": "ZX-SH1.0-8PWT",
+      "common_pins": 10,
+      "exact_pins": 0,
+      "diff_count": 10,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "10",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "JTAG_VREF"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "FPGA_TCK_R"
+        },
+        {
+          "pin": "5",
+          "a_net": "+5VA",
+          "b_net": "FPGA_TCK_R"
+        },
+        {
+          "pin": "6",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "7",
+          "a_net": "-5VA",
+          "b_net": "FPGA_TCK_R"
+        },
+        {
+          "pin": "8",
+          "a_net": "GND",
+          "b_net": "FPGA_TCK_R"
+        },
+        {
+          "pin": "9",
+          "a_net": "+3.3V",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U16",
+      "b_lib": "ZX-SH1.0-8PWT",
+      "common_pins": 6,
+      "exact_pins": 0,
+      "diff_count": 6,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "10",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "3",
+          "a_net": "+5VP",
+          "b_net": "JTAG_VREF"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "FPGA_TCK_R"
+        },
+        {
+          "pin": "5",
+          "a_net": "GND",
+          "b_net": "FPGA_TCK_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U9",
+      "b_lib": "WAFER-GH1.25-4PWB",
+      "common_pins": 6,
+      "exact_pins": 0,
+      "diff_count": 6,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "VCC_SCEEN_LPOWER"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "SCREEN_UART_TX_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "SCREEN_UART_RX_R"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "+5VA",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "6",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN1",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 5,
+      "exact_pins": 0,
+      "diff_count": 5,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "RS485_A_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS485_B_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "+5VP",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN2",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 5,
+      "exact_pins": 0,
+      "diff_count": 5,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "RS232_RX_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS232_TX_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "+5VP",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U9",
+      "b_lib": "WAFER-GH1.25-4PWB",
+      "common_pins": 5,
+      "exact_pins": 0,
+      "diff_count": 5,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "VCC_SCEEN_LPOWER"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "SCREEN_UART_TX_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "+5VP",
+          "b_net": "SCREEN_UART_RX_R"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN1",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 5,
+      "exact_pins": 0,
+      "diff_count": 5,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "RS485_A_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS485_B_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "+5VA",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN2",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 5,
+      "exact_pins": 0,
+      "diff_count": 5,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "RS232_RX_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS232_TX_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "+5VA",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "H5",
+      "b_lib": "PinHeader_1x03_P2.54mm_Vertical",
+      "common_pins": 3,
+      "exact_pins": 0,
+      "diff_count": 3,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "DBG_MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DBG_MCU_SWDIO"
+        },
+        {
+          "pin": "3",
+          "a_net": "+5VP",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "H5",
+      "b_lib": "PinHeader_1x03_P2.54mm_Vertical",
+      "common_pins": 3,
+      "exact_pins": 0,
+      "diff_count": 3,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "DBG_MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DBG_MCU_SWDIO"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN1",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "RS485_A_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS485_B_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN2",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "RS232_RX_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS232_TX_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN7",
+      "b_lib": "X0802FVS-80AS-LPV01",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "H5",
+      "b_lib": "PinHeader_1x03_P2.54mm_Vertical",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "DBG_MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DBG_MCU_SWDIO"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U16",
+      "b_lib": "ZX-SH1.0-8PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "MCU_SWCLK"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U9",
+      "b_lib": "WAFER-GH1.25-4PWB",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "VCC_SCEEN_LPOWER"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "SCREEN_UART_TX_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN1",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "RS485_A_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS485_B_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN2",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "RS232_RX_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS232_TX_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN7",
+      "b_lib": "X0802FVS-80AS-LPV01",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "H5",
+      "b_lib": "PinHeader_1x03_P2.54mm_Vertical",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "DBG_MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DBG_MCU_SWDIO"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U16",
+      "b_lib": "ZX-SH1.0-8PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "MCU_SWCLK"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U9",
+      "b_lib": "WAFER-GH1.25-4PWB",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "VCC_SCEEN_LPOWER"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "SCREEN_UART_TX_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN1",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "RS485_A_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "RS485_B_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN2",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "RS232_RX_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "RS232_TX_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN7",
+      "b_lib": "X0802FVS-80AS-LPV01",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "H5",
+      "b_lib": "PinHeader_1x03_P2.54mm_Vertical",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "DBG_MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "DBG_MCU_SWDIO"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U16",
+      "b_lib": "ZX-SH1.0-8PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "MCU_SWCLK"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U9",
+      "b_lib": "WAFER-GH1.25-4PWB",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "VCC_SCEEN_LPOWER"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "SCREEN_UART_TX_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN1",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "RS485_A_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS485_B_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN2",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "RS232_RX_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS232_TX_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN7",
+      "b_lib": "X0802FVS-80AS-LPV01",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "H5",
+      "b_lib": "PinHeader_1x03_P2.54mm_Vertical",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "DBG_MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DBG_MCU_SWDIO"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U16",
+      "b_lib": "ZX-SH1.0-8PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "MCU_SWCLK"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_MainBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U9",
+      "b_lib": "WAFER-GH1.25-4PWB",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "VCC_SCEEN_LPOWER"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "SCREEN_UART_TX_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J103",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN7",
+      "b_lib": "X0802FVS-80AS-LPV01",
+      "common_pins": 16,
+      "exact_pins": 0,
+      "diff_count": 16,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "10",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "11",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "12",
+          "a_net": "GND",
+          "b_net": "IO_L3P_T0_DQS_34"
+        },
+        {
+          "pin": "13",
+          "a_net": "GND",
+          "b_net": "MGT_RX3_P"
+        },
+        {
+          "pin": "14",
+          "a_net": "+5VP",
+          "b_net": "IO_L3N_T0_DQS_34"
+        },
+        {
+          "pin": "15",
+          "a_net": "+5VP",
+          "b_net": "MGT_RX3_N"
+        },
+        {
+          "pin": "16",
+          "a_net": "+5VP",
+          "b_net": "IO_L7P_T1_34"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "+5VA",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "6",
+          "a_net": "GND",
+          "b_net": "MGT_TX3_N"
+        },
+        {
+          "pin": "7",
+          "a_net": "-5VA",
+          "b_net": "MGT_EXTCLK0_P"
+        },
+        {
+          "pin": "8",
+          "a_net": "GND",
+          "b_net": "MGT_TX3_P"
+        },
+        {
+          "pin": "9",
+          "a_net": "+3.3V",
+          "b_net": "MGT_EXTCLK0_N"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J103",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U16",
+      "b_lib": "ZX-SH1.0-8PWT",
+      "common_pins": 10,
+      "exact_pins": 0,
+      "diff_count": 10,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "10",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "JTAG_VREF"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "FPGA_TCK_R"
+        },
+        {
+          "pin": "5",
+          "a_net": "+5VA",
+          "b_net": "FPGA_TCK_R"
+        },
+        {
+          "pin": "6",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "7",
+          "a_net": "-5VA",
+          "b_net": "FPGA_TCK_R"
+        },
+        {
+          "pin": "8",
+          "a_net": "GND",
+          "b_net": "FPGA_TCK_R"
+        },
+        {
+          "pin": "9",
+          "a_net": "+3.3V",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J103",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U9",
+      "b_lib": "WAFER-GH1.25-4PWB",
+      "common_pins": 6,
+      "exact_pins": 0,
+      "diff_count": 6,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "VCC_SCEEN_LPOWER"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "SCREEN_UART_TX_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "SCREEN_UART_RX_R"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "+5VA",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "6",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J103",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN1",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 5,
+      "exact_pins": 0,
+      "diff_count": 5,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "RS485_A_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS485_B_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "+5VA",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J103",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN2",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 5,
+      "exact_pins": 0,
+      "diff_count": 5,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "RS232_RX_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS232_TX_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "5",
+          "a_net": "+5VA",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_01x04",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN1",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 4,
+      "exact_pins": 0,
+      "diff_count": 4,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "RS485_A_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$5",
+          "b_net": "RS485_B_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_01x04",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN2",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 4,
+      "exact_pins": 0,
+      "diff_count": 4,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "RS232_RX_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$5",
+          "b_net": "RS232_TX_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_01x04",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN7",
+      "b_lib": "X0802FVS-80AS-LPV01",
+      "common_pins": 4,
+      "exact_pins": 0,
+      "diff_count": 4,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$5",
+          "b_net": "DXN_0"
+        },
+        {
+          "pin": "3",
+          "a_net": "GND",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_01x04",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U16",
+      "b_lib": "ZX-SH1.0-8PWT",
+      "common_pins": 4,
+      "exact_pins": 0,
+      "diff_count": 4,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$5",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "3",
+          "a_net": "GND",
+          "b_net": "JTAG_VREF"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "FPGA_TCK_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_01x04",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U9",
+      "b_lib": "WAFER-GH1.25-4PWB",
+      "common_pins": 4,
+      "exact_pins": 0,
+      "diff_count": 4,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "VCC_SCEEN_LPOWER"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$5",
+          "b_net": "SCREEN_UART_TX_R"
+        },
+        {
+          "pin": "3",
+          "a_net": "GND",
+          "b_net": "SCREEN_UART_RX_R"
+        },
+        {
+          "pin": "4",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_01x04",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "H5",
+      "b_lib": "PinHeader_1x03_P2.54mm_Vertical",
+      "common_pins": 3,
+      "exact_pins": 0,
+      "diff_count": 3,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "DBG_MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$5",
+          "b_net": "DBG_MCU_SWDIO"
+        },
+        {
+          "pin": "3",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J103",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "H5",
+      "b_lib": "PinHeader_1x03_P2.54mm_Vertical",
+      "common_pins": 3,
+      "exact_pins": 0,
+      "diff_count": 3,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "DBG_MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DBG_MCU_SWDIO"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector:Barrel_Jack",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN1",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "RS485_A_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS485_B_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector:Barrel_Jack",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN2",
+      "b_lib": "HX-GH1.25-3PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "RS232_RX_R"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "RS232_TX_R"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector:Barrel_Jack",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "CN7",
+      "b_lib": "X0802FVS-80AS-LPV01",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "VCC_5V_BTBIN"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DXN_0"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector:Barrel_Jack",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "H5",
+      "b_lib": "PinHeader_1x03_P2.54mm_Vertical",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "DBG_MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "DBG_MCU_SWDIO"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector:Barrel_Jack",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U16",
+      "b_lib": "ZX-SH1.0-8PWT",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "MCU_SWCLK"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "MCU_SWCLK"
+        }
+      ]
+    },
+    {
+      "a_board": "Lock-In-Amplifier_PowerBoard_V0.1",
+      "a_format": "kicad",
+      "a_ref": "J102",
+      "a_lib": "Connector:Barrel_Jack",
+      "b_board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+      "b_format": "lceda",
+      "b_ref": "U9",
+      "b_lib": "WAFER-GH1.25-4PWB",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "score": 0.0,
+      "confidence": "candidate",
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$5",
+          "b_net": "VCC_SCEEN_LPOWER"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "SCREEN_UART_TX_R"
+        }
+      ]
+    }
+  ]
+}

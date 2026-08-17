@@ -1,0 +1,424 @@
+{
+  "project_a": "D:\\MyProjects\\AI\\schematics_review_tool\\examples\\Lock-In-Amplifier_MainBoard_V0.1",
+  "project_b": "D:\\MyProjects\\AI\\schematics_review_tool\\examples\\Lock-In-Amplifier_PowerBoard_V0.1",
+  "connector_pairs": [
+    {
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "a_sheet": "/",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "b_sheet": "/",
+      "common_pins": 16,
+      "exact_pins": 16,
+      "diff_count": 0,
+      "diffs": []
+    },
+    {
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "a_sheet": "/",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "b_sheet": "/",
+      "common_pins": 16,
+      "exact_pins": 5,
+      "diff_count": 11,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "+12VA"
+        },
+        {
+          "pin": "12",
+          "a_net": "/Internal Reference Source/DAC_CLK",
+          "b_net": "GND"
+        },
+        {
+          "pin": "14",
+          "a_net": "/Internal Reference Source/DAC_D13",
+          "b_net": "+5VP"
+        },
+        {
+          "pin": "15",
+          "a_net": "GND",
+          "b_net": "+5VP"
+        },
+        {
+          "pin": "16",
+          "a_net": "/Internal Reference Source/DAC_D12",
+          "b_net": "+5VP"
+        },
+        {
+          "pin": "3",
+          "a_net": "+5VP",
+          "b_net": "-12VA"
+        },
+        {
+          "pin": "5",
+          "a_net": "GND",
+          "b_net": "+5VA"
+        },
+        {
+          "pin": "6",
+          "a_net": null,
+          "b_net": "GND"
+        },
+        {
+          "pin": "7",
+          "a_net": null,
+          "b_net": "-5VA"
+        },
+        {
+          "pin": "8",
+          "a_net": null,
+          "b_net": "GND"
+        },
+        {
+          "pin": "9",
+          "a_net": null,
+          "b_net": "+3.3V"
+        }
+      ]
+    },
+    {
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "a_sheet": "/",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "b_sheet": "/",
+      "common_pins": 4,
+      "exact_pins": 1,
+      "diff_count": 3,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "3",
+          "a_net": "+5VP",
+          "b_net": "GND"
+        }
+      ]
+    },
+    {
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "a_sheet": "/",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "b_sheet": "/",
+      "common_pins": 4,
+      "exact_pins": 1,
+      "diff_count": 3,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "3",
+          "a_net": "-12VA",
+          "b_net": "GND"
+        }
+      ]
+    },
+    {
+      "a_ref": "J101",
+      "a_lib": "Connector_Generic:Conn_02x40_Odd_Even",
+      "a_sheet": "/",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+5VP",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_ref": "J102",
+      "a_lib": "Connector_Generic:Conn_01x16",
+      "a_sheet": "/",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "+12VA",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/2cbef686-8f02-4c5f-bcf6-217497882ee3",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/2cbef686-8f02-4c5f-bcf6-217497882ee3",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "+12VA"
+        }
+      ]
+    },
+    {
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/2cbef686-8f02-4c5f-bcf6-217497882ee3",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/2cbef686-8f02-4c5f-bcf6-217497882ee3",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "+12VA"
+        }
+      ]
+    },
+    {
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/69c97752-28d7-4ad3-888a-2beb501d4b85",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/69c97752-28d7-4ad3-888a-2beb501d4b85",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 1,
+      "diff_count": 1,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "+12VA"
+        }
+      ]
+    },
+    {
+      "a_ref": "J201",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/2cbef686-8f02-4c5f-bcf6-217497882ee3",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$46",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_ref": "J202",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/2cbef686-8f02-4c5f-bcf6-217497882ee3",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$157",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/c46f7bf0-b3e5-4206-aa8d-e6d0679b809b",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "N$5"
+        }
+      ]
+    },
+    {
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/c46f7bf0-b3e5-4206-aa8d-e6d0679b809b",
+      "b_ref": "J102",
+      "b_lib": "Connector:Barrel_Jack",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "GND"
+        }
+      ]
+    },
+    {
+      "a_ref": "J401",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/c46f7bf0-b3e5-4206-aa8d-e6d0679b809b",
+      "b_ref": "J103",
+      "b_lib": "Connector_Generic:Conn_01x16",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "N$64",
+          "b_net": "+12VA"
+        },
+        {
+          "pin": "2",
+          "a_net": "N$61",
+          "b_net": "GND"
+        }
+      ]
+    },
+    {
+      "a_ref": "J701",
+      "a_lib": "Connector:Conn_Coaxial",
+      "a_sheet": "/69c97752-28d7-4ad3-888a-2beb501d4b85",
+      "b_ref": "J101",
+      "b_lib": "Connector_Generic:Conn_01x04",
+      "b_sheet": "/",
+      "common_pins": 2,
+      "exact_pins": 0,
+      "diff_count": 2,
+      "diffs": [
+        {
+          "pin": "1",
+          "a_net": "/Internal Reference Source/SRC_OUT",
+          "b_net": "N$5"
+        },
+        {
+          "pin": "2",
+          "a_net": "GND",
+          "b_net": "N$5"
+        }
+      ]
+    }
+  ]
+}

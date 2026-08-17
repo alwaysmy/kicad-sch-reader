@@ -1,0 +1,1494 @@
+{
+  "epro": "D:\\MyProjects\\AI\\schematics_review_tool\\examples\\LIA_DigitalBoard_RevA\\ProPrj_XC7A35TCSG325_EmoeSOM_2026-05-18.epro",
+  "board": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd",
+  "main_schematic": "EmoeSOM_A7_DDR_RevA_ForLIA_4L.sch",
+  "pages": 13,
+  "cbb_modules": [
+    {
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "designator": "CBB4",
+      "cid": "e34548",
+      "module": "_CBB_接口_通用TypeC-5V带数据供电",
+      "symbol_uuid": "6e323da8b52a8cbd",
+      "pos": [
+        190,
+        865
+      ],
+      "pins": [
+        "VBUS",
+        "D+",
+        "D-",
+        "GND"
+      ],
+      "port_nets": {
+        "VBUS": "VBUS_5V_USB",
+        "D+": "USBC_D_PE",
+        "D-": "USBC_D_NE",
+        "GND": "GND"
+      }
+    },
+    {
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "designator": "CBB2",
+      "cid": "e34551",
+      "module": "_CBB_接口_通用TypeC-5V带数据供电",
+      "symbol_uuid": "6e323da8b52a8cbd",
+      "pos": [
+        190,
+        975
+      ],
+      "pins": [
+        "VBUS",
+        "D+",
+        "D-",
+        "GND"
+      ],
+      "port_nets": {
+        "VBUS": "VBUS_5V_DBG",
+        "D+": "USBDBG_D_PE",
+        "D-": "USBDBG_D_NE",
+        "GND": "GND"
+      }
+    },
+    {
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::SYS_POWER",
+      "designator": "CBB1",
+      "cid": "e13474",
+      "module": "_CBB_SMPS_TPS563201_BUCK_2L",
+      "symbol_uuid": "4906d7574de8465a",
+      "pos": [
+        345,
+        590
+      ],
+      "pins": [
+        "VIN",
+        "VOUT",
+        "GND",
+        "EN"
+      ],
+      "port_nets": {
+        "VIN": "VCC_5V",
+        "VOUT": "VCC_1V5",
+        "GND": "GND",
+        "EN": "VCC_1V8"
+      }
+    },
+    {
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::SYS_POWER",
+      "designator": "CBB3",
+      "cid": "e13475",
+      "module": "_CBB_SMPS_EA3059_4CH_BUCK_2L_TINY",
+      "symbol_uuid": "96c085f5bc1df742",
+      "pos": [
+        345,
+        750
+      ],
+      "pins": [
+        "VIN",
+        "GND",
+        "VOUT1",
+        "VOUT2",
+        "VOUT3",
+        "VOUT4",
+        "EN1",
+        "EN2",
+        "EN3",
+        "EN4"
+      ],
+      "port_nets": {
+        "VIN": "VCC_5V",
+        "GND": "GND",
+        "VOUT1": "VCC_1V0",
+        "VOUT2": "VCC_1V8",
+        "VOUT3": "VCC_2V5",
+        "VOUT4": "VCC_3V3",
+        "EN1": "VCC_5V",
+        "EN2": "VCC_5V",
+        "EN3": "VCC_5V",
+        "EN4": "VCC_5V"
+      }
+    }
+  ],
+  "flat_component_count": 260,
+  "bom_line_count": 81,
+  "net_count": 216,
+  "findings": [
+    {
+      "severity": "warning",
+      "code": "CBB_PIN_TYPE_SUSPECT",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CBB4.D+",
+      "message": "CBB 模块 _CBB_接口_通用TypeC-5V带数据供电 引脚 D+ 标记为 IN，但按名称应为输出/双向"
+    },
+    {
+      "severity": "warning",
+      "code": "CBB_PIN_TYPE_SUSPECT",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CBB4.D-",
+      "message": "CBB 模块 _CBB_接口_通用TypeC-5V带数据供电 引脚 D- 标记为 IN，但按名称应为输出/双向"
+    },
+    {
+      "severity": "warning",
+      "code": "CBB_PIN_TYPE_SUSPECT",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CBB2.D+",
+      "message": "CBB 模块 _CBB_接口_通用TypeC-5V带数据供电 引脚 D+ 标记为 IN，但按名称应为输出/双向"
+    },
+    {
+      "severity": "warning",
+      "code": "CBB_PIN_TYPE_SUSPECT",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CBB2.D-",
+      "message": "CBB 模块 _CBB_接口_通用TypeC-5V带数据供电 引脚 D- 标记为 IN，但按名称应为输出/双向"
+    },
+    {
+      "severity": "warning",
+      "code": "CBB_PIN_TYPE_SUSPECT",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::SYS_POWER",
+      "ref": "CBB1.VOUT",
+      "message": "CBB 模块 _CBB_SMPS_TPS563201_BUCK_2L 引脚 VOUT 标记为 IN，但按名称应为输出/双向"
+    },
+    {
+      "severity": "info",
+      "code": "CBB_PIN_TYPE_SUSPECT",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::SYS_POWER",
+      "ref": "CBB3.GND",
+      "message": "CBB 模块 _CBB_SMPS_EA3059_4CH_BUCK_2L_TINY 引脚 GND 类型为 BI，建议确认"
+    },
+    {
+      "severity": "info",
+      "code": "MULTI_UNIT_OR_REUSED_REF",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG",
+      "ref": "U1",
+      "message": "位号 U1 跨 4 页出现（多单元器件或复用，需人工确认）"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG)",
+      "ref": "U5",
+      "message": "网络 DBG_SPI_CLK 仅 U5.PB13/SPI2SCK/UART3CTS/CAN2TX 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG)",
+      "ref": "U5",
+      "message": "网络 DBG_SPI_CS 仅 U5.PB12/SPI2NSS/CAN2RX 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG)",
+      "ref": "U5",
+      "message": "网络 DBG_SPI_MISO 仅 U5.PB14/SPI2MISO/UART3RTS 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::MCU(JTAG)",
+      "ref": "U5",
+      "message": "网络 DBG_SPI_MOSI 仅 U5.PB15/SPI2MOSI/UART1TX2 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG",
+      "ref": "R110",
+      "message": "网络 FPGA_CCLK 仅 R110.1 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG",
+      "ref": "R116",
+      "message": "网络 FPGA_M0 仅 R116.1 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG",
+      "ref": "U15",
+      "message": "网络 FPGA_QSPI_DQ0 仅 U15.DI 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG",
+      "ref": "U15",
+      "message": "网络 FPGA_QSPI_DQ1 仅 U15.DO 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG",
+      "ref": "U15",
+      "message": "网络 FPGA_QSPI_DQ2 仅 U15.IO2 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG",
+      "ref": "U15",
+      "message": "网络 FPGA_QSPI_DQ3 仅 U15.IO3 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG",
+      "ref": "R25",
+      "message": "网络 FPGA_TDO 仅 R25.1 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG",
+      "ref": "R30",
+      "message": "网络 INIT_B 仅 R30.1 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L10N_T1_34 仅 CN7.35 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L10P_T1_34 仅 CN7.33 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L12N_T1_MRCC_34 仅 CN7.39 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L12P_T1_MRCC_34 仅 CN7.41 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L13N_T2_MRCC_14 仅 CN7.71 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L13N_T2_MRCC_34 仅 CN7.28 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L13P_T2_MRCC_14 仅 CN7.69 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L13P_T2_MRCC_34 仅 CN7.26 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L14N_T2_SRCC_34 仅 CN7.43 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L14P_T2_SRCC_34 仅 CN7.45 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L15N_T2_DQS_34 仅 CN7.34 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L15P_T2_DQS_34 仅 CN7.32 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L16N_T2_34 仅 CN7.36 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "TP3",
+      "message": "网络 IO_L16N_T2_A15_D31_14 仅 TP3.1 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L16P_T2_34 仅 CN7.38 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "TP4",
+      "message": "网络 IO_L16P_T2_CSI_B_14 仅 TP4.1 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L17N_T2_34 仅 CN7.49 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L17N_T2_A13_D29_14 仅 CN7.77 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L17P_T2_34 仅 CN7.51 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L17P_T2_A14_D30_14 仅 CN7.75 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L18N_T2_34 仅 CN7.44 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L18P_T2_34 仅 CN7.42 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L19N_T3_A09_D25_VREF_14 仅 CN7.63 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L19P_T3_A10_D26_14 仅 CN7.65 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L20N_T3_34 仅 CN7.46 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L20N_T3_A07_D23_14 仅 CN7.76 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L20P_T3_34 仅 CN7.48 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L20P_T3_A08_D24_14 仅 CN7.78 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L21N_T3_DQS_34 仅 CN7.55 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L21N_T3_DQS_A06_D22_14 仅 CN7.74 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L21P_T3_DQS_14 仅 CN7.72 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L21P_T3_DQS_34 仅 CN7.53 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L22N_T3_34 仅 CN7.61 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L22P_T3_34 仅 CN7.59 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L23N_T3_34 仅 CN7.52 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L23N_T3_A02_D18_14 仅 CN7.66 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L23P_T3_34 仅 CN7.54 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L23P_T3_A03_D19_14 仅 CN7.68 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L24N_T3_34 仅 CN7.56 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L24N_T3_A00_D16_14 仅 CN7.64 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L24P_T3_34 仅 CN7.58 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L24P_T3_A01_D17_14 仅 CN7.62 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L3N_T0_DQS_34 仅 CN7.14 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L3P_T0_DQS_34 仅 CN7.12 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L4N_T0_34 仅 CN7.19 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L4P_T0_34 仅 CN7.21 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L5N_T0_34 仅 CN7.25 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L5P_T0_34 仅 CN7.23 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L6N_T0_VREF_34 仅 CN7.31 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L6P_T0_34 仅 CN7.29 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L7N_T1_34 仅 CN7.18 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L7P_T1_34 仅 CN7.16 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L9N_T1_DQS_34 仅 CN7.24 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 IO_L9P_T1_DQS_34 仅 CN7.22 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::CLOCK",
+      "ref": "C15",
+      "message": "网络 MGT_CLK0_N 仅 C15.2 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::CLOCK",
+      "ref": "C14",
+      "message": "网络 MGT_CLK0_P 仅 C14.2 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 MGT_RX3_N 仅 CN7.15 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 MGT_RX3_P 仅 CN7.13 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 MGT_TX3_N 仅 CN7.6 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::USB&BTB",
+      "ref": "CN7",
+      "message": "网络 MGT_TX3_P 仅 CN7.8 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A0 仅 U24.A0 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A1 仅 U24.A1 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A10 仅 U24.A10/AP 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A11 仅 U24.A11 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A12 仅 U24.A12/BC# 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A13 仅 U24.A13 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A14 仅 U24.A14 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A15 仅 U24.NC 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A2 仅 U24.A2 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A3 仅 U24.A3 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A4 仅 U24.A4 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A5 仅 U24.A5 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A6 仅 U24.A6 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A7 仅 U24.A7 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A8 仅 U24.A8 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_A9 仅 U24.A9 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_BA0 仅 U24.BA0 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_BA1 仅 U24.BA1 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_BA2 仅 U24.BA2 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_CAS_B 仅 U24.CAS# 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_CKE 仅 U24.CKE 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_CS_B 仅 U24.CS# 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DM0 仅 U24.LDM 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DM1 仅 U24.UDM 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ0 仅 U24.DQ0 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ1 仅 U24.DQ1 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ10 仅 U24.DQ10 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ11 仅 U24.DQ11 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ12 仅 U24.DQ12 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ13 仅 U24.DQ13 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ14 仅 U24.DQ14 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ15 仅 U24.DQ15 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ2 仅 U24.DQ2 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ3 仅 U24.DQ3 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ4 仅 U24.DQ4 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ5 仅 U24.DQ5 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ6 仅 U24.DQ6 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ7 仅 U24.DQ7 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ8 仅 U24.DQ8 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQ9 仅 U24.DQ9 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQS0_N 仅 U24.LDQS# 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQS0_P 仅 U24.LDQS 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQS1_N 仅 U24.UDQS# 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_DQS1_P 仅 U24.UDQS 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_ODT 仅 U24.ODT 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_RAS_B 仅 U24.RAS# 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::DRAM",
+      "ref": "U24",
+      "message": "网络 PL_DDR_WE_B 仅 U24.WE# 一个引脚"
+    },
+    {
+      "severity": "info",
+      "code": "SINGLE_PIN_NET",
+      "sheet": "EmoeSOM_A7_DDR_RevA-锁定放大器专用4层.brd::FPGA CONFIG",
+      "ref": "R29",
+      "message": "网络 PROGRAM_B 仅 R29.1 一个引脚"
+    }
+  ],
+  "bom": [
+    {
+      "device": "0402B221K500NT",
+      "footprint": "5e09589c82772842",
+      "qty": 4,
+      "refs": "C21, C31, C36, C44"
+    },
+    {
+      "device": "0402CG100J500NT",
+      "footprint": "5e09589c82772842",
+      "qty": 4,
+      "refs": "C51, C52, C204, C205"
+    },
+    {
+      "device": "0402WGF1000TCE",
+      "footprint": "b0a21af130e22d73",
+      "qty": 1,
+      "refs": "R1"
+    },
+    {
+      "device": "0402WGF1001TCE",
+      "footprint": "b0a21af130e22d73",
+      "qty": 5,
+      "refs": "R26, R94, R95, R115, R116"
+    },
+    {
+      "device": "0402WGF1002TCE",
+      "footprint": "b0a21af130e22d73",
+      "qty": 2,
+      "refs": "R32, R34"
+    },
+    {
+      "device": "0402WGF1003TCE",
+      "footprint": "e240cef0a04b2f7e",
+      "qty": 4,
+      "refs": "R18, R20, R27, R31"
+    },
+    {
+      "device": "0402WGF1802TCE",
+      "footprint": "fab321e682bfdefa",
+      "qty": 1,
+      "refs": "R113"
+    },
+    {
+      "device": "0402WGF2003TCE",
+      "footprint": "e240cef0a04b2f7e",
+      "qty": 1,
+      "refs": "R19"
+    },
+    {
+      "device": "0402WGF220JTCE",
+      "footprint": "b0a21af130e22d73",
+      "qty": 25,
+      "refs": "R12, R15, R21, R25, R35, R36, R39, R40, R41, R42, R43, R44, R45, R46, R48, R49, R52, R91, R92, R110, R134, R135, R136, R137, R138"
+    },
+    {
+      "device": "0402WGF2400TCE",
+      "footprint": "b0a21af130e22d73",
+      "qty": 1,
+      "refs": "R5"
+    },
+    {
+      "device": "0402WGF3163TCE",
+      "footprint": "b0a21af130e22d73",
+      "qty": 1,
+      "refs": "R24"
+    },
+    {
+      "device": "0402WGF4701TCE",
+      "footprint": "b0a21af130e22d73",
+      "qty": 6,
+      "refs": "R29, R30, R47, R60, R131, R139"
+    },
+    {
+      "device": "0402WGF5100TCE",
+      "footprint": "b0a21af130e22d73",
+      "qty": 2,
+      "refs": "R22, R23"
+    },
+    {
+      "device": "0402WGF510JTCE",
+      "footprint": "b0a21af130e22d73",
+      "qty": 1,
+      "refs": "R96"
+    },
+    {
+      "device": "0402WGF6200TCE",
+      "footprint": "b0a21af130e22d73",
+      "qty": 2,
+      "refs": "R11, R13"
+    },
+    {
+      "device": "0402WGF6802TCE",
+      "footprint": "e240cef0a04b2f7e",
+      "qty": 1,
+      "refs": "R17"
+    },
+    {
+      "device": "0603WAJ0512T5E",
+      "footprint": "ff86949838e23dbc",
+      "qty": 4,
+      "refs": "R6, R7, R8, R9"
+    },
+    {
+      "device": "8132H-50.000ML33DTL",
+      "footprint": "88fef3f7feee8bbc",
+      "qty": 1,
+      "refs": "OSC2"
+    },
+    {
+      "device": "AC0402FR-07453KL",
+      "footprint": "e240cef0a04b2f7e",
+      "qty": 1,
+      "refs": "R28"
+    },
+    {
+      "device": "AFE201612S1R5MBT",
+      "footprint": "52abc3e55eb1bd5f",
+      "qty": 4,
+      "refs": "L1, L2, L3, L4"
+    },
+    {
+      "device": "AT24C16M5/TR",
+      "footprint": "bdbfb87a99c1c663",
+      "qty": 1,
+      "refs": "U10"
+    },
+    {
+      "device": "BLM15PD121SN1D",
+      "footprint": "5dd6ab62108302c1",
+      "qty": 3,
+      "refs": "FB4, FB6, FB8"
+    },
+    {
+      "device": "BLM18PG121SN1D",
+      "footprint": "a4ed4ce4a5915003",
+      "qty": 1,
+      "refs": "FB7"
+    },
+    {
+      "device": "C0402",
+      "footprint": "fc384027295dde45",
+      "qty": 2,
+      "refs": "C14, C15"
+    },
+    {
+      "device": "CC0402JRNPO9BN100",
+      "footprint": "5e09589c82772842",
+      "qty": 1,
+      "refs": "C42"
+    },
+    {
+      "device": "CC0402KRX7R6BB474",
+      "footprint": "5e09589c82772842",
+      "qty": 12,
+      "refs": "C4, C5, C6, C7, C161, C162, C163, C164, C177, C178, C180, C181"
+    },
+    {
+      "device": "CC0402KRX7R9BB103",
+      "footprint": "5e09589c82772842",
+      "qty": 4,
+      "refs": "C43, C97, C98, C170"
+    },
+    {
+      "device": "CC0402KRX7R9BB104",
+      "footprint": "0d12e6d9028f6bfe",
+      "qty": 19,
+      "refs": "C9, C10, C11, C12, C13, C16, C17, C46, C47, C48, C49, C50, C53, C54, C55, C56, C201, C202, C203"
+    },
+    {
+      "device": "CC0603KRX7R9BB105",
+      "footprint": "391e3edc5506eb64",
+      "qty": 3,
+      "refs": "C1, C8, C39"
+    },
+    {
+      "device": "CH32V305GBU6",
+      "footprint": "7b2bb61c380a2ff0",
+      "qty": 1,
+      "refs": "U5"
+    },
+    {
+      "device": "CH32V307RCT6",
+      "footprint": "14f70959027070c3",
+      "qty": 1,
+      "refs": "U3"
+    },
+    {
+      "device": "CL05B104KB54PNC",
+      "footprint": "5e09589c82772842",
+      "qty": 1,
+      "refs": "C37"
+    },
+    {
+      "device": "DSHP01TSGET",
+      "footprint": "9f4cb0e4b2e9ea6c",
+      "qty": 1,
+      "refs": "SW8"
+    },
+    {
+      "device": "EA3059",
+      "footprint": "7cb5afc1c98d8bf8",
+      "qty": 1,
+      "refs": "U7"
+    },
+    {
+      "device": "ESD5Z3.3T1G-MS",
+      "footprint": "bbca3490b4aa7f7a",
+      "qty": 1,
+      "refs": "D9"
+    },
+    {
+      "device": "ESD5Z3.3_SOD523",
+      "footprint": "6653e02a67429e5d",
+      "qty": 1,
+      "refs": "D7"
+    },
+    {
+      "device": "FTC252010S4R7MBCA",
+      "footprint": "76b7249dfa5994fc",
+      "qty": 1,
+      "refs": "L5"
+    },
+    {
+      "device": "GRM155R61A106ME11D",
+      "footprint": "5e09589c82772842",
+      "qty": 3,
+      "refs": "C157, C158, C159"
+    },
+    {
+      "device": "GRM155R61A225KE95D",
+      "footprint": "5e09589c82772842",
+      "qty": 1,
+      "refs": "C30"
+    },
+    {
+      "device": "GRM155R70J105KA12D",
+      "footprint": "5e09589c82772842",
+      "qty": 10,
+      "refs": "C58, C103, C105, C106, C107, C112, C113, C118, C119, C120"
+    },
+    {
+      "device": "GRM155Z71A105KE01D",
+      "footprint": "5e09589c82772842",
+      "qty": 2,
+      "refs": "C33, C34"
+    },
+    {
+      "device": "GRM155Z71A225KE01D",
+      "footprint": "df3454e5cddc18c5",
+      "qty": 19,
+      "refs": "C23, C24, C25, C26, C160, C171, C173, C174, C175, C176, C186, C187, C188, C189, C193, C194, C195, C197, C199"
+    },
+    {
+      "device": "GRM188R61A226ME15D",
+      "footprint": "fab803fd171fd310",
+      "qty": 4,
+      "refs": "C22, C27, C28, C29"
+    },
+    {
+      "device": "GRM188Z71A106KA73D",
+      "footprint": "584735e579b1db0d",
+      "qty": 2,
+      "refs": "C206, C207"
+    },
+    {
+      "device": "GRM188Z71A475KE15D",
+      "footprint": "600c280db6051593",
+      "qty": 10,
+      "refs": "C2, C3, C57, C165, C166, C179, C182, C185, C198, C200"
+    },
+    {
+      "device": "GRM21BR61E226ME44L",
+      "footprint": "b5d6eca0b2a622a3",
+      "qty": 7,
+      "refs": "C18, C32, C35, C38, C40, C41, C45"
+    },
+    {
+      "device": "GRM21BZ71A226ME15L",
+      "footprint": "fac18ca13d2804bd",
+      "qty": 2,
+      "refs": "C19, C20"
+    },
+    {
+      "device": "HR913550A",
+      "footprint": "d5ee7794719fec6c",
+      "qty": 1,
+      "refs": "RJ2"
+    },
+    {
+      "device": "HX-GH1.25-3PWT",
+      "footprint": "8ebc3a0692152796",
+      "qty": 2,
+      "refs": "CN1, CN2"
+    },
+    {
+      "device": "M2.5螺丝安装孔_金属化",
+      "footprint": "64e681b05239eabf",
+      "qty": 4,
+      "refs": "H1, H2, H3, H4"
+    },
+    {
+      "device": "MARK_d1D2",
+      "footprint": "009575afca1d25fc",
+      "qty": 6,
+      "refs": "MARK1, MARK2, MARK3, MARK4, MARK5, MARK6"
+    },
+    {
+      "device": "MT41K256M16TW-107 IT:P",
+      "footprint": "ccbb826e57c42ccb",
+      "qty": 2,
+      "refs": "U24, U24"
+    },
+    {
+      "device": "NCD0603G1",
+      "footprint": "3d4e8ed3d2e4b8ea",
+      "qty": 3,
+      "refs": "LED2, LED5, LED6"
+    },
+    {
+      "device": "PinHeader_1x03_P2.54mm_Vertical",
+      "footprint": "0a8c153fa1376670",
+      "qty": 1,
+      "refs": "H5"
+    },
+    {
+      "device": "RC-02K9101FT",
+      "footprint": "b0a21af130e22d73",
+      "qty": 1,
+      "refs": "R33"
+    },
+    {
+      "device": "RC-02W80R6FT",
+      "footprint": "b0a21af130e22d73",
+      "qty": 1,
+      "refs": "R57"
+    },
+    {
+      "device": "RC0402FR-0710KL",
+      "footprint": "b0a21af130e22d73",
+      "qty": 6,
+      "refs": "R2, R3, R4, R53, R111, R112"
+    },
+    {
+      "device": "RC0402FR-074K7L",
+      "footprint": "b0a21af130e22d73",
+      "qty": 2,
+      "refs": "R37, R38"
+    },
+    {
+      "device": "RC0603FR-07120RL",
+      "footprint": "9fbf295d3572874b",
+      "qty": 1,
+      "refs": "R10"
+    },
+    {
+      "device": "RCLAMP0522P.TCT",
+      "footprint": "9ee9f6f1c3b37740",
+      "qty": 1,
+      "refs": "D10"
+    },
+    {
+      "device": "RCLAMP0524P_C907837",
+      "footprint": "b79e65294ca11c18",
+      "qty": 3,
+      "refs": "D6, D13, D14"
+    },
+    {
+      "device": "RT0402BRD0710KL",
+      "footprint": "b0a21af130e22d73",
+      "qty": 4,
+      "refs": "R14, R16, R50, R51"
+    },
+    {
+      "device": "SKRPACE010",
+      "footprint": "3c4b44725af0273e",
+      "qty": 1,
+      "refs": "SW6"
+    },
+    {
+      "device": "SMD0603-050-12",
+      "footprint": "9bf0ff41909dc346",
+      "qty": 4,
+      "refs": "F2, F3, F4, F5"
+    },
+    {
+      "device": "SMF15CA_C19077510",
+      "footprint": "d1636e5f67ee04fd",
+      "qty": 2,
+      "refs": "D11, D12"
+    },
+    {
+      "device": "SMF6.5CA_C19077501",
+      "footprint": "d1636e5f67ee04fd",
+      "qty": 2,
+      "refs": "D3, D5"
+    },
+    {
+      "device": "TF PUSH",
+      "footprint": "8d6ce1d245f6ed65",
+      "qty": 1,
+      "refs": "CARD1"
+    },
+    {
+      "device": "TLV73312PQDRVRQ1",
+      "footprint": "8fea1ce2bc21bfcd",
+      "qty": 1,
+      "refs": "U4"
+    },
+    {
+      "device": "TMP112AIDRLR",
+      "footprint": "c099e4bf18e51be4",
+      "qty": 1,
+      "refs": "U12"
+    },
+    {
+      "device": "TPS563201DDCR",
+      "footprint": "10b425e02863b853",
+      "qty": 1,
+      "refs": "U6"
+    },
+    {
+      "device": "TPT3232E-TS3R",
+      "footprint": "a3c81d0dfc52614d",
+      "qty": 1,
+      "refs": "U2"
+    },
+    {
+      "device": "TPT75176HL1-DF6R",
+      "footprint": "3225285726d70a95",
+      "qty": 1,
+      "refs": "U11"
+    },
+    {
+      "device": "TYPEC-304-ACP16",
+      "footprint": "f8c1d5c91b1cb4a2",
+      "qty": 2,
+      "refs": "USB1, USB2"
+    },
+    {
+      "device": "TestPoint_D0.8_SMD",
+      "footprint": "933a9edd26c749c3",
+      "qty": 4,
+      "refs": "TP1, TP2, TP3, TP4"
+    },
+    {
+      "device": "USBLC6-2P6_C49451919",
+      "footprint": "da41640c161f1dd5",
+      "qty": 3,
+      "refs": "D1, D2, D4"
+    },
+    {
+      "device": "W25Q128JVSIQ",
+      "footprint": "e7ce8df8d6a1041e",
+      "qty": 1,
+      "refs": "U15"
+    },
+    {
+      "device": "WAFER-GH1.25-4PWB",
+      "footprint": "fd4b7e8c8c7bc2e5",
+      "qty": 1,
+      "refs": "U9"
+    },
+    {
+      "device": "X0802FVS-80AS-LPV01",
+      "footprint": "31b30b69f2f07c43",
+      "qty": 1,
+      "refs": "CN7"
+    },
+    {
+      "device": "XC7A35T-2CSG325C",
+      "footprint": "33b4aa6051808efd",
+      "qty": 7,
+      "refs": "U1, U1, U1, U1, U1, U1, U1"
+    },
+    {
+      "device": "XL2EL89COI-111YLC-8M",
+      "footprint": "b6f81d50502e1b07",
+      "qty": 2,
+      "refs": "X1, X2"
+    },
+    {
+      "device": "ZX-SH1.0-8PWT",
+      "footprint": "6f313c475ee9e6f4",
+      "qty": 1,
+      "refs": "U16"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+_s*.bat
+_s*.py
+_t*.bat
+_t*.py
+_t*.log
+_t*_*.txt
+_cleanup_log.txt
+_cleanup.bat
+examples/
+repos/
+reports/*.net
+reports/bom_*.csv
+reports/erc_*.json
+reports/validation/*.net

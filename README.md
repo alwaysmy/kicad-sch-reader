@@ -50,7 +50,8 @@ python kicad-sch-reader.py --json netfind examples\Lock-In-Amplifier_PowerBoard_
 | `components <工程> [过滤]` | 元件、型号、封装 |
 | `pins <工程> [位号]` | 引脚级网络表（含悬空/NC） |
 | `nets <工程> [网络名]` | 项目网络清单 |
-| `netfind <工程> <网络名>` | 查网络全部引脚 |
+| `netfind <工程> <网络名> [--exact]` | 查网络全部引脚（N$ 网络建议 --exact） |
+| `bridges <工程>` | 两脚中间器件桥接对（排阻 Rk.1↔Rk.2、0Ω 等） |
 | `find <工程> <位号>` | 位号反查 |
 | `trace <工程> <位号> [--depth N] [--no-power]` | BFS 链路追踪 |
 | `review <工程> [--no-erc] [--out-md ...] [--out-json ...]` | 设计审查报告 |
@@ -78,7 +79,14 @@ python scripts\lceda_epro_review.py ^
 
 会展开 CBB 复用模块：应用 `.eins` 位号覆盖、连接模块端口与子图网络，
 输出 CBB 内部器件逐 pin 连接，并让 `--trace-net/--trace-ref` 直接穿透到
-CBB 内部器件。
+CBB 内部器件。普通电阻/电感等中间器件保留为 `component_bridges` hop，
+只有 SHORT/0Ω 跳线做脚本化直连合并。
+
+`lceda_reader.py` CLI 现在也直接接受 `.epro`（自动解包并打印日志）：
+
+```bat
+python repos\lceda-sch-reader\lceda_reader.py --eprj xxx.epro boards
+```
 
 KiCad + LCEDA 多工程跨板候选核对（统一走 Circuit IR）：
 

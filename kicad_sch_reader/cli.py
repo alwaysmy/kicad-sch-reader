@@ -147,6 +147,72 @@ def cmd_pins(args) -> None:
         _print_json(rows)
 
 
+def cmd_bridges(args) -> None:
+    """导出两脚中间器件桥接对（排阻 Rk.1/Rk.2、0Ω、磁珠等）。
+
+    不自动合并网络；输出两侧网络与 direct 标记，供脚本或 LLM 判断。
+    """
+    project = _project(args)
+    netlist = _netlist(project)
+    pin_net = {
+        (p.sheet_path, p.ref, p.pin_number): n.name
+        for n in netlist for p in n.pins
+    }
+    rows = []
+    by_ref: Dict[str, list] = defaultdict(list)
+    for sym in project.all_symbols():
+        if sym.ref and not sym.ref.startswith("#"):
+            by_ref[sym.ref].append(sym)
+    for ref, syms in by_ref.items():
+        pins = {}
+        for sym in syms:
+            for pin in sym.pins:
+                key = (sym.sheet_path, pin.number)
+                pins[key] = {"number": pin.number, "name": pin.name,
+                             "sheet": sym.sheet_path,
+                             "net": pin_net.get((sym.sheet_path, sym.ref, pin.number))}
+        items = list(pins.values())
+        direct = bool(re.search(r"0000|0R|0Ω", str(syms[0].value), re.I))
+        lib_id = syms[0].lib_id or ""
+
+        def add_row(a, b, channel=None):
+            rows.append({
+                "ref": ref,
+                "lib_id": lib_id,
+                "value": syms[0].value,
+                "sheet_path": syms[0].sheet_path,
+                "pin_a": a["number"], "pin_a_name": a["name"], "net_a": a["net"],
+                "pin_b": b["number"], "pin_b_name": b["name"], "net_b": b["net"],
+                "direct": direct,
+                **({"channel": channel} if channel else {}),
+            })
+
+        if len(items) == 2:
+            add_row(items[0], items[1])
+            continue
+        # R_Pack：pin name 形如 R1.1/R1.2 ...，按通道配对输出。
+        if "r_pack" in lib_id.lower() or any(
+            re.match(r"R\d+\.([12])$", str(p["name"] or "")) for p in items
+        ):
+            sides: Dict[int, dict] = defaultdict(dict)
+            for p in items:
+                m = re.match(r"R(\d+)\.([12])$", str(p["name"] or ""))
+                if m:
+                    sides[int(m.group(1))][m.group(2)] = p
+            for channel in sorted(sides):
+                if "1" in sides[channel] and "2" in sides[channel]:
+                    add_row(sides[channel]["1"], sides[channel]["2"], channel=channel)
+
+    rows.sort(key=lambda r: (not r["direct"], r["ref"], str(r.get("channel") or 0)))
+    if args.json:
+        _print_json(rows)
+        return
+    for r in rows:
+        tag = "direct" if r["direct"] else "passive"
+        print(f"{r['ref']:8s} {r['pin_a']:>3s}({r['pin_a_name'] or ''})={r['net_a'] or '<float>'} "
+              f"<-> {r['pin_b']:>3s}({r['pin_b_name'] or ''})={r['net_b'] or '<float>'}  [{tag}]")
+
+
 def cmd_nets(args) -> None:
     project = _project(args)
     netlist = _netlist(project)
@@ -180,7 +246,10 @@ def cmd_nets(args) -> None:
 def cmd_netfind(args) -> None:
     project = _project(args)
     netlist = _netlist(project)
-    matches = [n for n in netlist if args.name.lower() in n.name.lower()]
+    if getattr(args, "exact", False):
+        matches = [n for n in netlist if n.name.lower() == args.name.lower()]
+    else:
+        matches = [n for n in netlist if args.name.lower() in n.name.lower()]
     if args.json:
         _print_json([
             {
@@ -509,6 +578,11 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("ref", nargs="?", default="", help="仅显示某位号")
     p.set_defaults(func=cmd_pins)
 
+    p = sub.add_parser("bridges", help="导出两脚中间器件桥接对（排阻/0Ω/磁珠等）")
+    add_json(p)
+    add_input(p)
+    p.set_defaults(func=cmd_bridges)
+
     p = sub.add_parser("nets", help="项目网络清单")
     add_json(p)
     add_input(p)
@@ -520,6 +594,8 @@ def build_arg_parser() -> argparse.ArgumentParser:
     add_json(p)
     add_input(p)
     p.add_argument("name")
+    p.add_argument("--exact", action="store_true",
+                   help="精确匹配网络名（推荐用于 N$xxx 未命名网络）")
     p.set_defaults(func=cmd_netfind)
 
     p = sub.add_parser("find", help="按位号反查元件")

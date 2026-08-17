@@ -2,6 +2,33 @@
 
 本项目采用语义化版本。所有重要变更按时间倒序记录。
 
+## [0.1.2] - 2026-08-18
+
+### 新增/修复（NIM 审查问题与经验 v2 实测驱动）
+
+- LCEDA 多 Part 符号支持完整 PART 名（B0/B14/GTP/POWER 等字母名）
+- 同器件重名引脚以 `name#number` 为键，修复 SHORT `Pin1/Pin1`、ESD
+  `IN/IN`、`NC/NC` 导致的网络错误合并
+- `pin_net_map` 保留每个引脚自己物理端点命中的网络名，alias 组仅用于
+  跨名查询/成员分组
+- 连通性策略修订：仅 SHORT(symbolType=22)/0Ω 跳线脚本化直连；普通电阻/
+  电感/LED/磁珠两侧网络不再自动合并，器件作为中间 hop 输出
+- `component_bridges`：LCEDA 报告新增两脚中间器件桥接表
+- `.epro` CLI 自动解包支持：`lceda_reader.py --eprj xxx.epro ...`，
+  打印解包日志
+- `netfind --exact`：KiCad 未命名网络精确查询
+- `bridges` 命令：KiCad 两脚器件/排阻 `Rk.1 ↔ Rk.2` 通道桥接对导出
+- 跨工具比对 `DXN_0 -> GND` 归一化
+- 默认输出到 `reports/` 且文件名带时间戳
+- 修订文档：`原理图审查工具问题与经验v2.MD`（NIM DesignDocs）
+
+### 验证
+
+- 单元测试 29/29 通过
+- KiCad 官方网表交叉验证保持 735/735 与 313/313
+- 数字板实测：260 位号 / 272 网络 / 59 findings；U1 pin_net_map 322 条；
+  U3 关键引脚与坐标法一致；CBB3.VOUT4=VCC_3V3；R26 1kΩ 上拉不再并入电源轨
+
 ## [0.1.1] - 2026-08-18
 
 ### 新增

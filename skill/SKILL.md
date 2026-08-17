@@ -21,7 +21,10 @@ python kicad-sch-reader.py parse <kicad工程目录>
 python kicad-sch-reader.py review <kicad工程目录> --out-md reports\xxx.review.md --out-json reports\xxx.review.json
 python kicad-sch-reader.py trace <工程> <位号> --no-power --depth 3
 python kicad-sch-reader.py link-check <工程A> <工程B>
+python kicad-sch-reader.py netfind <工程> 'N$124' --exact
+python kicad-sch-reader.py bridges <工程>
 python scripts\lceda_epro_review.py <xxx.epro> --trace-net VCC_1V5 --trace-ref U6 --trace-skip-power
+python repos\lceda-sch-reader\lceda_reader.py --eprj <xxx.epro> pinmap "<页名>"
 ```
 
 ## 2. trace 的 power 判断（不要只靠名字正则）
@@ -73,6 +76,14 @@ KiCad CLI 已按此实现；LCEDA 脚本使用 `POWER_RE + --power-net + SHORT/�
 - 提到器件时写 `板 / 页 / CBB实例 / 位号`。
 - CBB 端口 trace 要用母图网络 canonical，避免 SHORT 短路桥造成
   `VCC_1V5` / `VCC_1V35_DDR` 名实分离。
+
+## 5.5 中间器件与 0Ω 的边界
+
+- SHORT(symbolType=22) 与可识别 0Ω 跳线：工具可脚本化视为物理直连。
+- 普通电阻/电感/LED/磁珠：**不得自动并网**；保留在 `component_bridges`
+  或 `bridges` 输出中作为中间 hop。
+- LLM 判断串联电阻/磁珠是否可视为同一信号时必须引用器件值/手册，不得猜测。
+- CBB 引脚直接网络为空时先查 bridge 表，再决定是否警告“未连接”。
 
 ## 6. 多工程跨板检查
 

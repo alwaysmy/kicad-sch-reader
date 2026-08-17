@@ -75,7 +75,11 @@ def normalize_net(name: Optional[str]) -> str:
     if "/" in text:
         text = text.rsplit("/", 1)[-1]
     text = text.split(",")[0].strip()
-    return re.sub(r"[^0-9A-Za-z+#.]", "", text).upper()
+    normalized = re.sub(r"[^0-9A-Za-z+#.]", "", text).upper()
+    # LCEDA 的 GND 展平名通常为 DXN_0，跨工具对比时归一化为 GND。
+    if normalized == "DXN_0":
+        return "GND"
+    return normalized
 
 
 def is_connector_ref(ref: str) -> bool:

@@ -147,6 +147,14 @@ KiCad 把同一多单元器件的每个 unit 存为独立 `symbol` 节点（同 
 
 回归测试：`python -m unittest tests.test_lceda_epro -v`。
 
+v0.1.2 修复（NIM 问题清单实测）：
+- PART 名按完整字符串匹配，支持字母 Part；
+- 重名引脚键 `name#number`，修复 SHORT/ESD 键冲突；
+- `resolve_nets_by_domain` 不再跨非 0Ω 两脚器件传播网络名；
+- `.epro` 后端进 `lceda_reader.EproDB`，CLI 自动解包；
+- 报告输出 `component_bridges`、`net_aliases`，默认输出到 `reports/`
+  并带时间戳。
+
 ## 6.6 共享 Circuit IR（采纳 ChatGPT 架构评审）
 
 `kicad_sch_reader/circuit_ir.py` 是 KiCad 与 LCEDA 的统一分析层，设计要点：

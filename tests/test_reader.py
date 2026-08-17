@@ -7,6 +7,8 @@ project acceptance criteria.
 
 from __future__ import annotations
 
+import json
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -70,6 +72,29 @@ class TestPowerBoard(unittest.TestCase):
     def test_rules_run(self):
         issues = run_all_checks(self.project, self.netlist)
         self.assertGreaterEqual(len(issues), 1)
+
+
+class TestCLIFeatures(unittest.TestCase):
+    def run_cli(self, *args):
+        return subprocess.run(
+            [sys.executable, str(ROOT / "kicad-sch-reader.py"), *args],
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            timeout=120, cwd=str(ROOT))
+
+    def test_netfind_exact_n_dollar(self):
+        r = self.run_cli("netfind", str(MAINBOARD), "N$124", "--exact")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("== N$124 ==", r.stdout)
+        self.assertNotIn("AFE_OUT_P", r.stdout)
+
+    def test_bridges_exports_r_pack_pairs(self):
+        r = self.run_cli("--json", "bridges", str(MAINBOARD))
+        self.assertEqual(r.returncode, 0, r.stderr)
+        rows = json.loads(r.stdout)
+        rn301 = [row for row in rows if row["ref"] == "RN301"]
+        self.assertTrue(rn301)
+        channels = {row["channel"] for row in rn301}
+        self.assertGreaterEqual(channels, {1, 2, 3})
 
 
 class TestRotationLab(unittest.TestCase):

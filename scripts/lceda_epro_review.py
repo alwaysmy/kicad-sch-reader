@@ -18,6 +18,7 @@ import os
 import re
 import sys
 import zipfile
+from datetime import datetime
 from collections import defaultdict
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
@@ -321,6 +322,32 @@ def _collect_pinmap(db: EproDB, title: str):
     return sheet, comp_pins, pinmap, endp
 
 
+def _pin_direct_nets(comp_pins, endp):
+    """返回 {(designator, pin_key): 该引脚物理端点上的网络名}。
+
+    pin_key 对重名引脚为 name#number。该映射用于让 pin_net_map 保留“本引脚
+    自己命中的网络名”，而不是被全局 alias 组覆盖成另一侧名字。
+    """
+    out = {}
+    for key, plist in (comp_pins or {}).items():
+        des = key if isinstance(key, str) else key[0]
+        for p in plist:
+            ax, ay = p.get("x"), p.get("y")
+            if ax is None or ay is None:
+                continue
+            net = (endp or {}).get((ax, ay))
+            if net is None:
+                for ox in (-1, 0, 1):
+                    for oy in (-1, 0, 1):
+                        net = (endp or {}).get((ax + ox, ay + oy))
+                        if net:
+                            break
+                    if net:
+                        break
+            out[(des, p.get("key") or p["pin"])] = net or ""
+    return out
+
+
 def _fmt_component(db, c):
     dev_uuid = c.get("device_uuid") or ""
     dev = db.devices.get(dev_uuid, {}) if dev_uuid else {}
@@ -362,7 +389,9 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
     flat_components = []
     net_members = defaultdict(list)
     pin_net_map = {}
+    pin_local_net = {}
     child_page_registry = []
+    bridge_rows = []
 
     cbb_symbol_titles = {
         u: s.get("title")
@@ -386,6 +415,10 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         for (des, pin), net in (pinmap or {}).items():
             pin_net_map[(title, str(des), str(pin))] = net
             net_members[net or ""].append({"sheet": title, "ref": str(des), "pin": str(pin)})
+        for (des, pin), net in _pin_direct_nets(comp_pins, endp).items():
+            pin_local_net[(title, str(des), str(pin))] = net
+        bridge_rows.extend(
+            lceda_reader.collect_two_pin_bridges(db, sheet, comp_pins, pinmap or {}, endp or {}))
 
         # Discover CBB instances on this page.
         for c in sheet["components"]:
@@ -466,13 +499,21 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
                             flat_net = ""
                         pin_net_map[(child_title, str(des), str(pin))] = flat_net
                         net_members[flat_net].append({"sheet": child_title, "ref": str(des), "pin": str(pin)})
+                    for (des, pin), net in _pin_direct_nets(child_comp_pins, child_endp).items():
+                        pin_local_net[(child_title, str(des), str(pin))] = net
+                    bridge_rows.extend(
+                        lceda_reader.collect_two_pin_bridges(
+                            db, child_sheet, child_comp_pins, child_pinmap or {},
+                            child_endp or {}))
                     for cc in child_sheet["components"]:
                         if cc.get("designator") and not str(cc.get("designator")).startswith("#"):
                             item = _fmt_component(db, cc)
                             item["sheet"] = child_title
                             item["module_instance"] = str(c.get("designator"))
                             flat_components.append(item)
-                    # Verify every module pin found a parent net.
+                    # Verify every module pin found a parent net. 直接网络为
+                    # 空时先查两脚中间器件桥：若该引脚与一个 passive 器件
+                    # 相连且另一侧有名，则不是“未连接”，而是“经器件连接”。
                     sp = db.symbol_pins(sym)
                     for p in (sp or {}).get("pins", []):
                         pname = p.get("name")
@@ -480,9 +521,35 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
                             continue
                         parent_net = pin_net_map.get((title, str(c.get("designator")), str(pname)))
                         if not parent_net:
-                            findings.append(("warning", "CBB_PIN_UNCONNECTED", title,
-                                             f"{c.get('designator')}.{pname}",
-                                             f"CBB 模块 {module_name} 引脚 {pname} 未在母图连接"))
+                            rx, ry = p.get("x"), p.get("y")
+                            if c.get("mirror"):
+                                rx = -rx
+                            rot = (c.get("rot") or 0) % 360
+                            for _ in range(int(rot // 90)):
+                                rx, ry = -ry, rx
+                            ax, ay = (c.get("x") or 0) + rx, (c.get("y") or 0) + ry
+                            through = None
+                            for b in bridge_rows:
+                                pos_a = b.get("pos_a") or [None, None]
+                                pos_b = b.get("pos_b") or [None, None]
+                                if pos_a[0] is not None and abs(pos_a[0] - ax) <= 1 and abs(pos_a[1] - ay) <= 1 and b.get("net_b"):
+                                    through = (b, "b")
+                                    break
+                                if pos_b[0] is not None and abs(pos_b[0] - ax) <= 1 and abs(pos_b[1] - ay) <= 1 and b.get("net_a"):
+                                    through = (b, "a")
+                                    break
+                            if through:
+                                b, side = through
+                                other = b.get("net_b") if side == "b" else b.get("net_a")
+                                findings.append(("info", "CBB_PIN_THROUGH_PASSIVE", title,
+                                                 f"{c.get('designator')}.{pname}",
+                                                 f"CBB 引脚 {pname} 直接网络为空，经中间器件 "
+                                                 f"{b.get('designator')}({b.get('kind')}) 连接到 {other}"))
+                            else:
+                                findings.append(("info", "CBB_PIN_INDIRECT_NET", title,
+                                                 f"{c.get('designator')}.{pname}",
+                                                 f"CBB 模块 {module_name} 引脚 {pname} 直接网络为空；"
+                                                 f"可能经导线/无源器件间接连接，请结合 component_bridges 判断"))
                         ptype = (p.get("pin_type") or "").upper()
                         pname_u = str(pname).upper()
                         if ("VOUT" in pname_u or pname_u in ("D+", "D-")) and ptype == "IN":
@@ -510,6 +577,13 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         if ra != rb:
             alias_parent[rb] = ra
 
+    def group_of(name: str) -> str:
+        """把 'A,B' 别名串归到 alias 组的 root；单名返回自身 root。"""
+        if not name:
+            return ""
+        names = [n for n in str(name).split(",") if n]
+        return afind(names[0]) if names else ""
+
     for key, netstr in list(pin_net_map.items()):
         if not netstr:
             continue
@@ -518,15 +592,23 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
             for n in names[1:]:
                 aunion(names[0], n)
     net_members = defaultdict(list)
+    net_aliases = defaultdict(set)
     canonical_pin_net_map = {}
     for key, netstr in list(pin_net_map.items()):
         if not netstr:
             canonical_pin_net_map[key] = ""
             continue
         names = [n for n in str(netstr).split(",") if n]
-        canonical = afind(names[0])
-        canonical_pin_net_map[key] = canonical
-        net_members[canonical].append({"sheet": key[0], "ref": str(key[1]), "pin": str(key[2])})
+        # pin_net_map 保留“该引脚自己物理端点命中的网络名”，不要被全局
+        # alias root 改写。这样 U3.PA9=MCU_UART_TX、SHORTe4381.Pin1#1=
+        # MCU_SPI_CS、Pin1#2=IO_L9P...；跨名查找/成员分组使用 alias 组。
+        local_name = pin_local_net.get(key)
+        if local_name not in names:
+            local_name = names[0]
+        group = afind(local_name)
+        canonical_pin_net_map[key] = local_name
+        net_aliases[group].update(names)
+        net_members[group].append({"sheet": key[0], "ref": str(key[1]), "pin": str(key[2])})
 
     comp_lookup = defaultdict(list)
     for comp in flat_components:
@@ -546,7 +628,7 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         }
 
     def trace_net(net):
-        target = afind(str(net)) if net else ""
+        target = group_of(net)
         return [member_detail(m) for m in net_members.get(target, [])]
 
     extra_power_patterns = [re.compile(p) for p in (power_net_patterns or [])]
@@ -564,7 +646,7 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
                 return True
         # 层级 3：SHORT 别名或明显的电源/地标识。
         if name.startswith("SHORT") or name.split(",")[0].strip().upper() in (
-            "GND", "AGND", "DGND", "VCC", "VDD", "VSS", "VBUS", "PWR", "VREF"
+            "GND", "AGND", "DGND", "DXN_0", "VCC", "VDD", "VSS", "VBUS", "PWR", "VREF"
         ):
             return True
         return False
@@ -577,9 +659,10 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
             if str(ref_key).lower() != str(ref).lower() or not netstr:
                 continue
             canonical = canonical_pin_net_map.get(key, "")
+            group = group_of(canonical)
             if trace_skip_power and is_power_net_name(canonical):
                 continue
-            for member in net_members.get(canonical, []):
+            for member in net_members.get(group, []):
                 edge_key = (sheet, str(ref_key), str(pin_key), member["sheet"], member["ref"], member["pin"], canonical)
                 if edge_key in seen:
                     continue
@@ -625,7 +708,7 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
             parent_net = module_meta.get("port_nets", {}).get(port_name)
             # 内部器件跟踪必须以“母图网络”为目标：短路桥会把
             # VCC_1V5/VCC_1V35_DDR、D+/USB_D_P 等合并成同一展平网络。
-            target = afind(str(parent_net or child_net)) if (parent_net or child_net) else ""
+            target = group_of(str(parent_net or child_net))
             members = [
                 member_detail(m) for m in net_members.get(target, [])
                 if m["sheet"] == child_title and m["ref"]
@@ -733,6 +816,11 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
             f"{key[0]}||{key[1]}||{key[2]}": canonical_pin_net_map.get(key, "")
             for key in canonical_pin_net_map
         },
+        "net_aliases": {
+            group: sorted(names) for group, names in sorted(net_aliases.items())
+            if len(names) > 1
+        },
+        "component_bridges": bridge_rows,
         "trace_results": trace_results,
         "flat_component_count": len(flat_components),
         "bom_line_count": len(bom),
@@ -748,8 +836,17 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         ],
     }
 
-    out_md = Path(out_md or (Path(epro_path).parent / f"{board_name}.lceda-review.md"))
-    out_json = Path(out_json or out_md.with_suffix(".json"))
+    if out_md:
+        out_md = Path(out_md)
+        out_json = Path(out_json or out_md.with_suffix(".json"))
+    else:
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        safe_board = re.sub(r"[^0-9A-Za-z_\-\u4e00-\u9fff]+", "_", board_name)
+        out_dir = BASE / "reports"
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_md = out_dir / f"{safe_board}.lceda-review-{stamp}.md"
+        out_json = out_md.with_suffix(".json")
+        print(f"[lceda_epro_review] 未指定 --out-md/--out-json，默认输出到 reports/（带时间戳）：{out_md}")
     _write_markdown(report, findings, out_md)
     out_json.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"LCEDA review written:\n  md={out_md}\n  json={out_json}")
@@ -838,6 +935,23 @@ def _write_markdown(report, findings, path):
                 f"{e['to_ref']}.{e['to_pin']} | {e['to_device']} | {e['to_module_instance']} |"
             )
         lines.append("")
+    bridges = report.get("component_bridges", [])
+    lines.append("## 3.5 两脚中间器件桥接（保留中间 hop）")
+    lines.append("")
+    if not bridges:
+        lines.append("无。")
+    else:
+        lines.append("| 位号 | 类型 | direct | 引脚 A | 网络 A | 引脚 B | 网络 B | 器件 |")
+        lines.append("| --- | --- | --- | --- | --- | --- | --- | --- |")
+        for b in bridges:
+            lines.append(
+                f"| {b['designator']} | {b['kind']} | {b['direct']} | "
+                f"{b['pin_a']}({b['number_a'] or ''}) | {b['net_a'] or '?'} | "
+                f"{b['pin_b']}({b['number_b'] or ''}) | {b['net_b'] or '?'} | {b['device']} |"
+            )
+    lines.append("")
+    lines.append("> 说明：LCEDA 展平地网络名 `DXN_0` 与 KiCad `GND` 为同一语义；跨工具比对时归一化。")
+    lines.append("")
     lines.append("## 4. 展平 BOM（含 CBB 内部器件）")
     lines.append("")
     lines.append(f"共 {report['bom_line_count']} 行 / {report['flat_component_count']} 个位号。")

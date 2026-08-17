@@ -43,8 +43,10 @@ x2_chatgpt_keywords.txt
 x3_webbridge.txt
 x4_webbridge.txt
 docs/dsh-session-*.zip
-_cleanup_now.bat
-_cleanup_result.txt
+_cleanup*.bat
+_cleanup*.txt
 _st.bat
 _st.txt
-_cleanup2.bat
+_commit*.bat
+_commit*.log
+_hold*.bat

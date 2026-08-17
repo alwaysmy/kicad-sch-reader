@@ -27,8 +27,9 @@ PATTERNS = [
     "docs/dsh-session-*.zip",
     "_run_cleanup.bat", "_cleanup.bat", "_cleanup_run.bat", "_cleanup_log.txt",
     "_python_alive.py", "_python_alive.txt", "_run_test.bat",
-    "_cleanup_now.bat", "_cleanup_result.txt",
-    "_st.bat", "_st.txt", "_cleanup2.bat",
+    "_cleanup*.bat", "_cleanup*.txt",
+    "_st.bat", "_st.txt",
+    "_commit*.bat", "_commit*.log", "_hold*.bat",
 ]
 
 KEEP = {

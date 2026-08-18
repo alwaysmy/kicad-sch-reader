@@ -90,6 +90,19 @@ KiCad 10 的 lib pin 写法是
 早期实现把这类“空域”过滤掉，导致 `AFE_OUT_P` 等跨两张子图的网络无法合并。
 现在的实现保留全部中间域，仅在最终物化时丢弃从未获得引脚或名字的分组。
 
+### 3.4.5 子图复用多实例（instances 覆盖）
+
+KiCad 允许同一张子图被多次实例化，并在 symbol 节点内保存
+`(instances (project ... (path /root/sheet_uuid (reference "R311")
+(unit 1))))`。解析器必须按当前 sheet path 应用这些覆盖，否则第二实例
+的位号（C301/C310...）会全部丢失或与第一实例重复。
+
+### 3.4.6 `free` 引脚仍可连网
+
+`free` 只是 ERC 中性，不是 no-connect。ESD/TVS 器件（例如
+TPD4E02B04DQA）大量使用 `free` 引脚；只有 `no_connect` /
+`not_connected` 才应跳过。
+
 ### 3.5 多单元器件
 
 KiCad 把同一多单元器件的每个 unit 存为独立 `symbol` 节点（同 Reference，

@@ -375,6 +375,13 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
                 trace_nets=None, trace_refs=None, trace_skip_power=False,
                 power_net_patterns=None):
     db = EproDB(epro_path)
+    if not db.boards:
+        if db.schematics:
+            raise SystemExit(
+                f".epro 中 project.json 没有 boards 表，且 schematics={list(db.schematics)[:3]}；"
+                f"当前版本无法选择审查板")
+        raise SystemExit(
+            f".epro 中 project.json 没有 boards/schematics 数据（可能是仅有 PCB 的导出包）：{epro_path}")
     if board_name is None:
         candidates = [n for n in db.boards if "LIA" in n or "锁定" in n]
         board_name = candidates[0] if candidates else list(db.boards)[0]

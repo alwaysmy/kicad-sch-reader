@@ -203,9 +203,10 @@ def build_local_nets(project: Project):
                     pin.no_connect = True
                     pin_net_key[path][key] = None
                     continue
-                if pin.electrical_type.lower() in ("no_connect", "not_connected", "free"):
-                    # KiCad treats these pin types as intentionally unconnected
-                    # even when several of them share one coordinate.
+                if pin.electrical_type.lower() in ("no_connect", "not_connected"):
+                    # Only `no_connect`/`not_connected` pins are intentionally
+                    # unconnected.  `free` pins are ERC-neutral but still
+                    # electrically connectable (TVS/ESD devices use them).
                     pin.no_connect = True
                     pin_net_key[path][key] = None
                     continue

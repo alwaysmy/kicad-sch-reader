@@ -93,6 +93,52 @@ def parse_lib_symbols(root) -> Dict[str, LibSymbol]:
     return out
 
 
+def parse_lib_instances(root) -> Dict[str, Dict[str, dict]]:
+    """Parse per-sheet-instance overrides inside ``lib_symbols``.
+
+    KiCad stores ``(instances (project ... (path /root/sheet_uuid
+    (reference "C301") (unit 1))))`` in a reused child sheet's library
+    symbols.  Without applying these overrides both instances keep the base
+    reference (e.g. C101) and the second instance's unique designators are
+    lost entirely.
+
+    Return ``{lib_id: {sheet_path: {"reference": ..., "unit": ...}}}`` where
+    sheet_path is the child instance path without the project root prefix.
+    """
+    out: Dict[str, Dict[str, dict]] = {}
+    libs = sexpr.first(root, "lib_symbols")
+    if libs is None:
+        return out
+    for sym in sexpr.children(libs, "symbol"):
+        if len(sym) < 2:
+            continue
+        lib_id = _text(sym[1])
+        instances = next(sexpr.find_all(sym, "instances"), None)
+        if instances is None:
+            continue
+        per_path: Dict[str, dict] = {}
+        for proj in sexpr.children(instances, "project"):
+            for item in sexpr.children(proj, "path"):
+                if len(item) < 2:
+                    continue
+                raw_path = _text(item[1])
+                # KiCad path: /root_sheet_uuid/child_sheet_uuid (older files may
+                # include a project name).  Our internal sheet_path is /uuid.
+                leaf = raw_path.rsplit("/", 1)[-1]
+                override = {}
+                ref_node = sexpr.first(item, "reference")
+                if ref_node is not None and len(ref_node) > 1:
+                    override["reference"] = _text(ref_node[1])
+                unit_node = sexpr.first(item, "unit")
+                if unit_node is not None and len(unit_node) > 1:
+                    override["unit"] = _text(unit_node[1])
+                if leaf:
+                    per_path[leaf] = override
+        if per_path:
+            out[lib_id] = per_path
+    return out
+
+
 def _mirror_of(node) -> str:
     item = sexpr.first(node, "mirror")
     if item is None:
@@ -126,7 +172,8 @@ def transform_point(p: tuple[float, float], rotation: float, mirror: str) -> tup
 
 
 def parse_symbol_instance(
-    node, lib_symbols: Dict[str, LibSymbol], sheet_path: str = "/"
+    node, lib_symbols: Dict[str, LibSymbol], sheet_path: str = "/",
+    instance_overrides: Optional[Dict[str, Dict[str, dict]]] = None,
 ) -> Optional[SymbolInstance]:
     if not sexpr.is_node(node, "symbol"):
         return None
@@ -147,6 +194,27 @@ def parse_symbol_instance(
         for p in sexpr.children(node, "property")
         if len(p) > 2
     }
+    # Per-instance overrides (KiCad sheet reuse): placed symbols in a reused
+    # child sheet carry ``(instances (project ... (path /root/sheet_uuid
+    # (reference "R311") (unit 1))))``.  Apply the entry whose path leaf
+    # matches this sheet instance.
+    instances_node = next(sexpr.find_all(node, "instances"), None)
+    if instances_node is not None:
+        leaf = sheet_path.rstrip("/").rsplit("/", 1)[-1] if sheet_path != "/" else ""
+        for proj in sexpr.children(instances_node, "project"):
+            for p in sexpr.children(proj, "path"):
+                if len(p) < 2:
+                    continue
+                p_leaf = _text(p[1]).rstrip("/").rsplit("/", 1)[-1]
+                if not leaf or p_leaf != leaf:
+                    continue
+                ref_node = sexpr.first(p, "reference")
+                if ref_node is not None and len(ref_node) > 1:
+                    props["Reference"] = _text(ref_node[1])
+                unit_node = sexpr.first(p, "unit")
+                if unit_node is not None and len(unit_node) > 1:
+                    unit = _text(unit_node[1])
+                break
     uuid_node = sexpr.first(node, "uuid")
     symbol = SymbolInstance(
         ref=props.get("Reference", ""),
@@ -284,11 +352,13 @@ def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
             sheet.title = _text(title[1])
 
     sheet.lib_symbols = parse_lib_symbols(root)
+    instance_overrides = parse_lib_instances(root)
 
     for child in sexpr.children(root):
         kind = child[0]
         if kind == "symbol":
-            symbol = parse_symbol_instance(child, sheet.lib_symbols, sheet_path)
+            symbol = parse_symbol_instance(child, sheet.lib_symbols, sheet_path,
+                                           instance_overrides)
             if symbol is not None:
                 sheet.symbols.append(symbol)
         elif kind == "wire":

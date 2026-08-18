@@ -2,6 +2,28 @@
 
 本项目采用语义化版本。所有重要变更按时间倒序记录。
 
+## [0.1.3] - 2026-08-18
+
+### 本地多工程实测驱动修复
+
+- 用 8 个本地 KiCad 工程 + 9 个本地 `.epro` 工程做扩展回归
+- KiCad 复用子图（同一 sheet 多次实例化）：应用 symbol 级
+  `(instances (project ... (path ... (reference ...))))` 覆盖，修复
+  EmoeULNA/Calibrator 等工程第二实例位号（C301/C310...）完全丢失
+- `free` 引脚类型不再当作 no-connect：ESD/TVS 器件（TPD4E02B04DQA）
+  的 free 引脚仍参与连网
+- `.epro` 只有 PCB、没有 boards/schematics 时给出明确错误而不是
+  IndexError
+- 坐标法结论：修复后的连通域法比坐标法更准确，本地 NIM 工程已切换到
+  `extract_fpga_mcu_nets_from_tool_20260818.py`
+
+### 扩展验证
+
+- 本地 8 个 KiCad 工程：8/8 解析成功；修复后 missing pins 全部为 0；
+  通过 kicad-cli 官方网表比对的工程 5/8（其余仅剩网络命名差异，无缺脚）
+- 本地 9 个 `.epro`：8/9 成功审查；1 个纯 PCB 导出包已改为清晰报错
+- 官方验收保持 735/735 与 313/313；单元测试 29/29
+
 ## [0.1.2] - 2026-08-18
 
 ### 新增/修复（NIM 审查问题与经验 v2 实测驱动）

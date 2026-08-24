@@ -526,8 +526,6 @@ def check_polar_devices(project: Project, netlist: Iterable[Net]) -> List[Issue]
         prefix = prefix_m.group(0) if prefix_m else ""
         if prefix not in _POLAR_PREFIXES:
             continue
-        if (ref, sym.value) in seen_refs:
-            continue
         seen_refs.add((ref, sym.value))
         polarised = [(p, _polar_of(p.name)) for p in sym.pins]
         unresolved = [p for p, pol in polarised if pol is None]
@@ -622,6 +620,7 @@ def apply_config(issues: List[Issue], config: Optional[dict]) -> List[Issue]:
         elif entry is False:
             continue
         out.append(issue)
+    out.sort(key=lambda i: i.sort_key())
     return out
 
 

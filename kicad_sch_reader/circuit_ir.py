@@ -777,19 +777,25 @@ def diff_boards(old: "BoardIR", new: "BoardIR") -> dict:
     nets_new = new._net_by_name
     added_names = set(nets_new) - set(nets_old)
     removed_names = set(nets_old) - set(nets_new)
-    nets_added = [net_summary(nets_new[r]) for r in sorted(added_names)]
-    nets_removed = [net_summary(nets_old[r]) for r in sorted(removed_names)]
 
     members_to_removed = {}
     for r in removed_names:
         members_to_removed.setdefault(net_members(nets_old[r]), []).append(r)
     renamed_candidates = []
+    renamed_old: set = set()
+    renamed_new: set = set()
     for r in sorted(added_names):
         key = net_members(nets_new[r])
         for old_name in members_to_removed.get(key, []):
             renamed_candidates.append({"old": old_name, "new": r,
                                        "member_count": len(nets_new[r].members)})
+            renamed_old.add(old_name)
+            renamed_new.add(r)
             break
+    # Keep the inventories consistent with the summary: pairs matched as
+    # rename candidates appear only under nets_renamed_candidates.
+    nets_added = [net_summary(nets_new[r]) for r in sorted(added_names - renamed_new)]
+    nets_removed = [net_summary(nets_old[r]) for r in sorted(removed_names - renamed_old)]
 
     nets_changed = []
     for name in sorted(set(nets_old) & set(nets_new)):
@@ -812,8 +818,8 @@ def diff_boards(old: "BoardIR", new: "BoardIR") -> dict:
             "components_added": len(comps_added),
             "components_removed": len(comps_removed),
             "components_changed": len(comps_changed),
-            "nets_added": max(0, len(nets_added) - len(renamed_candidates)),
-            "nets_removed": max(0, len(nets_removed) - len(renamed_candidates)),
+            "nets_added": len(nets_added),
+            "nets_removed": len(nets_removed),
             "nets_renamed_candidates": len(renamed_candidates),
             "nets_changed": len(nets_changed),
         },

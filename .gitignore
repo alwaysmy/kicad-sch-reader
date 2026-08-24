@@ -62,3 +62,5 @@ _st*.txt
 _commit*.bat
 _commit*.log
 _hold*.bat
+TEST_SCRIPTS/results/
+TEST_APPS/

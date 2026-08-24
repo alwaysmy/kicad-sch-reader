@@ -467,10 +467,10 @@ def build_netlist(project: Project) -> List[Net]:
         if len(global_set) > 1:
             group.has_conflict = True
             group.conflict_names = global_set
-        # Deterministic naming priority: power symbol value, global label,
-        # hierarchical label, ordinary label, generated name.  Named nets use
-        # KiCad's convention: power/global names are bare, ordinary local labels
-        # get a leading "/", and hierarchical labels become /<Sheet>/<Label>.
+        # Naming priority: power/global names first (bare), then — among
+        # label-derived candidates — the *shallower* sheet wins (official
+        # exporter behaviour; e.g. parent label "D9" beats child HL "DOUT9"),
+        # ties keep hierarchical-first.  Unnamed nets get N$<order>.
         if global_set:
             group.name = global_set[0]
         else:

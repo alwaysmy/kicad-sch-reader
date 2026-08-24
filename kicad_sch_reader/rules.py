@@ -476,10 +476,42 @@ def _is_power_like(net: Net) -> bool:
     )
 
 
+def load_config(path) -> dict:
+    """Load a review-rule config JSON (enabled/severity per rule code)."""
+    import json
+    from pathlib import Path as _Path
+    data = json.loads(_Path(path).read_text(encoding="utf-8"))
+    if not isinstance(data.get("rules", {}), dict):
+        raise ValueError("config 'rules' must be an object")
+    return data
+
+
+def apply_config(issues: List[Issue], config: Optional[dict]) -> List[Issue]:
+    """Filter/override issues per ``{"rules": {"R501": {"enabled": false,
+    "severity": "warning"}}}``.  Unknown codes in the config are ignored."""
+    if not config:
+        return issues
+    table = config.get("rules", {})
+    out = []
+    for issue in issues:
+        entry = table.get(issue.code)
+        if isinstance(entry, dict):
+            if entry.get("enabled") is False:
+                continue
+            sev = entry.get("severity")
+            if sev in ("error", "warning", "info"):
+                issue.severity = sev
+        elif entry is False:
+            continue
+        out.append(issue)
+    return out
+
+
 def run_all_checks(
     project: Project,
     netlist: List[Net],
     erc_markers: Optional[List[dict]] = None,
+    config: Optional[dict] = None,
 ) -> List[Issue]:
     issues: List[Issue] = []
     issues.extend(check_duplicate_references(project))
@@ -497,7 +529,7 @@ def run_all_checks(
     if erc_markers:
         issues.extend(erc_markers_to_issues(erc_markers))
     issues.sort(key=lambda i: i.sort_key())
-    return issues
+    return apply_config(issues, config)
 
 
 def severity_counts(issues: Iterable[Issue]) -> Dict[str, int]:

@@ -421,7 +421,9 @@ def cmd_review(args) -> None:
             erc_note = f"KiCad ERC 已运行: {_erc_summary_dict(markers)}"
         except Exception as exc:  # pragma: no cover - depends on local KiCad install
             erc_note = f"KiCad ERC 未运行（{type(exc).__name__}: {exc}）"
-    issues = rules.run_all_checks(project, netlist, markers)
+    issues = rules.run_all_checks(project, netlist, markers,
+                                  config=rules.load_config(args.config)
+                                  if getattr(args, "config", "") else None)
 
     name = project.root.parent.name or project.root_sheet.file.stem
     out_md = args.out_md or str(Path.cwd() / f"{name}.review.md")
@@ -555,6 +557,34 @@ def _project_named(path):
     return parser.load_project(path)
 
 
+def cmd_diff(args) -> None:
+    """Compare two revisions of a design via the shared Circuit IR."""
+    from .circuit_ir import board_from_kicad, diff_boards
+    project_a = _project_named(args.input_a)
+    project_b = _project_named(args.input_b)
+    board_a = board_from_kicad(project_a, name=Path(args.input_a).name)
+    board_b = board_from_kicad(project_b, name=Path(args.input_b).name)
+    result = diff_boards(board_a, board_b)
+    if args.json:
+        _print_json(result)
+        return
+    s = result["summary"]
+    print(f"A: {result['old']}")
+    print(f"B: {result['new']}")
+    print(f"components: +{s['components_added']} -{s['components_removed']} ~{s['components_changed']} changed")
+    print(f"nets: +{s['nets_added']} -{s['nets_removed']} ~{s['nets_changed']} changed"
+          f"  (renamed candidates: {s['nets_renamed_candidates']})")
+    for row in result["components_changed"][:12]:
+        changes = ", ".join(f"{k}: {v[0]!r}->{v[1]!r}" for k, v in row["changes"].items())
+        print(f"  ~ {row['ref']}: {changes}")
+    for row in result["nets_changed"][:12]:
+        print(f"  ~ net {row['name']}: +{row['gained_count']} -{row['lost_count']} pins")
+        for g in row["gained"][:4]:
+            print(f"      + {g}")
+        for l in row["lost"][:4]:
+            print(f"      - {l}")
+
+
 def cmd_validate(args) -> None:
     """Smoke-test the reader on a project and report structural invariants."""
     project = _project(args)
@@ -664,6 +694,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("--out-md", default="")
     p.add_argument("--out-json", default="")
     p.add_argument("--no-erc", action="store_true", help="不调用 kicad-cli ERC")
+    p.add_argument("--config", default="", help="review_rules.json 路径（规则启停/级别覆盖）")
     p.set_defaults(func=cmd_review)
 
     p = sub.add_parser("erc", help="调用 kicad-cli 执行 ERC")
@@ -695,6 +726,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("input_a")
     p.add_argument("input_b")
     p.set_defaults(func=cmd_link_check)
+
+    p = sub.add_parser("diff", help="两个工程版本间的元件/网络差异对比（候选级证据）")
+    add_json(p)
+    p.add_argument("input_a")
+    p.add_argument("input_b")
+    p.set_defaults(func=cmd_diff)
     return ap
 
 

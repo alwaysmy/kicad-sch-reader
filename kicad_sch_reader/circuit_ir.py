@@ -732,3 +732,96 @@ def compare_boards(a: BoardIR, b: BoardIR, min_common: int = 2) -> List[IRCrossL
             ))
     rows.sort(key=lambda r: (-r.score, -r.common_pins, r.a_board, r.b_board))
     return rows
+
+
+def diff_boards(old: "BoardIR", new: "BoardIR") -> dict:
+    """Version diff between two revisions of the same design lineage.
+
+    Components compare by designator (value / footprint / pin-count), nets by
+    name with member-set changes.  Unnamed ``N$`` nets are unstable across
+    revisions, so same-member add/remove pairs are reported as
+    ``nets_renamed_candidates`` instead of hard adds/removes.  The result is a
+    *candidate* statement about two files — deciding that they really are
+    consecutive revisions is design knowledge.
+    """
+
+    def comp_snapshot(c: IRComponent) -> dict:
+        return {
+            "ref": c.ref,
+            "value": c.value or "",
+            "lib_id": c.lib_id or "",
+            "footprint": c.footprint or "",
+            "pin_count": len(c.pins),
+        }
+
+    comps_old = {c.ref: c for c in old.components}
+    comps_new = {c.ref: c for c in new.components}
+    comps_added = [comp_snapshot(comps_new[r]) for r in sorted(set(comps_new) - set(comps_old))]
+    comps_removed = [comp_snapshot(comps_old[r]) for r in sorted(set(comps_old) - set(comps_new))]
+    comps_changed = []
+    for ref in sorted(set(comps_old) & set(comps_new)):
+        ca, cb = comp_snapshot(comps_old[ref]), comp_snapshot(comps_new[ref])
+        changes = {k: [ca[k], cb[k]] for k in ("value", "lib_id", "footprint", "pin_count")
+                   if ca[k] != cb[k]}
+        if changes:
+            comps_changed.append({"ref": ref, "changes": changes})
+
+    def net_members(n: IRNet) -> frozenset:
+        return frozenset((m.ref, m.pin) for m in n.members)
+
+    def net_summary(n: IRNet) -> dict:
+        return {"name": n.name, "pin_count": len(n.members),
+                "members": sorted(f"{m.ref}.{m.pin}" for m in n.members)[:24]}
+
+    nets_old = old._net_by_name
+    nets_new = new._net_by_name
+    added_names = set(nets_new) - set(nets_old)
+    removed_names = set(nets_old) - set(nets_new)
+    nets_added = [net_summary(nets_new[r]) for r in sorted(added_names)]
+    nets_removed = [net_summary(nets_old[r]) for r in sorted(removed_names)]
+
+    members_to_removed = {}
+    for r in removed_names:
+        members_to_removed.setdefault(net_members(nets_old[r]), []).append(r)
+    renamed_candidates = []
+    for r in sorted(added_names):
+        key = net_members(nets_new[r])
+        for old_name in members_to_removed.get(key, []):
+            renamed_candidates.append({"old": old_name, "new": r,
+                                       "member_count": len(nets_new[r].members)})
+            break
+
+    nets_changed = []
+    for name in sorted(set(nets_old) & set(nets_new)):
+        mo, mn = net_members(nets_old[name]), net_members(nets_new[name])
+        if mo == mn:
+            continue
+        gained = sorted(f"{ref}.{pin}" for ref, pin in (mn - mo))
+        lost = sorted(f"{ref}.{pin}" for ref, pin in (mo - mn))
+        nets_changed.append({
+            "name": name,
+            "gained": gained[:24],
+            "lost": lost[:24],
+            "gained_count": len(gained),
+            "lost_count": len(lost),
+        })
+
+    return {
+        "old": old.source, "new": new.source,
+        "summary": {
+            "components_added": len(comps_added),
+            "components_removed": len(comps_removed),
+            "components_changed": len(comps_changed),
+            "nets_added": max(0, len(nets_added) - len(renamed_candidates)),
+            "nets_removed": max(0, len(nets_removed) - len(renamed_candidates)),
+            "nets_renamed_candidates": len(renamed_candidates),
+            "nets_changed": len(nets_changed),
+        },
+        "components_added": comps_added,
+        "components_removed": comps_removed,
+        "components_changed": comps_changed,
+        "nets_added": nets_added,
+        "nets_removed": nets_removed,
+        "nets_renamed_candidates": renamed_candidates,
+        "nets_changed": nets_changed,
+    }

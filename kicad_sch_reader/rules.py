@@ -21,6 +21,14 @@ from .model import Issue, Net, PinNet, Project, SymbolInstance
 
 _CAP_VALUE_RE = re.compile(r"(\d+(?:\.\d+)?\s*(?:p|n|u|µ|m)?F)", re.IGNORECASE)
 
+# Reference designators matched as <letters><digits>; anything else is left
+# alone to keep the sequence check low-noise.
+_REF_RE = re.compile(r"^([A-Za-z]+)(\d+)$")
+
+# Net-naming rule thresholds (heuristic, overridable via review config).
+_UNNAMED_RATIO_WARN = 0.3
+_UNNAMED_COUNT_WARN = 20
+
 
 def _is_capacitor(pin: PinNet) -> bool:
     return bool(_CAP_VALUE_RE.search(pin.value or "")) and not pin.lib_id.startswith("power:")
@@ -52,6 +60,7 @@ def check_duplicate_references(project: Project) -> List[Issue]:
             other = seen_sheet[key]
             issues.append(Issue(
                 code="R101",
+                evidence="structural",
                 severity="error",
                 title="同一页内重复位号",
                 message=f"位号 {sym.ref}（unit {sym.unit}）在 {sym.sheet_path} 上重复（{other.lib_id} 与 {sym.lib_id}）",
@@ -67,6 +76,7 @@ def check_duplicate_references(project: Project) -> List[Issue]:
         if len(paths) > 1:
             issues.append(Issue(
                 code="R102",
+                evidence="structural",
                 severity="warning",
                 title="位号在多页重复",
                 message=f"位号 {ref}（unit {unit}）出现在多页: {', '.join(paths)}（分层复用需确认是同一实例的重复放置）",
@@ -86,6 +96,7 @@ def check_missing_fields(project: Project) -> List[Issue]:
         if sym.on_board and not sym.footprint:
             issues.append(Issue(
                 code="R201",
+                evidence="declared",
                 severity="warning",
                 title="元件缺少封装",
                 message=f"{sym.ref}（{sym.lib_id}）未指定 Footprint",
@@ -95,6 +106,7 @@ def check_missing_fields(project: Project) -> List[Issue]:
         if not sym.value:
             issues.append(Issue(
                 code="R202",
+                evidence="declared",
                 severity="info",
                 title="元件值/型号为空",
                 message=f"{sym.ref}（{sym.lib_id}）的 Value 为空",
@@ -127,6 +139,7 @@ def check_floating_pins(project: Project, netlist: Iterable[Net]) -> List[Issue]
                 continue
             issues.append(Issue(
                 code="R301",
+                evidence="structural",
                 severity=sev,
                 title="引脚未连接到任何网络",
                 message=(
@@ -148,6 +161,7 @@ def check_single_pin_nets(netlist: Iterable[Net]) -> List[Issue]:
             only_power = pin.lib_id.startswith("power:")
             issues.append(Issue(
                 code="R302",
+                evidence="structural",
                 severity="info" if only_power else "warning",
                 title="单引脚网络",
                 message=(
@@ -162,6 +176,7 @@ def check_single_pin_nets(netlist: Iterable[Net]) -> List[Issue]:
         elif net.pin_count() == 0 and (net.labels or net.global_names or net.power_names):
             issues.append(Issue(
                 code="R303",
+                evidence="structural",
                 severity="warning",
                 title="标签悬空",
                 message=f"标签/电源符号 {', '.join(net.labels + net.global_names + net.power_names)} 没有连接到任何元件引脚",
@@ -176,6 +191,7 @@ def check_net_name_conflicts(netlist: Iterable[Net]) -> List[Issue]:
         if net.has_conflict:
             issues.append(Issue(
                 code="R401",
+                evidence="structural",
                 severity="error",
                 title="网络名冲突",
                 message=(
@@ -200,6 +216,7 @@ def check_power_decoupling(netlist: Iterable[Net]) -> List[Issue]:
         for p in power_pins[:8]:
             issues.append(Issue(
                 code="R501",
+                evidence="heuristic",
                 severity="info",
                 title="电源引脚网络上未发现去耦电容",
                 message=(
@@ -230,6 +247,7 @@ def check_hierarchical_sheet_pins(project: Project) -> List[Issue]:
                 if child is None:
                     issues.append(Issue(
                         code="R601",
+                evidence="structural",
                         severity="error",
                         title="分层图纸文件缺失",
                         message=f"图纸符号 {ref.name or ref.file} 引用的 {ref.file} 未找到",
@@ -239,6 +257,7 @@ def check_hierarchical_sheet_pins(project: Project) -> List[Issue]:
                 elif pin.name not in child_names:
                     issues.append(Issue(
                         code="R602",
+                evidence="structural",
                         severity="warning",
                         title="图纸引脚缺少对应分层标签",
                         message=f"图纸符号 {ref.name or ref.file} 的引脚 {pin.name} 在子图 {ref.file} 中没有同名 hierarchical label",
@@ -255,6 +274,7 @@ def check_dnp_inventory(project: Project) -> List[Issue]:
         if sym.dnp:
             issues.append(Issue(
                 code="R701",
+                evidence="structural",
                 severity="info",
                 title="DNP 器件",
                 message=f"{sym.ref}（{sym.value or sym.lib_id}）被标记为不焊接（DNP）",
@@ -299,6 +319,7 @@ def erc_markers_to_issues(markers: List[dict]) -> List[Issue]:
             sheet_path=sheet_path,
             ref=ref,
             pin=pin,
+            evidence="official",
         ))
     return issues
 
@@ -311,6 +332,150 @@ def json_safe(obj) -> str:
         return str(obj)[:400]
 
 
+def check_nc_pin_inventory(project: Project) -> List[Issue]:
+    """Inventory every explicitly no-connect-marked pin for human confirmation.
+
+    Mirrors the lceda-sch-reader review discipline: an X marker is a design
+    *decision* ("this pin really is unused"), so each one must be confirmable
+    against the datasheet.  Power-input pins marked NC are suspicious enough
+    to escalate to warning; everything else stays informational.
+    """
+    issues: List[Issue] = []
+    for path in project.sheet_order:
+        sheet = project.sheets.get(path)
+        if sheet is None:
+            continue
+        nc_points = {(round(p.pos[0], 3), round(p.pos[1], 3)) for p in sheet.no_connects}
+        if not nc_points:
+            continue
+        for sym in sheet.symbols:
+            for pin in sym.pins:
+                key = (round(pin.pos[0], 3), round(pin.pos[1], 3))
+                # The parser records no_connect on pins only when it saw an
+                # explicit per-pin flag; the X symbol itself is geometric, so
+                # match by position.
+                marked_nc = pin.no_connect or key in nc_points
+                if not marked_nc:
+                    continue
+                ptype = (pin.electrical_type or "unknown").lower()
+                sev = "warning" if ptype == "power_in" else "info"
+                issues.append(Issue(
+                    code="R304",
+                    severity=sev,
+                    title="NC 引脚确认清单",
+                    message=(
+                        f"{sym.ref}.{pin.number}（{pin.name or sym.lib_id}，类型 {pin.electrical_type}）"
+                        f"被标记为 no-connect；请对照手册确认该脚确实可悬空"
+                        + ("——电源输入引脚被 NC 尤为可疑" if sev == "warning" else "")
+                    ),
+                    sheet_path=path,
+                    ref=sym.ref,
+                    pin=pin.number,
+                    evidence="structural",
+                ))
+    return issues
+
+
+def check_title_blocks(project: Project) -> List[Issue]:
+    """Flag incomplete title blocks (title/date/rev/company)."""
+    issues: List[Issue] = []
+    keys = ("title", "date", "rev", "company")
+    for path in project.sheet_order:
+        fields = project.sheets[path].title_fields if path in project.sheets else {}
+        missing = [k for k in keys if not (fields.get(k) or "").strip()]
+        if len(missing) == len(keys):
+            issues.append(Issue(
+                code="R603",
+                severity="warning",
+                title="标题栏完全空缺",
+                message=f"图纸 {path} 的 title_block 缺少全部关键字段（title/date/rev/company）",
+                sheet_path=path,
+                details={"missing": ", ".join(missing)},
+                evidence="declared",
+            ))
+        elif missing:
+            issues.append(Issue(
+                code="R603",
+                severity="info",
+                title="标题栏字段缺失",
+                message=f"图纸 {path} 的标题栏缺少: {', '.join(missing)}",
+                sheet_path=path,
+                details={"missing": ", ".join(missing)},
+                evidence="declared",
+            ))
+    return issues
+
+
+def check_reference_sequences(project: Project) -> List[Issue]:
+    """Report gaps in reference-designator numbering (R1,R2,R5 -> R3,R4 missing).
+
+    Purely informational: gaps usually mean deleted parts during iteration,
+    which is fine — but a fresh reviewer should know the numbering is not
+    contiguous before using ranges like "R1..R12 are the gain resistors".
+    """
+    groups: Dict[str, Set[int]] = defaultdict(set)
+    for sym in project.all_symbols():
+        m = _REF_RE.match(sym.ref or "")
+        if not m:
+            continue
+        groups[m.group(1)].add(int(m.group(2)))
+    issues: List[Issue] = []
+    for prefix in sorted(groups):
+        numbers = groups[prefix]
+        lo, hi = min(numbers), max(numbers)
+        missing = [n for n in range(lo, hi + 1) if n not in numbers]
+        if not missing:
+            continue
+        shown = ", ".join(f"{prefix}{n}" for n in missing[:8])
+        extra = f" …(+{len(missing) - 8})" if len(missing) > 8 else ""
+        issues.append(Issue(
+            code="R103",
+            severity="info",
+            title="位号编号不连续",
+            message=(
+                f"{prefix} 序列在 {prefix}{lo}..{prefix}{hi} 内缺号 {len(missing)} 个: "
+                f"{shown}{extra}（通常是迭代删除所致，仅供审阅时参考）"
+            ),
+            details={"missing": shown},
+            evidence="heuristic",
+        ))
+    return issues
+
+
+def check_net_naming(netlist: Iterable[Net]) -> List[Issue]:
+    """Summarise unnamed (N$) signal nets and prompt naming the important ones."""
+    nets = list(netlist)
+    unnamed = [n for n in nets if re.match(r"^N\$", n.name)
+               and not _is_power_like(n)]
+    if not unnamed:
+        return []
+    named_signal_count = sum(1 for n in nets if not re.match(r"^N\$", n.name))
+    ratio = len(unnamed) / max(1, named_signal_count + len(unnamed))
+    if len(unnamed) < _UNNAMED_COUNT_WARN and ratio < _UNNAMED_RATIO_WARN:
+        return []
+    biggest = sorted(unnamed, key=lambda n: -n.pin_count())[:5]
+    detail = "; ".join(f"{n.name}({n.pin_count()} 脚)" for n in biggest)
+    issues = [Issue(
+        code="R402",
+        severity="info",
+        title="存在较多未命名网络",
+        message=(
+            f"项目有 {len(unnamed)} 个未命名网络（N$，占网络总数 {ratio:.0%}）；"
+            f"关键信号建议命名以便跨页追踪与复查。最大的几个: {detail}"
+        ),
+        net=", ".join(n.name for n in biggest[:3]),
+        evidence="heuristic",
+    )]
+    return issues
+
+
+def _is_power_like(net: Net) -> bool:
+    return bool(net.power_names) or all(
+        p.pin_type.lower() in ("power_in", "power_out") or p.lib_id.startswith("power:")
+        for p in net.pins
+    )
+
+
 def run_all_checks(
     project: Project,
     netlist: List[Net],
@@ -318,12 +483,16 @@ def run_all_checks(
 ) -> List[Issue]:
     issues: List[Issue] = []
     issues.extend(check_duplicate_references(project))
+    issues.extend(check_reference_sequences(project))
     issues.extend(check_missing_fields(project))
     issues.extend(check_floating_pins(project, netlist))
+    issues.extend(check_nc_pin_inventory(project))
     issues.extend(check_single_pin_nets(netlist))
     issues.extend(check_net_name_conflicts(netlist))
+    issues.extend(check_net_naming(netlist))
     issues.extend(check_power_decoupling(netlist))
     issues.extend(check_hierarchical_sheet_pins(project))
+    issues.extend(check_title_blocks(project))
     issues.extend(check_dnp_inventory(project))
     if erc_markers:
         issues.extend(erc_markers_to_issues(erc_markers))

@@ -430,6 +430,7 @@ def cmd_review(args) -> None:
         "网络表由纯 Python 几何连通域构建（导线端点 + 连接点 + 标签 + 电源符号），并完成分层图纸与全局标签合并。",
         "悬空/单引脚等判定基于本工具解析结果；KiCad ERC 结果（如已运行）以 ERC-* 代码单独列出。",
         "报告中的 info 级发现需要人工结合设计意图判断，不代表设计错误。",
+        "发现条目带\"依据\"级别：official=官方 ERC 转写；structural=原理图结构事实；declared=字段约定检查；heuristic=启发式建议（可结合设计意图忽略）。",
     ]
     if erc_note:
         notes.insert(1, erc_note)

@@ -240,6 +240,14 @@ class Issue:
     pin: str = ""
     net: str = ""
     details: Dict[str, str] = field(default_factory=dict)
+    # Evidence level of the rule that raised this issue:
+    #   official   - verbatim from kicad-cli ERC
+    #   structural - directly checkable schematic fact (duplicate ref,
+    #                floating pin, single-pin net ...)
+    #   declared   - field-convention check (missing footprint/value)
+    #   heuristic  - experience-based suggestion (decoupling proximity),
+    #                configurable and safe to ignore after review
+    evidence: str = ""
 
     def sort_key(self) -> tuple:
         order = {"error": 0, "warning": 1, "info": 2}

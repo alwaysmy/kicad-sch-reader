@@ -102,8 +102,8 @@ def write_markdown(path, project: Project, netlist: List[Net], issues: List[Issu
             continue
         lines.append(f"### {label}（{len(sev_issues)}）")
         lines.append("")
-        lines.append("| # | 位置 | 代码 | 说明 | 网络 |")
-        lines.append("| --- | --- | --- | --- | --- |")
+        lines.append("| # | 位置 | 代码 | 说明 | 网络 | 依据 |")
+        lines.append("| --- | --- | --- | --- | --- | --- |")
         for idx, issue in enumerate(sev_issues, 1):
             location = issue.sheet_path
             if issue.ref:
@@ -111,7 +111,8 @@ def write_markdown(path, project: Project, netlist: List[Net], issues: List[Issu
                 if issue.pin:
                     location += f".{issue.pin}"
             lines.append(
-                f"| {idx} | `{location}` | {issue.code} | {_escape_md(issue.message)} | {_escape_md(issue.net)} |"
+                f"| {idx} | `{location}` | {issue.code} | {_escape_md(issue.message)} "
+                f"| {_escape_md(issue.net)} | {issue.evidence} |"
             )
         lines.append("")
     if extra_notes:
@@ -139,6 +140,7 @@ def write_json(path, project: Project, netlist: List[Net], issues: List[Issue],
                 "pin": i.pin,
                 "net": i.net,
                 "details": i.details,
+                "evidence": i.evidence,
             }
             for i in issues
         ],

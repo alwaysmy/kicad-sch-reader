@@ -210,7 +210,9 @@ def cmd_bridges(args) -> None:
                              "sheet": sym.sheet_path,
                              "net": pin_net.get((sym.sheet_path, sym.ref, pin.number))}
         items = list(pins.values())
-        direct = bool(re.search(r"0000|0R|0Ω", str(syms[0].value), re.I))
+        # Audited zero-ohm semantics (aligned with lceda-sch-reader):
+        # "10R"/"50R" contain non-zero digits and must NOT count as links.
+        direct = rules.is_zero_ohm_value(syms[0].value)
         lib_id = syms[0].lib_id or ""
 
         def add_row(a, b, channel=None):

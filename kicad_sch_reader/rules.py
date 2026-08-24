@@ -25,6 +25,44 @@ _CAP_VALUE_RE = re.compile(r"(\d+(?:\.\d+)?\s*(?:p|n|u|µ|m)?F)", re.IGNORECASE)
 # alone to keep the sequence check low-noise.
 _REF_RE = re.compile(r"^([A-Za-z]+)(\d+)$")
 
+# Zero-ohm detection aligned with lceda-sch-reader's audited semantics:
+# a Value that contains any non-zero digit vetoes the jumpers below
+# ("10R"/"50R"/"4k7" are real resistors, not wire links).
+_ZERO_FULL_RE = re.compile(r"0(?:[.0]+)?\s*(?:Ω|欧|R|ohm)?", re.IGNORECASE)
+_ZERO_TOKEN_RE = re.compile(r"(?:^|[^0-9.])0(?:\.0)?(?:Ω|欧|R(?![A-Za-z0-9]))")
+_ZERO_CODE_RE = re.compile(r"(?:^|[^0-9A-Za-z])0000(?![0-9A-Za-z])", re.IGNORECASE)
+
+# Polar-device pin-name normalisation (diode/LED/TVS families).
+_POLAR_ANODE = {"A", "ANODE", "+", "PA"}
+_POLAR_CATH = {"K", "C", "CATHODE", "-", "NK"}
+_POLAR_PREFIXES = ("D", "LED", "TVS")
+
+
+def is_zero_ohm_value(value) -> bool:
+    """True when a component Value denotes a 0Ω link.
+
+    Priority mirrors the audited LCEDA implementation: an explicit non-zero
+    digit in the Value vetoes everything else, so "10R" can never be mistaken
+    for a wire link by the token fallbacks.
+    """
+    v = str(value or "").strip()
+    if not v:
+        return False
+    if _ZERO_FULL_RE.fullmatch(v):
+        return True
+    if re.search(r"[1-9]", v):
+        return False
+    return bool(_ZERO_TOKEN_RE.search(v) or _ZERO_CODE_RE.search(v))
+
+
+def _polar_of(pin_name: str) -> Optional[str]:
+    n = str(pin_name or "").strip().upper()
+    if n in _POLAR_ANODE:
+        return "anode"
+    if n in _POLAR_CATH:
+        return "cathode"
+    return None
+
 # Net-naming rule thresholds (built-in heuristic defaults; NOT yet
 # configurable — review --config only supports enabled/severity today).
 _UNNAMED_RATIO_WARN = 0.3
@@ -410,19 +448,39 @@ def check_title_blocks(project: Project) -> List[Issue]:
 
 
 def check_reference_sequences(project: Project) -> List[Issue]:
-    """Report gaps in reference-designator numbering (R1,R2,R5 -> R3,R4 missing).
+    """Report gaps in reference-designator numbering (R1,R2,R5 -> R3,R4 missing)
+    and designators that do not match the <letters><digits> convention.
 
     Purely informational: gaps usually mean deleted parts during iteration,
     which is fine — but a fresh reviewer should know the numbering is not
     contiguous before using ranges like "R1..R12 are the gain resistors".
     """
     groups: Dict[str, Set[int]] = defaultdict(set)
+    nonstandard: List[str] = []
     for sym in project.all_symbols():
-        m = _REF_RE.match(sym.ref or "")
+        ref = sym.ref or ""
+        if not ref or ref.startswith("#"):
+            continue
+        m = _REF_RE.match(ref)
         if not m:
+            nonstandard.append(ref)
             continue
         groups[m.group(1)].add(int(m.group(2)))
     issues: List[Issue] = []
+    if nonstandard:
+        shown = ", ".join(sorted(nonstandard)[:8])
+        extra = f" …(+{len(nonstandard) - 8})" if len(nonstandard) > 8 else ""
+        issues.append(Issue(
+            code="R103",
+            severity="info",
+            title="位号格式不规范",
+            message=(
+                f"{len(nonstandard)} 个位号不符合 字母前缀+数字 规范"
+                f"（如 DA、2、R_1）: {shown}{extra}"
+            ),
+            details={"refs": ", ".join(sorted(nonstandard))},
+            evidence="heuristic",
+        ))
     for prefix in sorted(groups):
         numbers = groups[prefix]
         lo, hi = min(numbers), max(numbers)
@@ -441,6 +499,58 @@ def check_reference_sequences(project: Project) -> List[Issue]:
             ),
             details={"missing": shown},
             evidence="heuristic",
+        ))
+    return issues
+
+
+def check_polar_devices(project: Project, netlist: Iterable[Net]) -> List[Issue]:
+    """Polarised-device inventory (D*/LED*/TVS* designators): normalise pin
+    polarity from pin names (A/K/C/+/-/ANODE/CATHODE); devices whose pins
+    cannot be resolved need a datasheet check before any polarity-dependent
+    review.
+
+    Mirrors lceda-sch-reader's ``polar`` command, but triggers on the
+    *designator prefix only*.  Pin-name hits alone are unreliable here:
+    op-amp inputs are literally named "+"/"-" (inverting/non-inverting), so a
+    pin-name trigger would flag every amplifier in the project.  Only
+    unresolvable devices of the polar families are reported.
+    """
+    pin_net = _build_pin_net_index(netlist)
+    issues: List[Issue] = []
+    seen_refs: Set[Tuple[str, str]] = set()
+    for sym in project.all_symbols():
+        ref = sym.ref or ""
+        if not ref or ref.startswith("#") or (ref, sym.value) in seen_refs:
+            continue
+        prefix_m = re.match(r"^[A-Za-z]+", ref.upper())
+        prefix = prefix_m.group(0) if prefix_m else ""
+        if prefix not in _POLAR_PREFIXES:
+            continue
+        if (ref, sym.value) in seen_refs:
+            continue
+        seen_refs.add((ref, sym.value))
+        polarised = [(p, _polar_of(p.name)) for p in sym.pins]
+        unresolved = [p for p, pol in polarised if pol is None]
+        if not unresolved:
+            continue
+        parts = []
+        for p in unresolved[:6]:
+            net = pin_net.get((sym.sheet_path, ref, p.number))
+            net_name = net.name if net else "无网"
+            parts.append(f"{p.number}({p.name or '?'})->{net_name}")
+        detail = "; ".join(parts)
+        issues.append(Issue(
+            code="R801",
+            severity="info",
+            title="极性器件引脚极性未解析",
+            message=(
+                f"{ref}（{sym.value or sym.lib_id}）有 {len(unresolved)} 个引脚名"
+                f"无法归一为阳极/阴极（A/K/C/+/-/ANODE/CATHODE 之外），"
+                f"涉及时请查手册确认极性: {detail}"
+            ),
+            sheet_path=sym.sheet_path,
+            ref=ref,
+            evidence="structural",
         ))
     return issues
 
@@ -533,6 +643,7 @@ def run_all_checks(
     issues.extend(check_power_decoupling(netlist))
     issues.extend(check_hierarchical_sheet_pins(project))
     issues.extend(check_title_blocks(project))
+    issues.extend(check_polar_devices(project, netlist))
     issues.extend(check_dnp_inventory(project))
     if erc_markers:
         issues.extend(erc_markers_to_issues(erc_markers))

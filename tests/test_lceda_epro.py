@@ -130,7 +130,11 @@ class TestCbbExpansion(unittest.TestCase):
             capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=120,
             cwd=str(ROOT))
         self.assertEqual(r.returncode, 0, r.stderr)
-        self.assertIn("自动解包", r.stdout)
+        # 上游 2026-08 重构后格式横幅移至 stderr（如
+        # "[lceda_reader] 格式: 立创EDA .epro（V2 ZIP 导出）…"），
+        # 且 stdout 按 [文件名] 前缀列出 boards。
+        self.assertIn(".epro", r.stderr)
+        self.assertIn("ProPrj_XC7A35TCSG325_EmoeSOM_2026-05-18.epro", r.stdout)
 
     def test_cbb_pin_type_warnings_preserved(self):
         rows = [

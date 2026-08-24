@@ -318,7 +318,10 @@ def _collect_pinmap(db: EproDB, title: str):
     if sheet is None:
         return None, None, None, None
     comp_pins, wires, pt_wires, endp = lceda_reader._collect_pinmap_data(db, sheet, title)
-    pinmap = lceda_reader.resolve_nets_by_domain(db, sheet, comp_pins, wires, pt_wires, endp)
+    # _cbb_depth=2 跳过上游内置 CBB 自动展开（其依赖 SchemaBackend 缓存槽，
+    # 本脚本鸭子类型 EproDB 不具备）；CBB 展开走本脚本 register_cbb_page 管线。
+    pinmap = lceda_reader.resolve_nets_by_domain(db, sheet, comp_pins, wires,
+                                                 pt_wires, endp, _cbb_depth=2)
     return sheet, comp_pins, pinmap, endp
 
 
@@ -368,7 +371,16 @@ def _fmt_component(db, c):
 
 # ---------------------------------------------------------------- review rules
 
-POWER_RE = lceda_reader.POWER_NET_RE
+class _PowerMatcher:
+    """lceda_reader 旧版模块级 POWER_NET_RE 正则已升级为通用函数
+    is_power_net()；此包装保持 POWER_RE.match() 调用点不变。"""
+
+    @staticmethod
+    def match(name):
+        return name if lceda_reader.is_power_net(name) else None
+
+
+POWER_RE = _PowerMatcher()
 
 
 def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
@@ -588,13 +600,13 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         """把 'A,B' 别名串归到 alias 组的 root；单名返回自身 root。"""
         if not name:
             return ""
-        names = [n for n in str(name).split(",") if n]
+        names = lceda_reader.net_tokens(name)
         return afind(names[0]) if names else ""
 
     for key, netstr in list(pin_net_map.items()):
         if not netstr:
             continue
-        names = [n for n in str(netstr).split(",") if n]
+        names = lceda_reader.net_tokens(netstr)
         if len(names) > 1:
             for n in names[1:]:
                 aunion(names[0], n)
@@ -605,7 +617,7 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         if not netstr:
             canonical_pin_net_map[key] = ""
             continue
-        names = [n for n in str(netstr).split(",") if n]
+        names = lceda_reader.net_tokens(netstr)
         # pin_net_map 保留“该引脚自己物理端点命中的网络名”，不要被全局
         # alias root 改写。这样 U3.PA9=MCU_UART_TX、SHORTe4381.Pin1#1=
         # MCU_SPI_CS、Pin1#2=IO_L9P...；跨名查找/成员分组使用 alias 组。
@@ -652,7 +664,9 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
             if pat.search(name):
                 return True
         # 层级 3：SHORT 别名或明显的电源/地标识。
-        if name.startswith("SHORT") or name.split(",")[0].strip().upper() in (
+        tokens = lceda_reader.net_tokens(name)
+        if name.startswith("SHORT") or (
+                tokens[0].strip().upper() if tokens else "") in (
             "GND", "AGND", "DGND", "DXN_0", "VCC", "VDD", "VSS", "VBUS", "PWR", "VREF"
         ):
             return True

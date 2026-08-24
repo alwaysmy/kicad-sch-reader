@@ -435,9 +435,11 @@ def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
 def parse_free_text(node) -> Optional[SchText]:
     """Parse a free-text annotation (``text`` / ``textbox`` nodes).
 
-    KiCad 7..10 ``textbox`` wraps the string in an inner ``(text ...)`` node;
-    older/other layouts keep the content as the first atom.  Both are handled
-    here so page annotations survive across file versions.
+    ``text`` layout is validated against real projects.  **The ``textbox``
+    branch is unverified**: none of our current fixtures contains a textbox
+    node, so the inner-``(text ...)`` layout and the relative-coordinate
+    handling below are written from the KiCad file-format documentation and
+    have never executed against a real file.
     """
     if not sexpr.is_node(node, "text") and not sexpr.is_node(node, "textbox"):
         return None

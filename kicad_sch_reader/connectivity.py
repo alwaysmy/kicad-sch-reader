@@ -254,8 +254,8 @@ def build_local_nets(project: Project):
                 if not pin.name or not pin.name.strip():
                     continue
                 key = (sym.ref, pin.number, qpoint(*pin.pos))
-                if pin_net_key[path].get(key) is not None:
-                    continue  # also connected geometrically
+                if pin.no_connect or pin_net_key[path].get(key) is not None:
+                    continue  # explicitly no-connect, or connected geometrically
                 nm = pin.name.strip()
                 net = hidden_by_name.get(nm)
                 if net is None:

@@ -25,7 +25,8 @@ _CAP_VALUE_RE = re.compile(r"(\d+(?:\.\d+)?\s*(?:p|n|u|µ|m)?F)", re.IGNORECASE)
 # alone to keep the sequence check low-noise.
 _REF_RE = re.compile(r"^([A-Za-z]+)(\d+)$")
 
-# Net-naming rule thresholds (heuristic, overridable via review config).
+# Net-naming rule thresholds (built-in heuristic defaults; NOT yet
+# configurable — review --config only supports enabled/severity today).
 _UNNAMED_RATIO_WARN = 0.3
 _UNNAMED_COUNT_WARN = 20
 
@@ -445,7 +446,11 @@ def check_reference_sequences(project: Project) -> List[Issue]:
 
 
 def check_net_naming(netlist: Iterable[Net]) -> List[Issue]:
-    """Summarise unnamed (N$) signal nets and prompt naming the important ones."""
+    """Summarise unnamed (N$) signal nets and prompt naming the important ones.
+
+    Thresholds are built-in heuristics (see module constants), not derived
+    from any standard.
+    """
     nets = list(netlist)
     unnamed = [n for n in nets if re.match(r"^N\$", n.name)
                and not _is_power_like(n)]

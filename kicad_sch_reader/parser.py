@@ -90,6 +90,9 @@ def parse_lib_symbols(root) -> Dict[str, LibSymbol]:
             pins = [p for p in (_parse_lib_pin(n) for n in sexpr.children(sub, "pin")) if p]
             if pins:
                 symbol.units[key] = pins
+        # Authoritative power-symbol marker (works for project-local power
+        # libraries like "myproj:GND", not just the standard "power:" lib).
+        symbol.is_power = sexpr.first(sym, "power") is not None
         out[lib_id] = symbol
     return out
 
@@ -235,6 +238,8 @@ def parse_symbol_instance(
     )
 
     lib = lib_symbols.get(lib_id)
+    if lib is not None:
+        symbol.power = lib.is_power
     lib_pins = lib.pins_for(unit, body_style) if lib else []
     pin_positions: Dict[str, tuple[float, float]] = {}
     for lp in lib_pins:

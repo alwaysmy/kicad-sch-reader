@@ -31,7 +31,8 @@ _UNNAMED_COUNT_WARN = 20
 
 
 def _is_capacitor(pin: PinNet) -> bool:
-    return bool(_CAP_VALUE_RE.search(pin.value or "")) and not pin.lib_id.startswith("power:")
+    return bool(_CAP_VALUE_RE.search(pin.value or "")) and not (
+        pin.lib_id.startswith("power:") or pin.ref.startswith("#"))
 
 
 def _severity_for_pin_type(pin_type: str, has_net: bool) -> Optional[str]:
@@ -158,7 +159,7 @@ def check_single_pin_nets(netlist: Iterable[Net]) -> List[Issue]:
     for net in netlist:
         if net.pin_count() == 1:
             pin = net.pins[0]
-            only_power = pin.lib_id.startswith("power:")
+            only_power = pin.lib_id.startswith("power:") or pin.ref.startswith("#PWR")
             issues.append(Issue(
                 code="R302",
                 evidence="structural",
@@ -207,7 +208,8 @@ def check_power_decoupling(netlist: Iterable[Net]) -> List[Issue]:
     """Per power-input pin: is there at least one capacitor on the same net?"""
     issues: List[Issue] = []
     for net in netlist:
-        power_pins = [p for p in net.pins if p.pin_type.lower() == "power_in" and not p.lib_id.startswith("power:")]
+        power_pins = [p for p in net.pins if p.pin_type.lower() == "power_in" and not (
+            p.lib_id.startswith("power:") or p.ref.startswith("#PWR"))]
         if not power_pins:
             continue
         caps = [p for p in net.pins if _is_capacitor(p)]
@@ -471,7 +473,8 @@ def check_net_naming(netlist: Iterable[Net]) -> List[Issue]:
 
 def _is_power_like(net: Net) -> bool:
     return bool(net.power_names) or all(
-        p.pin_type.lower() in ("power_in", "power_out") or p.lib_id.startswith("power:")
+        p.pin_type.lower() in ("power_in", "power_out")
+        or p.lib_id.startswith("power:") or p.ref.startswith("#PWR")
         for p in net.pins
     )
 

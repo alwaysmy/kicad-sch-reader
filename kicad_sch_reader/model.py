@@ -20,6 +20,10 @@ class LibPin:
 @dataclass
 class LibSymbol:
     lib_id: str
+    # True when the library definition carries the explicit ``(power)`` flag.
+    # Older projects keep their power symbols in a project-local library
+    # (e.g. "myproj:GND"), so the lib_id prefix alone is not authoritative.
+    is_power: bool = False
     # key = "<unit>_<body_style>" (for example "1_1")
     units: Dict[str, List[LibPin]] = field(default_factory=dict)
 
@@ -72,6 +76,7 @@ class SymbolInstance:
     in_bom: bool = True
     on_board: bool = True
     dnp: bool = False
+    power: bool = False
     properties: Dict[str, str] = field(default_factory=dict)
     pins: List[PinInstance] = field(default_factory=list)
     sheet_path: str = "/"
@@ -82,7 +87,12 @@ class SymbolInstance:
 
     @property
     def is_power_symbol(self) -> bool:
-        return self.lib_id.startswith("power:")
+        if self.power or self.lib_id.startswith("power:"):
+            return True
+        # Fallback for libraries without the (power) flag: KiCad power symbols
+        # are single-pin, power_in, and their reference starts with "#PWR".
+        return self.ref.startswith("#PWR") and len(self.pins) == 1 \
+            and self.pins[0].electrical_type == "power_in"
 
 
 @dataclass

@@ -232,8 +232,11 @@ def build_local_nets(project: Project):
                     net.hierarchical_names.append(label.name)
 
         # Power symbols behave like global labels named by their Value.
+        # Exception: PWR_FLAG only marks "this net is power-driven" for ERC;
+        # treating its value as a net name would unite every flagged rail
+        # (verified against kicad-cli on the complex_hierarchy demo).
         for sym in sheet.symbols:
-            if sym.is_power_symbol:
+            if sym.is_power_symbol and sym.value and sym.value != "PWR_FLAG":
                 for pin in sym.pins:
                     key = (sym.ref, pin.number)
                     k = pin_net_key[path].get(key)

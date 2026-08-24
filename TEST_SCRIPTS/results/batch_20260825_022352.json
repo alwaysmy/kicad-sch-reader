@@ -1,0 +1,60 @@
+[
+  {
+    "project": "D:\\MyProjects\\2_MyDesigns\\5_R2R_DAC\\设计分Part\\I2S接收实现\\i2s_recv_part_rev0.2",
+    "name": "i2s_recv_part_rev0.2",
+    "ok": true,
+    "file_version": [
+      "20231120"
+    ],
+    "sheets": 5,
+    "symbols": 138,
+    "nets": 97,
+    "pin_connections": 446,
+    "free_texts": 26,
+    "title_blocks_with_title": 0,
+    "issues": 33,
+    "issue_severity": {
+      "warning": 11,
+      "info": 22
+    },
+    "issue_codes": {
+      "R603": 5,
+      "R301": 6,
+      "R103": 1,
+      "R701": 1,
+      "R501": 18,
+      "R304": 2
+    },
+    "error_samples": [],
+    "seconds": 0.06,
+    "netlist_check": {
+      "common": 369,
+      "official": 369,
+      "missing": 0,
+      "extra": 4,
+      "name_mismatches": 128,
+      "precision": 0.6531,
+      "missing_samples": [],
+      "extra_samples": [
+        "U4.2",
+        "U4.3",
+        "U4.4",
+        "U4.5"
+      ],
+      "mismatch_samples": [
+        "J5.1: ours='/32BitSerToDes/DOUT0' official='/D0'",
+        "J5.10: ours='/32BitSerToDes/DOUT9' official='/D9'",
+        "J5.11: ours='/32BitSerToDes/DOUT10' official='/D10'",
+        "J5.12: ours='/32BitSerToDes/DOUT11' official='/D11'",
+        "J5.13: ours='/32BitSerToDes/DOUT12' official='/D12'",
+        "J5.14: ours='/32BitSerToDes/DOUT13' official='/D13'",
+        "J5.15: ours='/32BitSerToDes/DOUT14' official='/D14'",
+        "J5.16: ours='/32BitSerToDes/DOUT15' official='/D15'",
+        "J5.2: ours='/32BitSerToDes/DOUT1' official='/D1'",
+        "J5.3: ours='/32BitSerToDes/DOUT2' official='/D2'",
+        "J5.4: ours='/32BitSerToDes/DOUT3' official='/D3'",
+        "J5.5: ours='/32BitSerToDes/DOUT4' official='/D4'"
+      ]
+    }
+  }
+]

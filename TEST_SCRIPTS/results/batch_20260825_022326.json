@@ -1,0 +1,58 @@
+[
+  {
+    "project": "D:\\MyProjects\\1_MySpace\\KiCadProjects\\CH340E",
+    "name": "CH340E",
+    "ok": true,
+    "file_version": [
+      "20211123"
+    ],
+    "sheets": 1,
+    "symbols": 21,
+    "nets": 14,
+    "pin_connections": 57,
+    "free_texts": 0,
+    "title_blocks_with_title": 0,
+    "issues": 17,
+    "issue_severity": {
+      "error": 4,
+      "warning": 6,
+      "info": 7
+    },
+    "issue_codes": {
+      "R101": 4,
+      "R603": 1,
+      "R201": 3,
+      "R302": 2,
+      "R402": 1,
+      "R304": 4,
+      "R501": 2
+    },
+    "error_samples": [
+      "R101: 位号 J?（unit 1）在 / 上重复（Connector_Generic:Conn_01x06 与 CH340E-rescue:USB_C_Receptacle_USB2.0-Connector）",
+      "R101: 位号 J?（unit 1）在 / 上重复（Connector_Generic:Conn_01x06 与 CH340E-rescue:USB_B_Micro-Connector）",
+      "R101: 位号 R?（unit 1）在 / 上重复（Device:R 与 Device:R）",
+      "R101: 位号 R?（unit 1）在 / 上重复（Device:R 与 Device:R）"
+    ],
+    "seconds": 0.01,
+    "netlist_check": {
+      "common": 28,
+      "official": 28,
+      "missing": 0,
+      "extra": 8,
+      "name_mismatches": 0,
+      "precision": 1.0,
+      "missing_samples": [],
+      "extra_samples": [
+        "C?.1",
+        "D?.1",
+        "J?.A5",
+        "J?.B5",
+        "R?.2",
+        "U?.10",
+        "U?.8",
+        "U?.9"
+      ],
+      "mismatch_samples": []
+    }
+  }
+]

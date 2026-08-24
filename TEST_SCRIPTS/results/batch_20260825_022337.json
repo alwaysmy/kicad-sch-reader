@@ -1,0 +1,55 @@
+[
+  {
+    "project": "D:\\MyProjects\\2_MyDesigns\\1夹具冶具延长线转接板测试架\\测试冶具夹具\\USB测试夹具",
+    "name": "USB测试夹具",
+    "ok": true,
+    "file_version": [
+      "20211123"
+    ],
+    "sheets": 1,
+    "symbols": 19,
+    "nets": 6,
+    "pin_connections": 41,
+    "free_texts": 1,
+    "title_blocks_with_title": 0,
+    "issues": 17,
+    "issue_severity": {
+      "error": 7,
+      "warning": 3,
+      "info": 7
+    },
+    "issue_codes": {
+      "R101": 7,
+      "R603": 1,
+      "R201": 2,
+      "R402": 1,
+      "R304": 3,
+      "R501": 3
+    },
+    "error_samples": [
+      "R101: 位号 J?（unit 1）在 / 上重复（Connector:USB_A 与 Connector:USB_B）",
+      "R101: 位号 J?（unit 1）在 / 上重复（Connector:USB_A 与 Connector:Conn_Coaxial）",
+      "R101: 位号 J?（unit 1）在 / 上重复（Connector:USB_A 与 QFN_G2553_EVM-rescue:USB_C_Receptacle_USB2.0-Connector）",
+      "R101: 位号 J?（unit 1）在 / 上重复（Connector:USB_A 与 QFN_G2553_EVM-rescue:USB_B_Micro-Connector）",
+      "R101: 位号 J?（unit 1）在 / 上重复（Connector:USB_A 与 Connector_Generic:Conn_01x02）",
+      "R101: 位号 J?（unit 1）在 / 上重复（Connector:USB_A 与 Connector:USB_A）",
+      "R101: 位号 R?（unit 1）在 / 上重复（Device:R 与 Device:R）"
+    ],
+    "seconds": 0.01,
+    "netlist_check": {
+      "common": 22,
+      "official": 22,
+      "missing": 0,
+      "extra": 3,
+      "name_mismatches": 0,
+      "precision": 1.0,
+      "missing_samples": [],
+      "extra_samples": [
+        "J?.A5",
+        "J?.B5",
+        "R?.2"
+      ],
+      "mismatch_samples": []
+    }
+  }
+]

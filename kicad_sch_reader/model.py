@@ -15,6 +15,9 @@ class LibPin:
     name: str
     electrical_type: str
     pos: Point
+    # Legacy-library hidden power pins ((hide yes), usually length 0) connect
+    # to the global net named after the pin even without any geometry.
+    hidden: bool = False
 
 
 @dataclass
@@ -59,6 +62,7 @@ class PinInstance:
     pos: Point
     uuid: str = ""
     no_connect: bool = False
+    hidden: bool = False
     net: Optional[str] = None
 
 

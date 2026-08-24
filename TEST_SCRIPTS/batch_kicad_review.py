@@ -36,7 +36,7 @@ PROJECTS = [
     DEMOS / "video",
     DEMOS / "ecc83",
     # --- User projects spanning KiCad 6..9 file formats ---
-    Path(r"D:\MyProjects\1_MySpace\KiCadProjects\ADS1292R_EVM"),
+    # (ADS1292R_EVM skipped: KiCad-5 legacy .sch format, out of scope.)
     Path(r"D:\MyProjects\1_MySpace\KiCadProjects\CH340E"),
     Path(r"D:\MyProjects\2_MyDesigns\4_Lightsensor\LightSensor"),
     Path(r"D:\MyProjects\2_MyDesigns\5_R2R_DAC\2022YearRedesign\R2R_DAC_16BIT"),
@@ -131,6 +131,12 @@ def main() -> int:
                     "common": val["common_pins"], "official": val["official_pins"],
                     "missing": val["missing_pins"], "extra": val["extra_pins"],
                     "name_mismatches": val["name_mismatches"], "precision": val["precision"],
+                    "missing_samples": [f"{k[0]}.{k[1]}" for k in val["missing_samples"]],
+                    "extra_samples": [f"{k[0]}.{k[1]}" for k in val["extra_samples"]],
+                    "mismatch_samples": [
+                        f"{m[0][0]}.{m[0][1]}: ours={m[1]!r} official={m[2]!r}"
+                        for m in val["mismatch_samples"]
+                    ],
                 }
                 flag = "PASS" if val["missing_pins"] == 0 and val["precision"] >= 0.95 else "WEAK"
                 print(f"[netlist {flag}] {proj.name}: common={val['common_pins']}/{val['official_pins']} "

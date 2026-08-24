@@ -1,0 +1,59 @@
+[
+  {
+    "project": "C:\\Program Files\\KiCad\\10.0\\share\\kicad\\demos\\video",
+    "name": "video",
+    "ok": true,
+    "file_version": [
+      "20250114"
+    ],
+    "sheets": 8,
+    "symbols": 395,
+    "nets": 589,
+    "pin_connections": 2022,
+    "free_texts": 5,
+    "title_blocks_with_title": 8,
+    "issues": 386,
+    "issue_severity": {
+      "error": 2,
+      "warning": 166,
+      "info": 218
+    },
+    "issue_codes": {
+      "R401": 2,
+      "R303": 43,
+      "R302": 121,
+      "R304": 217,
+      "R103": 2,
+      "R402": 1
+    },
+    "error_samples": [
+      "R401: 网络被命名为多个全局网络: +5V, VCC；当前工具暂按 '+5V' 归并，请用 KiCad ERC 复核",
+      "R401: 网络被命名为多个全局网络: GND, VSS；当前工具暂按 'GND' 归并，请用 KiCad ERC 复核"
+    ],
+    "seconds": 0.51,
+    "netlist_check": {
+      "common": 1816,
+      "official": 1816,
+      "missing": 0,
+      "extra": 0,
+      "name_mismatches": 122,
+      "precision": 0.9328,
+      "missing_samples": [],
+      "extra_samples": [],
+      "mismatch_samples": [
+        "U10.100: ours='/PC_D7' official='/DQ7'",
+        "U10.84: ours='/PC_A0' official='/PCA0'",
+        "U10.85: ours='/PC_A1' official='/PCA1'",
+        "U10.92: ours='/PC_D0' official='/DQ0'",
+        "U10.93: ours='/PC_D1' official='/DQ1'",
+        "U10.94: ours='/PC_D2' official='/DQ2'",
+        "U10.95: ours='/PC_D3' official='/DQ3'",
+        "U10.96: ours='/PC_D4' official='/DQ4'",
+        "U10.97: ours='/PC_D5' official='/DQ5'",
+        "U10.99: ours='/PC_D6' official='/DQ6'",
+        "U22.17: ours='/VRAM0' official='/TVRAM0'",
+        "U22.18: ours='/VRAM3' official='/TVRAM3'"
+      ]
+    }
+  }
+]

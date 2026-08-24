@@ -65,11 +65,13 @@ def _parse_lib_pin(node) -> Optional[LibPin]:
         )
     name = _text(name_node[1]) if name_node is not None and len(name_node) > 1 else ""
     pos = sexpr.xy(at_node) if at_node is not None else (0.0, 0.0, 0.0)
+    hidden = sexpr.first(node, "hide") is not None
     # Empirical KiCad 10 fact (validated against kicad-cli netlist on the
     # example projects and a minimal rotation test bench): the pin `at` y
     # coordinate in the symbol definition has the opposite sign of the
     # physical connection offset used by Eeschema connectivity.
-    return LibPin(number=number, name=name, electrical_type=electrical_type, pos=(pos[0], -pos[1]))
+    return LibPin(number=number, name=name, electrical_type=electrical_type,
+                  pos=(pos[0], -pos[1]), hidden=hidden)
 
 
 def parse_lib_symbols(root) -> Dict[str, LibSymbol]:
@@ -279,6 +281,7 @@ def parse_symbol_instance(
                 electrical_type=etype,
                 pos=pos,
                 uuid=_text(uuid_node[1]) if uuid_node is not None and len(uuid_node) > 1 else "",
+                hidden=bool(lp.hidden) if lp is not None else False,
             )
         )
     return symbol

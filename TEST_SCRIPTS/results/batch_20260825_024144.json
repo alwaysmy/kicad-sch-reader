@@ -1,0 +1,59 @@
+[
+  {
+    "project": "C:\\Program Files\\KiCad\\10.0\\share\\kicad\\demos\\video",
+    "name": "video",
+    "ok": true,
+    "file_version": [
+      "20250114"
+    ],
+    "sheets": 8,
+    "symbols": 395,
+    "nets": 589,
+    "pin_connections": 2022,
+    "free_texts": 5,
+    "title_blocks_with_title": 8,
+    "issues": 386,
+    "issue_severity": {
+      "error": 2,
+      "warning": 166,
+      "info": 218
+    },
+    "issue_codes": {
+      "R401": 2,
+      "R303": 43,
+      "R302": 121,
+      "R304": 217,
+      "R103": 2,
+      "R402": 1
+    },
+    "error_samples": [
+      "R401: 网络被命名为多个全局网络: +5V, VCC；当前工具暂按 '+5V' 归并，请用 KiCad ERC 复核",
+      "R401: 网络被命名为多个全局网络: GND, VSS；当前工具暂按 'GND' 归并，请用 KiCad ERC 复核"
+    ],
+    "seconds": 0.47,
+    "netlist_check": {
+      "common": 1816,
+      "official": 1816,
+      "missing": 0,
+      "extra": 0,
+      "name_mismatches": 138,
+      "precision": 0.924,
+      "missing_samples": [],
+      "extra_samples": [],
+      "mismatch_samples": [
+        "BUS1.A52: ours='/P_C/BE0#' official='/buspci.sch/P_C{slash}BE0#'",
+        "BUS1.B26: ours='/P_C/BE3#' official='/buspci.sch/P_C{slash}BE3#'",
+        "BUS1.B33: ours='/P_C/BE2#' official='/buspci.sch/P_C{slash}BE2#'",
+        "BUS1.B44: ours='/P_C/BE1#' official='/buspci.sch/P_C{slash}BE1#'",
+        "RR3.5: ours='/PCWR' official='/{slash}PCWR'",
+        "RR3.7: ours='/PCRD' official='/{slash}PCRD'",
+        "U10.100: ours='/PC_D7' official='/DQ7'",
+        "U10.84: ours='/PC_A0' official='/PCA0'",
+        "U10.85: ours='/PC_A1' official='/PCA1'",
+        "U10.92: ours='/PC_D0' official='/DQ0'",
+        "U10.93: ours='/PC_D1' official='/DQ1'",
+        "U10.94: ours='/PC_D2' official='/DQ2'"
+      ]
+    }
+  }
+]

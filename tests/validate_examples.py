@@ -48,10 +48,29 @@ def parse_official_netlist(path: Path) -> dict:
 
 
 def normalize_name(name: str) -> str:
-    """Compare names ignoring KiCad's hierarchical ``/Sheet/Label`` prefixes."""
+    """Strip KiCad's hierarchical ``/Sheet/Label`` prefix."""
     if name.startswith("unconnected-"):
         return name
     return name.rsplit("/", 1)[-1]
+
+
+def names_match(ours_raw: str, official_raw: str) -> bool:
+    """Three-way net-name comparison against the official exporter.
+
+    1. plain tail equality (``/Sheet/Label`` vs ``Label``);
+    2. our unnamed ``N$n`` vs official single-pin ``Net-(REF-PIN)``;
+    3. literal slashes inside label text are exported as ``{slash}`` —
+       compare again with those unescaped (a label "P_C/BE0#" is one name,
+       not a hierarchy).
+    """
+    a, b = normalize_name(ours_raw), normalize_name(official_raw)
+    if a == b:
+        return True
+    if a.startswith("N$") and b.startswith("Net-"):
+        return True
+    fa = ours_raw.replace("{slash}", "/").rsplit("/", 1)[-1]
+    fb = official_raw.replace("{slash}", "/").rsplit("/", 1)[-1]
+    return fa == fb
 
 
 def validate_project(project_dir: Path, work_dir: Path) -> dict:
@@ -74,10 +93,9 @@ def validate_project(project_dir: Path, work_dir: Path) -> dict:
     extra = sorted(set(ours_real) - set(official_real))
     mismatches = []
     for key in sorted(common):
-        a, b = normalize_name(ours_real[key]), normalize_name(official_real[key])
-        both_unnamed = a.startswith("N$") and b.startswith("Net-")
-        if a != b and not both_unnamed:
-            mismatches.append((key, ours_real[key], official_real[key]))
+        a, b = ours_real[key], official_real[key]
+        if not names_match(a, b):
+            mismatches.append((key, a, b))
 
     precision = 0
     if common:

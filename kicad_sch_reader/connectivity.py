@@ -9,6 +9,7 @@ and global labels/power symbols are merged project-wide by name.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from typing import Dict, Iterable, List, Optional, Set, Tuple
 
@@ -25,6 +26,11 @@ from .model import (
 
 Point = Tuple[int, int]  # quantized point key
 EPS_MM = 0.001  # position match tolerance (1 um)
+
+
+def _path_depth(path: str) -> int:
+    """Hierarchy depth of a sheet path: '/' -> 0, '/uuid' -> 1, '/a/b' -> 2."""
+    return sum(1 for seg in str(path).split("/") if seg)
 
 
 @dataclass
@@ -177,7 +183,11 @@ def build_local_nets(project: Project):
     """Return per-sheet local nets plus the maps needed for hierarchy joins."""
     local_by_sheet: Dict[str, List[_LocalNet]] = {}
     point_net: Dict[str, Dict[Point, _LocalNet]] = {}
-    pin_net_key: Dict[str, Dict[Tuple[str, str], Optional[Point]]] = {}
+    # (ref, pin, quantised point) -> point.  The position is part of the key:
+    # unannotated power symbols all share reference "#PWR?" and pin "1", so a
+    # bare (ref, pin) key would collapse them onto whichever instance was
+    # stored last.
+    pin_net_key: Dict[str, Dict[Tuple[str, str, Point], Optional[Point]]] = {}
 
     for path in project.sheet_order:
         sheet = project.sheets[path]
@@ -198,7 +208,7 @@ def build_local_nets(project: Project):
         for sym in sheet.symbols:
             for pin in sym.pins:
                 k = qpoint(*pin.pos)
-                key = (sym.ref, pin.number)
+                key = (sym.ref, pin.number, k)
                 if k in nc_keys:
                     pin.no_connect = True
                     pin_net_key[path][key] = None
@@ -231,6 +241,30 @@ def build_local_nets(project: Project):
                 elif label.kind == "hierarchical_label":
                     net.hierarchical_names.append(label.name)
 
+        # Hidden power-input pins (legacy libraries, "(hide yes)"): KiCad
+        # connects them to the global net named after the *pin* even without
+        # any geometry (verified against kicad-cli on the video demo).  Give
+        # each such pin a name-only net; build_netlist() merges same power
+        # names project-wide, so a matching power symbol joins the geometry.
+        hidden_by_name: Dict[str, _LocalNet] = {}
+        for sym in sheet.symbols:
+            for pin in sym.pins:
+                if not pin.hidden or (pin.electrical_type or "").lower() != "power_in":
+                    continue
+                if not pin.name or not pin.name.strip():
+                    continue
+                key = (sym.ref, pin.number, qpoint(*pin.pos))
+                if pin_net_key[path].get(key) is not None:
+                    continue  # also connected geometrically
+                nm = pin.name.strip()
+                net = hidden_by_name.get(nm)
+                if net is None:
+                    net = _LocalNet(sheet_path=path)
+                    net.power_names.append(nm)
+                    hidden_by_name[nm] = net
+                _attach_pin(net, pin, sym)
+                pin_net_key[path][key] = qpoint(*pin.pos)
+
         # Power symbols behave like global labels named by their Value.
         # Exception: PWR_FLAG only marks "this net is power-driven" for ERC;
         # treating its value as a net name would unite every flagged rail
@@ -238,7 +272,7 @@ def build_local_nets(project: Project):
         for sym in sheet.symbols:
             if sym.is_power_symbol and sym.value and sym.value != "PWR_FLAG":
                 for pin in sym.pins:
-                    key = (sym.ref, pin.number)
+                    key = (sym.ref, pin.number, qpoint(*pin.pos))
                     k = pin_net_key[path].get(key)
                     if k is not None:
                         net = net_of_point.get(k)
@@ -249,7 +283,7 @@ def build_local_nets(project: Project):
         # hierarchical sheet-pin joins (two sheet pins connected by a wire with
         # no component on it); final materialisation drops groups that never
         # acquired a pin or a name.
-        nets = list(root_to_net.values())
+        nets = list(root_to_net.values()) + list(hidden_by_name.values())
 
         # KiCad connects same-name ordinary/hierarchical labels inside one
         # sheet; merge those domains before hierarchy handling.
@@ -389,6 +423,7 @@ def build_netlist(project: Project) -> List[Net]:
             if group is None:
                 group = Net(name="")
                 group.hier_sources = {}  # name -> set(sheet_path)
+                group.label_entries = []  # (sheet depth, label name)
                 groups[root_i] = group
             group.pins.extend(local.pins)
             group.labels.extend(local.labels)
@@ -397,6 +432,12 @@ def build_netlist(project: Project) -> List[Net]:
             group.hierarchical_names.extend(local.hierarchical_names)
             for hname in local.hierarchical_names:
                 group.hier_sources.setdefault(hname, set()).add(local.sheet_path)
+            # Record where each ordinary label lives: the official netlist
+            # exporter names merged nets after the *shallower* candidate.
+            depth = _path_depth(local.sheet_path)
+            for lname in set(local.labels):
+                if lname:
+                    group.label_entries.append((depth, lname))
             group.point_count += len(local.points)
 
     named_or_pinned_groups = [
@@ -432,17 +473,28 @@ def build_netlist(project: Project) -> List[Net]:
         # get a leading "/", and hierarchical labels become /<Sheet>/<Label>.
         if global_set:
             group.name = global_set[0]
-        elif group.hierarchical_names:
-            hname = group.hierarchical_names[0]
-            paths = sorted(group.hier_sources.get(hname, {"/"}))
-            path = paths[0] if paths else "/"
-            sheet_name = sheet_names.get(path, "")
-            group.name = f"/{sheet_name}/{hname}" if sheet_name else f"/{hname}"
-        elif group.labels:
-            label = sorted(set(group.labels))[0]
-            group.name = label if label.startswith("/") else f"/{label}"
         else:
-            group.name = f"N${order + 1}"
+            # Depth-first naming mirrors the official exporter: a plain label
+            # on a shallower sheet wins over a deeper hierarchical label
+            # (e.g. parent "D9" over child HL "DOUT9" on the same net); ties
+            # keep the previous hierarchical-first behaviour.
+            hier_best = None
+            local_best = min(group.label_entries) if group.label_entries else None
+            if group.hierarchical_names:
+                hname = sorted(group.hierarchical_names)[0]
+                paths = sorted(group.hier_sources.get(hname, {"/"}))
+                hd = min(_path_depth(x) for x in paths)
+                hier_best = (hd, hname)
+            if local_best is not None and (hier_best is None or local_best[0] < hier_best[0]):
+                group.name = local_best[1] if local_best[1].startswith("/") else f"/{local_best[1]}"
+            elif hier_best is not None:
+                hname = hier_best[1]
+                paths = sorted(group.hier_sources.get(hname, {"/"}))
+                path = paths[0] if paths else "/"
+                sheet_name = sheet_names.get(path, "")
+                group.name = f"/{sheet_name}/{hname}" if sheet_name else f"/{hname}"
+            else:
+                group.name = f"N${order + 1}"
         nets.append(group)
 
     nets.sort(key=lambda n: (n.name, tuple(p.ref for p in n.pins[:2])))

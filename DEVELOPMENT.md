@@ -90,6 +90,30 @@ KiCad 10 的 lib pin 写法是
 早期实现把这类“空域”过滤掉，导致 `AFE_OUT_P` 等跨两张子图的网络无法合并。
 现在的实现保留全部中间域，仅在最终物化时丢弃从未获得引脚或名字的分组。
 
+**多工程实测修复（2026-08-25，11 个本机工程 + 官方网表交叉验证）**：
+
+1. **工程本地电源库**：电源符号不一定在 `power:` 库（老工程常用
+   `工程名:GND`）。判定以 lib_symbols 定义中的 `(power)` 标志为准，
+   兜底条件为 `#PWR*` 单引脚 power_in。仅看 lib_id 前缀会把
+   complex_hierarchy 等 demo 的全部电源网打成 `N$`。
+2. **PWR_FLAG 不是网络名**：其 Value 曾被当作全局电源名参与跨页合并，
+   把 +12V/GND/HT 各轨并成一团。它只是"此网络有电源驱动"的 ERC 标记，
+   已排除出命名。
+3. **`pin_net_key` 键冲突**：未标注的电源符号 Reference 全是 `#PWR?`
+   且单脚 "1"，`(ref, pin)` 作键互相覆盖。键已加入量化坐标维度。
+4. **隐藏电源引脚**（legacy 库 `(hide yes)` 的 power_in 脚）：KiCad 按
+   **引脚名**把它们连入全局网（video demo 的 VCC/GND 脚无任何几何连接）。
+   解析器现记录 `hidden` 标志，连通域为其建同名网，经 power_names
+   合并进几何网络。
+5. **命名深度优先**：同一网络既有父图普通标签又有子图分层标签时，
+   官方网表取浅层图纸的名字（根页 `D9` 胜过子图 HL `DOUT9`）。
+   命名候选按 sheet depth 排序，同深度保持分层优先。
+
+**已知命名差异（连通性均正确，missing=0）**：
+- 同页双标签冗余标注时，官方与我们的取名选择可能不同
+  （如 PC_D7 vs DQ7，属遍历顺序决定的任意选择，video 工程约 6.7% 引脚）；
+- 标签字面值含 `/` 时官方网表转义为 `{slash}`，交叉验证脚本已归一。
+
 ### 3.4.5 子图复用多实例（instances 覆盖）
 
 KiCad 允许同一张子图被多次实例化，并在 symbol 节点内保存
@@ -111,21 +135,28 @@ KiCad 把同一多单元器件的每个 unit 存为独立 `symbol` 节点（同 
 
 ## 4. 审查规则（rules.py）
 
-规则刻意保持“可解释、低误报”：
+规则刻意保持“可解释、低误报”，每条 Issue 带 `evidence` 级别：
+`official`（官方 ERC 转写）/ `structural`（结构事实）/ `declared`
+（字段约定）/ `heuristic`（启发式建议，可结合设计意图忽略）。
 
-| 代码 | 级别 | 含义 |
-| --- | --- | --- |
-| R101/R102 | error/warning | 同页/跨页重复位号 |
-| R201/R202 | warning/info | 缺封装 / 值为空 |
-| R301 | error/warning/info | 引脚未连接且未标 NC（按 pin type 分级） |
-| R302/R303 | warning | 单引脚网络 / 无引脚标签 |
-| R401 | error | 同一物理域存在多个全局网络名 |
-| R501 | info | 电源输入引脚网络上未发现去耦电容 |
-| R601/R602 | error/warning | 图纸文件缺失 / sheet-pin 无对应子图标签 |
-| R701 | info | DNP 器件清单 |
-| ERC-* | 随官方 | kicad-cli ERC JSON 转写 |
+| 代码 | 级别 | evidence | 含义 |
+| --- | --- | --- | --- |
+| R101/R102 | error/warning | structural | 同页/跨页重复位号 |
+| R103 | info | heuristic | 位号编号不连续（跳号提示） |
+| R201/R202 | warning/info | declared | 缺封装 / 值为空 |
+| R301 | error/warning/info | structural | 引脚未连接且未标 NC（按 pin type 分级） |
+| R304 | info/warning | structural | NC 引脚人工确认清单（power_in 被 NC 升级 warning） |
+| R302/R303 | warning | structural | 单引脚网络 / 无引脚标签 |
+| R401 | error | structural | 同一物理域存在多个全局网络名 |
+| R402 | info | heuristic | 未命名（N$）网络占比提示 |
+| R501 | info | heuristic | 电源输入引脚网络上未发现去耦电容 |
+| R601/R602 | error/warning | structural | 图纸文件缺失 / sheet-pin 无对应子图标签 |
+| R603 | warning/info | declared | 标题栏字段缺失（title/date/rev/company） |
+| R701 | info | structural | DNP 器件清单 |
+| ERC-* | 随官方 | official | kicad-cli ERC JSON 转写 |
 
-官方 ERC 与本工具规则分开输出（代码前缀不同），便于追溯证据来源。
+审查规则可通过 `review --config review_rules.json` 按 code 覆盖启停与
+severity。
 
 ## 5. 验证方法
 
@@ -134,9 +165,13 @@ KiCad 把同一多单元器件的每个 unit 存为独立 `symbol` 节点（同 
    - 用 `kicad-cli sch export netlist` 生成官方网表；
    - 逐引脚比对 `(ref, pin) -> net`；
    - 忽略 `#PWR*`（官方网表不含电源符号）与 `unconnected-*` 伪网络；
-   - 网络名比较时忽略 `/Sheet/Label` 前缀；
+   - 网络名比较时忽略 `/Sheet/Label` 前缀，`{slash}` 转义还原，
+     `N$` vs `Net-(...)` 单脚网豁免（见 `names_match`）；
    - 验收阈值：missing pins = 0，名称匹配 precision ≥ 0.95。
-3. `review` 命令生成报告后人工抽查关键网络（如 `GND`、`AFE_OUT_P`）。
+3. `python TEST_SCRIPTS/batch_kicad_review.py`：对本机多个真实工程
+   （KiCad 10 demos + 跨 KiCad 6..9 用户工程）批量 parse/review +
+   官方网表交叉验证，结果带时间戳写入 `TEST_SCRIPTS/results/`。
+4. `review` 命令生成报告后人工抽查关键网络（如 `GND`、`AFE_OUT_P`）。
 
 ## 6. 如何新增审查规则
 

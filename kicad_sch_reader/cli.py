@@ -65,6 +65,7 @@ def cmd_sheets(args) -> None:
             "path": path,
             "file": str(sheet.file),
             "title": sheet.title,
+            "title_fields": dict(sheet.title_fields),
             "version": sheet.version,
             "generator": sheet.generator,
             "symbols": len(sheet.symbols),
@@ -80,8 +81,45 @@ def cmd_sheets(args) -> None:
         rows.append(row)
         if not args.json:
             print(f"{path:24s} {Path(sheet.file).name:48s} {sheet.title}")
+            tb = sheet.title_fields
+            extras = [f"{k}={tb[k]}" for k in ("date", "rev", "company") if tb.get(k)]
+            if extras:
+                print(f"    title_block: {'; '.join(extras)}")
             for r in sheet.sheets:
                 print(f"    sheet {r.name} -> {r.file} ({r.first_path})")
+    if args.json:
+        _print_json(rows)
+
+
+def cmd_texts(args) -> None:
+    """导出各页自由文本注释（设计说明/注意事项），供设计意图审查对照。
+
+    文本内容是否与电路一致需人工或 LLM 对照器件手册核实——本命令只负责
+    把"审查对象"完整捞出来，不做自动判定。
+    """
+    project = _project(args)
+    needle = getattr(args, "filter", "") or ""
+    rows = []
+    for path in project.sheet_order:
+        sheet = project.sheets[path]
+        for t in sheet.texts:
+            if needle and needle.lower() not in t.content.lower():
+                continue
+            row = {
+                "sheet_path": path,
+                "kind": t.kind,
+                "content": t.content,
+                "pos": [round(t.pos[0], 4), round(t.pos[1], 4)],
+                "rotation": t.rotation,
+            }
+            if t.kind == "textbox":
+                row["size"] = [round(t.size[0], 4), round(t.size[1], 4)]
+            rows.append(row)
+            if not args.json:
+                content = t.content.replace("\n", "\\n")
+                if len(content) > 90:
+                    content = content[:90] + "…"
+                print(f"{path:24s} [{t.kind:7s}] ({t.pos[0]:8.2f},{t.pos[1]:8.2f}) {content}")
     if args.json:
         _print_json(rows)
 
@@ -565,6 +603,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
     add_json(p)
     add_input(p)
     p.set_defaults(func=cmd_sheets)
+
+    p = sub.add_parser("texts", help="导出页内自由文本注释（设计意图审查用）")
+    add_json(p)
+    add_input(p)
+    p.add_argument("filter", nargs="?", default="", help="按文本内容过滤")
+    p.set_defaults(func=cmd_texts)
 
     p = sub.add_parser("components", help="列出元件")
     add_json(p)

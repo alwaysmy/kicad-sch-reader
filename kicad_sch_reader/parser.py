@@ -20,6 +20,7 @@ from .model import (
     NoConnect,
     PinInstance,
     Project,
+    SchText,
     SheetData,
     SheetPin,
     SheetRef,
@@ -347,9 +348,15 @@ def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
 
     title_block = sexpr.first(root, "title_block")
     if title_block is not None:
-        title = sexpr.first(title_block, "title")
-        if title is not None and len(title) > 1:
-            sheet.title = _text(title[1])
+        for field_node in sexpr.children(title_block):
+            fname = field_node[0]
+            if fname == "comment":
+                # (comment <n> "<text>")
+                if len(field_node) > 2:
+                    sheet.title_fields[f"comment{_text(field_node[1])}"] = _text(field_node[2])
+            elif len(field_node) > 1:
+                sheet.title_fields[fname] = _text(field_node[1])
+        sheet.title = sheet.title_fields.get("title", "")
 
     sheet.lib_symbols = parse_lib_symbols(root)
     instance_overrides = parse_lib_instances(root)
@@ -410,7 +417,60 @@ def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
             ref = parse_sheet_ref(child)
             if ref is not None:
                 sheet.sheets.append(ref)
+        elif kind in ("text", "textbox"):
+            parsed = parse_free_text(child)
+            if parsed is not None:
+                sheet.texts.append(parsed)
     return sheet
+
+
+def parse_free_text(node) -> Optional[SchText]:
+    """Parse a free-text annotation (``text`` / ``textbox`` nodes).
+
+    KiCad 7..10 ``textbox`` wraps the string in an inner ``(text ...)`` node;
+    older/other layouts keep the content as the first atom.  Both are handled
+    here so page annotations survive across file versions.
+    """
+    if not sexpr.is_node(node, "text") and not sexpr.is_node(node, "textbox"):
+        return None
+    kind = node[0]
+    at_node = sexpr.first(node, "at")
+    x, y, rot = sexpr.xy(at_node) if at_node is not None else (0.0, 0.0, 0.0)
+    uuid_node = sexpr.first(node, "uuid")
+    content = ""
+    if kind == "textbox":
+        size_node = sexpr.first(node, "size")
+        w = sexpr.to_float(size_node[1]) if size_node is not None and len(size_node) > 1 else 0.0
+        h = sexpr.to_float(size_node[2]) if size_node is not None and len(size_node) > 2 else 0.0
+        inner = sexpr.first(node, "text")
+        if inner is not None and len(inner) > 1:
+            content = _text(inner[1])
+            inner_at = sexpr.first(inner, "at")
+            if inner_at is not None:
+                ix, iy, irot = sexpr.xy(inner_at)
+                # Inner text coordinates are relative to the box origin.
+                x += ix
+                y += iy
+                rot = irot if irot else rot
+        elif len(node) > 1 and isinstance(node[1], str):
+            content = node[1]
+        return SchText(
+            content=content,
+            pos=(x, y),
+            rotation=rot,
+            kind="textbox",
+            size=(w, h),
+            uuid=_text(uuid_node[1]) if uuid_node is not None and len(uuid_node) > 1 else "",
+        )
+    if len(node) > 1:
+        content = _text(node[1])
+    return SchText(
+        content=content,
+        pos=(x, y),
+        rotation=rot,
+        kind="text",
+        uuid=_text(uuid_node[1]) if uuid_node is not None and len(uuid_node) > 1 else "",
+    )
 
 
 def resolve_root_file(input_path) -> Path:

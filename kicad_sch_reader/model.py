@@ -115,6 +115,18 @@ class NoConnect:
 
 
 @dataclass
+class SchText:
+    """Free text annotation on a page (design intent, not connectivity)."""
+
+    content: str
+    pos: Point
+    rotation: float = 0.0
+    kind: str = "text"  # text | textbox
+    size: Tuple[float, float] = (0.0, 0.0)  # textbox width/height only
+    uuid: str = ""
+
+
+@dataclass
 class SheetPin:
     name: str
     direction: str
@@ -145,6 +157,8 @@ class SheetData:
     title: str = ""
     version: str = ""
     generator: str = ""
+    # Raw title_block fields: title/date/rev/company/comment<N>.
+    title_fields: Dict[str, str] = field(default_factory=dict)
     lib_symbols: Dict[str, LibSymbol] = field(default_factory=dict)
     symbols: List[SymbolInstance] = field(default_factory=list)
     wires: List[Wire] = field(default_factory=list)
@@ -152,6 +166,7 @@ class SheetData:
     junctions: List[Junction] = field(default_factory=list)
     no_connects: List[NoConnect] = field(default_factory=list)
     sheets: List[SheetRef] = field(default_factory=list)
+    texts: List[SchText] = field(default_factory=list)
     node_counts: Dict[str, int] = field(default_factory=dict)
 
     @property

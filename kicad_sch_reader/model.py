@@ -171,6 +171,8 @@ class SheetData:
     title: str = ""
     version: str = ""
     generator: str = ""
+    uuid: str = ""
+    paper: str = ""
     # Raw title_block fields: title/date/rev/company/comment<N>.
     title_fields: Dict[str, str] = field(default_factory=dict)
     lib_symbols: Dict[str, LibSymbol] = field(default_factory=dict)

@@ -8,6 +8,7 @@ aborting a whole-project review.
 from __future__ import annotations
 
 import re
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -353,6 +354,10 @@ def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
     sheet.generator = _text(generator[1]) if generator is not None and len(generator) > 1 else ""
     sheet.generator = f"{sheet.generator} {_text(generator_version[1])}".strip() \
         if generator_version is not None and len(generator_version) > 1 else sheet.generator
+    paper_node = sexpr.first(root, "paper")
+    sheet.paper = _text(paper_node[1]) if paper_node is not None and len(paper_node) > 1 else ""
+    uuid_node = sexpr.first(root, "uuid")
+    sheet.uuid = _text(uuid_node[1]) if uuid_node is not None and len(uuid_node) > 1 else ""
 
     title_block = sexpr.first(root, "title_block")
     if title_block is not None:
@@ -536,3 +541,39 @@ def load_project(input_path) -> Project:
                 if child_path not in visited:
                     queue.append((child_path, resolved))
     return project
+
+
+def collect_orphans(input_path) -> List[dict]:
+    """Find ``.kicad_sch`` files in the project directory tree that the root
+    schematic does not reference (leftovers from earlier revisions, deleted
+    sheets, copies).  The reference set comes from the load itself
+    (``project.files``), which is authoritative for one project root; the
+    on-disk set is every ``*.kicad_sch`` under the root directory.
+
+    Reported evidence is filesystem-level (mtime/size) only: KiCad stores no
+    internal modification time, so any "is this a leftover" judgement here is
+    inference, never a file-format fact.
+    """
+    root_file = resolve_root_file(input_path)
+    root_dir = root_file.parent
+    project = load_project(root_file)
+    referenced = {str(p) for p in project.files}
+    orphans = []
+    for f in sorted(root_dir.rglob("*.kicad_sch")):
+        f = f.resolve()
+        if str(f) in referenced:
+            continue
+        st = f.stat()
+        is_archived = ".history" in f.parts
+        note = ("KiCad 历史归档（.history 目录），非当前设计，通常无需处理"
+                if is_archived else
+                "未被当前工程根图引用的残留图纸；如 mtime 早于其余图纸，很可能是旧版副本")
+        orphans.append({
+            "file": str(f),
+            "relative": str(f.relative_to(root_dir)),
+            "mtime": datetime.fromtimestamp(st.st_mtime).strftime("%Y-%m-%d %H:%M:%S"),
+            "size_bytes": st.st_size,
+            "archived": is_archived,
+            "note": note,
+        })
+    return orphans

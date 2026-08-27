@@ -69,6 +69,24 @@ KiCad 10 的 lib pin 写法是
 `tests/test_reader.py::TestRotationLab`。这些事实绝不能凭直觉修改，
 修改后必须重新跑 `tests/validate_examples.py` 与官方网表比对。
 
+### 3.3.5 KiCad 文件元数据能力表（防误读，实测结论）
+
+对齐 lceda-sch-reader“时间元数据按格式能力如实标注”的实践，这里记录
+KiCad 侧的真实情况（实测 examples 工程与 KiCad 10 官方 demos）：
+
+| 元数据 | `.kicad_sch` 内部 | `.kicad_pro` | 结论 |
+| --- | --- | --- | --- |
+| 编辑时间 | **无**（唯一 `date` 是 title_block 设计日期，非编辑时间） | 无 | 只能取文件系统 mtime / git |
+| 编辑人 | 无 | 无 | 只有 git blame 才可能得到 |
+| 文件版本 | `(version NNNN)` 文件格式版本 | `meta.version` | 已有（并非工程版本号） |
+| 创建工具 | `(generator + generator_version)` | — | 已解析 |
+| 工程引用清单 | 根图 `(sheet ...)` 分层引用 | `sheets` 数组（含每个引用的文件名/uuid） | `.kicad_pro.sheets` 是工程“当前引用集合”权威来源 |
+| 变量/属性 | `(text_variables)`（${VAR} 不展开——已知限制） | `text_variables` | 未解析 |
+
+**使用纪律**：任何“最后编辑于/由谁改动”的判断必须来自 mtime 或 git，
+**禁止**从 `.kicad_sch`/`.kicad_pro` 文件内部假装读时间；读出的时间在
+输出中标注证据来源（filesystem/git）。
+
 ### 3.4 连通域算法（connectivity.py）
 
 借鉴 `lceda-sch-reader` 的“连通域精确方案”，但按 KiCad 格式重新表达：

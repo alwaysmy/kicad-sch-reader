@@ -208,6 +208,13 @@ def _tool_diff(project_a: str, project_b: str) -> dict:
     )
 
 
+def _tool_orphans(project: str) -> dict:
+    orphans = parser.collect_orphans(project)
+    return {"count": len(orphans),
+            "live_out": [o for o in orphans if not o["archived"]],
+            "history_archived": sum(1 for o in orphans if o["archived"])}
+
+
 def _tool_lceda_review(epro: str, board_name: str = "",
                        trace_nets: List[str] = None,
                        trace_refs: List[str] = None) -> dict:
@@ -240,6 +247,7 @@ TOOLS: Dict[str, Callable[..., Any]] = {
     "trace": _tool_trace,
     "components": _tool_components,
     "diff": _tool_diff,
+    "orphans": _tool_orphans,
     "lceda_review": _tool_lceda_review,
 }
 
@@ -273,6 +281,9 @@ _TOOL_META = [
     ("diff", "两个工程版本间的元件/网络差异（候选级）", {
         "project_a": {"type": "string"}, "project_b": {"type": "string"},
         "required": ["project_a", "project_b"]}),
+    ("orphans", "列出工程目录中未被根图引用的 .kicad_sch（旧版残留检测）", {
+        "project": {"type": "string"},
+        "required": ["project"]}),
     ("lceda_review", "LCEDA .epro 工程审查（CBB 展开 + trace-net/ref 穿透）", {
         "epro": {"type": "string", "description": ".epro 文件路径"},
         "board_name": {"type": "string"},

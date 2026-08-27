@@ -16,6 +16,7 @@ import os
 import re
 import sys
 from collections import defaultdict, deque
+from datetime import datetime
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional
 
@@ -61,9 +62,17 @@ def cmd_sheets(args) -> None:
     rows = []
     for path in project.sheet_order:
         sheet = project.sheets[path]
+        try:
+            st = sheet.file.stat()
+            mtime = datetime.fromtimestamp(st.st_mtime).strftime("%Y-%m-%d %H:%M:%S")
+        except OSError:
+            mtime = ""
         row = {
             "path": path,
             "file": str(sheet.file),
+            "file_mtime": mtime,
+            "file_uuid": sheet.uuid,
+            "paper": sheet.paper,
             "title": sheet.title,
             "title_fields": dict(sheet.title_fields),
             "version": sheet.version,
@@ -85,6 +94,9 @@ def cmd_sheets(args) -> None:
             extras = [f"{k}={tb[k]}" for k in ("date", "rev", "company") if tb.get(k)]
             if extras:
                 print(f"    title_block: {'; '.join(extras)}")
+            items = [f"mtime={mtime}", f"paper={sheet.paper or '-'}",
+                     f"uuid={sheet.uuid or '-'}"]
+            print(f"    {'  '.join(items)}")
             for r in sheet.sheets:
                 print(f"    sheet {r.name} -> {r.file} ({r.first_path})")
     if args.json:
@@ -587,6 +599,32 @@ def cmd_diff(args) -> None:
             print(f"      - {l}")
 
 
+def cmd_orphans(args) -> None:
+    """List .kicad_sch files in the project tree that the root schematic does
+    not reference (likely leftovers from earlier revisions).
+
+    Reference set = files loaded from the root sheet chain (authoritative).
+    Evidence for "leftover" is filesystem-level (mtime/size) only, because
+    KiCad stores no internal modification time.
+    """
+    orphans = parser.collect_orphans(args.input)
+    if args.json:
+        _print_json({"count": len(orphans), "orphans": orphans})
+        return
+    if not orphans:
+        print("未发现游离 .kicad_sch 文件")
+        return
+    print(f"游离图纸文件（被当前工程根图忽略）: {len(orphans)}")
+    live = [o for o in orphans if not o["archived"]]
+    archived = [o for o in orphans if o["archived"]]
+    for row in live:
+        print(f"  [游离] {row['relative']}")
+        print(f"    mtime={row['mtime']}  size={row['size_bytes']}B")
+        print(f"    {row['note']}")
+    if archived:
+        print(f"  [{len(archived)} 个 .history 历史归档，已省略明细]")
+
+
 def cmd_validate(args) -> None:
     """Smoke-test the reader on a project and report structural invariants."""
     project = _project(args)
@@ -722,6 +760,11 @@ def build_arg_parser() -> argparse.ArgumentParser:
     add_json(p)
     add_input(p)
     p.set_defaults(func=cmd_validate)
+
+    p = sub.add_parser("orphans", help="列出工程目录中未被根图引用的 .kicad_sch 文件（旧版残留检测）")
+    add_json(p)
+    add_input(p)
+    p.set_defaults(func=cmd_orphans)
 
     p = sub.add_parser("link-check", help="两个工程间连接器对候选核对")
     add_json(p)

@@ -64,3 +64,8 @@ _commit*.log
 _hold*.bat
 TEST_SCRIPTS/results/
 TEST_APPS/
+reports/EmoeSOM_A7_DDR_RevA-*.lceda-review-*
+reports/pw_test_*
+reports/cf_test_*
+reports/rc_test_*
+reports/validation/

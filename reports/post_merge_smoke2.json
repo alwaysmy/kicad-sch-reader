@@ -21,10 +21,10 @@
     "net_count": 52,
     "named_net_count": 10,
     "pin_connection_count": 424,
-    "issue_count": 23,
+    "issue_count": 14,
     "severity_counts": {
       "warning": 1,
-      "info": 22
+      "info": 13
     }
   },
   "issues": [
@@ -55,120 +55,12 @@
       "evidence": "heuristic"
     },
     {
-      "code": "R701",
+      "code": "R801",
       "severity": "info",
-      "title": "DNP 器件",
-      "message": "C113（47nF）被标记为不焊接（DNP）",
+      "title": "极性器件引脚极性未解析",
+      "message": "D101（SMAJ36A）有 2 个引脚名无法归一为阳极/阴极（A/K/C/+/-/ANODE/CATHODE 之外），涉及时请查手册确认极性: 2(A2)->GND; 1(A1)->N$7",
       "sheet_path": "/",
-      "ref": "C113",
-      "pin": "",
-      "net": "",
-      "details": {},
-      "evidence": "structural"
-    },
-    {
-      "code": "R701",
-      "severity": "info",
-      "title": "DNP 器件",
-      "message": "R102（102k）被标记为不焊接（DNP）",
-      "sheet_path": "/",
-      "ref": "R102",
-      "pin": "",
-      "net": "",
-      "details": {},
-      "evidence": "structural"
-    },
-    {
-      "code": "R701",
-      "severity": "info",
-      "title": "DNP 器件",
-      "message": "TP101（TP）被标记为不焊接（DNP）",
-      "sheet_path": "/",
-      "ref": "TP101",
-      "pin": "",
-      "net": "",
-      "details": {},
-      "evidence": "structural"
-    },
-    {
-      "code": "R701",
-      "severity": "info",
-      "title": "DNP 器件",
-      "message": "TP102（TP）被标记为不焊接（DNP）",
-      "sheet_path": "/",
-      "ref": "TP102",
-      "pin": "",
-      "net": "",
-      "details": {},
-      "evidence": "structural"
-    },
-    {
-      "code": "R701",
-      "severity": "info",
-      "title": "DNP 器件",
-      "message": "TP103（TP）被标记为不焊接（DNP）",
-      "sheet_path": "/",
-      "ref": "TP103",
-      "pin": "",
-      "net": "",
-      "details": {},
-      "evidence": "structural"
-    },
-    {
-      "code": "R701",
-      "severity": "info",
-      "title": "DNP 器件",
-      "message": "TP104（TP）被标记为不焊接（DNP）",
-      "sheet_path": "/",
-      "ref": "TP104",
-      "pin": "",
-      "net": "",
-      "details": {},
-      "evidence": "structural"
-    },
-    {
-      "code": "R701",
-      "severity": "info",
-      "title": "DNP 器件",
-      "message": "TP105（TP）被标记为不焊接（DNP）",
-      "sheet_path": "/",
-      "ref": "TP105",
-      "pin": "",
-      "net": "",
-      "details": {},
-      "evidence": "structural"
-    },
-    {
-      "code": "R701",
-      "severity": "info",
-      "title": "DNP 器件",
-      "message": "TP106（TP）被标记为不焊接（DNP）",
-      "sheet_path": "/",
-      "ref": "TP106",
-      "pin": "",
-      "net": "",
-      "details": {},
-      "evidence": "structural"
-    },
-    {
-      "code": "R701",
-      "severity": "info",
-      "title": "DNP 器件",
-      "message": "TP107（TP）被标记为不焊接（DNP）",
-      "sheet_path": "/",
-      "ref": "TP107",
-      "pin": "",
-      "net": "",
-      "details": {},
-      "evidence": "structural"
-    },
-    {
-      "code": "R701",
-      "severity": "info",
-      "title": "DNP 器件",
-      "message": "TP108（TP）被标记为不焊接（DNP）",
-      "sheet_path": "/",
-      "ref": "TP108",
+      "ref": "D101",
       "pin": "",
       "net": "",
       "details": {},

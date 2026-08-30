@@ -350,7 +350,8 @@ def _serve() -> None:
         elif method == "tools/list":
             _rpc(req_id, {"tools": [
                 {"name": name, "description": desc, "inputSchema": {
-                    "type": "object", "properties": props,
+                    "type": "object",
+                    "properties": {k: v for k, v in props.items() if k != "required"},
                     "required": props.get("required", []),
                 }}
                 for name, desc, props in _TOOL_META

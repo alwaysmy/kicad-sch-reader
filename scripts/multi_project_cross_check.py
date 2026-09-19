@@ -53,10 +53,18 @@ def main(argv=None):
     ap.add_argument("--lceda", action="append", default=[], help="LCEDA .epro 文件，可重复")
     ap.add_argument("--lceda-board", help="LCEDA 板名（默认自动选择 LIA/锁定）")
     ap.add_argument("--min-common", type=int, default=2)
+    ap.add_argument("--pin-map", help="声明式 pin 映射 JSON（可选；只作 declared 证据）")
     ap.add_argument("--out-json")
     ap.add_argument("--out-md")
     args = ap.parse_args(argv)
 
+    pin_map = None
+    if args.pin_map:
+        pin_map = json.loads(Path(args.pin_map).read_text(encoding="utf-8"))
+        if isinstance(pin_map, dict):
+            pin_map = pin_map.get("pairs", pin_map.get("mappings", []))
+        if not isinstance(pin_map, list):
+            raise SystemExit("--pin-map must be a JSON list or {pairs:[...]}")
     boards = []
     for path in args.kicad:
         boards.append(load_kicad_board(path))
@@ -64,7 +72,7 @@ def main(argv=None):
         boards.append(load_lceda_board(path, board_name=args.lceda_board))
 
     system = circuit_ir.IRSystem(boards=boards)
-    all_rows = system.compare_all(min_common=args.min_common)
+    all_rows = system.compare_all(min_common=args.min_common, pin_map=pin_map)
 
     payload = {
         "boards": [b.connector_view() for b in boards],
@@ -78,15 +86,22 @@ def main(argv=None):
     for b in boards:
         lines.append(f"- `{b.name}` [{b.format}] — 连接器 {len(b.connectors())} 个")
     lines.append("")
-    lines.append("| A | B | 一致 pin | 共同 pin | score | confidence | evidence | 差异示例 |")
-    lines.append("| --- | --- | --- | --- | --- | --- | --- | --- |")
+    lines.append("| A | B | 一致 pin | 共同 pin | score | confidence | evidence | 网络重合 | 信号重合 | 信号精确 | 电源轨 | mapping | 差异示例 |")
+    lines.append("| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |")
     for row in all_rows:
-        diffs = "; ".join(f"{d['pin']}: {d['a_net']} != {d['b_net']}" for d in row.diffs[:3])
+        diffs = "; ".join(
+            f"{d['pin']}->{d.get('b_pin', d['pin'])}: {d['a_net']} != {d['b_net']}"
+            for d in row.diffs[:3]
+        )
         lines.append(
             f"| {row.a_board} {row.a_ref} ({row.a_lib}) | "
             f"{row.b_board} {row.b_ref} ({row.b_lib}) | "
             f"{row.exact_pins} | {row.common_pins} | {row.score} | "
-            f"{row.confidence} | {row.evidence.kind} | {diffs} |"
+            f"{row.confidence} | {row.evidence.kind} | "
+            f"{row.net_overlap} ({row.net_score}) | "
+            f"{row.signal_overlap} ({row.signal_score}) | "
+            f"{row.signal_exact_pins} ({row.signal_exact_score}) | "
+            f"{row.rail_overlap} ({row.rail_score}) | {row.mapping} | {diffs} |"
         )
     lines.append("")
     lines.append("> 说明：同名网络逐 pin 一致仍只是候选证据；只有用户声明或工程 metadata")
@@ -99,9 +114,17 @@ def main(argv=None):
     for row in all_rows[:15]:
         print(f"[{row.confidence}] {row.a_board}.{row.a_ref} <-> "
               f"{row.b_board}.{row.b_ref} score={row.score} "
-              f"exact={row.exact_pins}/{row.common_pins}")
+              f"exact={row.exact_pins}/{row.common_pins} "
+              f"net={row.net_overlap}({row.net_score}) "
+              f"signal={row.signal_overlap}({row.signal_score}) "
+              f"signal_exact={row.signal_exact_pins}({row.signal_exact_score}) "
+              f"rail={row.rail_overlap}({row.rail_score}) mapping={row.mapping}")
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+
+

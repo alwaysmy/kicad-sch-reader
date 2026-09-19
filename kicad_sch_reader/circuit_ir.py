@@ -77,10 +77,33 @@ def normalize_net(name: Optional[str]) -> str:
     text = text.split(",")[0].strip()
     normalized = re.sub(r"[^0-9A-Za-z+#.]", "", text).upper()
     # LCEDA 的 GND 展平名通常为 DXN_0，跨工具对比时归一化为 GND。
-    if normalized == "DXN_0":
+    if normalized in ("DXN0", "DXN_0"):
         return "GND"
     return normalized
 
+
+_POWER_RAIL_RE = re.compile(r"(\d+)(?:\.(\d+))?V(\d*)", re.IGNORECASE)
+
+
+def power_rail_key(name: Optional[str]) -> str:
+    """Coarse power-rail key for candidate cross-board matching.
+
+    ``+5VP`` / ``VCC_5V`` / ``VCC_5V_BTBIN`` collapse to ``5V``; ``3.3V``
+    collapses to ``3V3``.  Signal names return ``""``.  This is only a
+    matching aid: a shared rail alone never proves a physical link.
+    """
+    normalized = normalize_net(name)
+    if not normalized:
+        return ""
+    if normalized in GROUND_NAMES or "GND" in normalized or normalized == "GND":
+        return "GND"
+    match = _POWER_RAIL_RE.search(normalized)
+    if not match:
+        return ""
+    major = match.group(1)
+    frac = match.group(2) or ""
+    suffix = match.group(3) or ""
+    return f"{major}V{frac or suffix}"
 
 def is_connector_ref(ref: str) -> bool:
     return bool(CONNECTOR_REF_RE.match(ref or ""))
@@ -381,6 +404,20 @@ class IRCrossLink:
     diff_count: int
     score: float
     confidence: str
+    # Cross-board auxiliary evidence: same-net matching independent of pin
+    # numbers.  A shared power rail alone is weak evidence and is kept
+    # separate from signal overlap so it cannot promote a candidate.
+    net_overlap: int = 0
+    net_score: float = 0.0
+    signal_overlap: int = 0
+    signal_score: float = 0.0
+    signal_exact_pins: int = 0
+    signal_exact_score: float = 0.0
+    power_exact_pins: int = 0
+    rail_overlap: int = 0
+    rail_score: float = 0.0
+    mapping: str = "pin-number"
+    mapping_pairs: List[Tuple[str, str]] = field(default_factory=list)
     diffs: List[dict] = field(default_factory=list)
     evidence: IREvidence = field(default_factory=IREvidence)
 
@@ -399,6 +436,17 @@ class IRCrossLink:
             "diff_count": self.diff_count,
             "score": self.score,
             "confidence": self.confidence,
+            "net_overlap": self.net_overlap,
+            "net_score": self.net_score,
+            "signal_overlap": self.signal_overlap,
+            "signal_score": self.signal_score,
+            "signal_exact_pins": self.signal_exact_pins,
+            "signal_exact_score": self.signal_exact_score,
+            "power_exact_pins": self.power_exact_pins,
+            "rail_overlap": self.rail_overlap,
+            "rail_score": self.rail_score,
+            "mapping": self.mapping,
+            "mapping_pairs": [list(pair) for pair in self.mapping_pairs],
             "diffs": self.diffs,
             "evidence": self.evidence.to_dict(),
         }
@@ -415,13 +463,13 @@ class IRSystem:
     def add_board(self, board: BoardIR) -> None:
         self.boards.append(board)
 
-    def compare_all(self, min_common: int = 2) -> List[IRCrossLink]:
+    def compare_all(self, min_common: int = 2, pin_map: Optional[List[dict]] = None) -> List[IRCrossLink]:
         rows: List[IRCrossLink] = []
         for i, a in enumerate(self.boards):
             for j, b in enumerate(self.boards):
                 if i >= j:
                     continue
-                rows.extend(compare_boards(a, b, min_common=min_common))
+                rows.extend(compare_boards(a, b, min_common=min_common, pin_map=pin_map))
         rows.sort(key=lambda r: (-r.score, -r.common_pins, r.a_board, r.b_board))
         self.links = rows
         return rows
@@ -688,51 +736,135 @@ def board_from_lceda(report: dict, name: Optional[str] = None,
 # cross-board comparison
 
 
-def compare_boards(a: BoardIR, b: BoardIR, min_common: int = 2) -> List[IRCrossLink]:
+def compare_boards(a: BoardIR, b: BoardIR, min_common: int = 2,
+                   pin_map: Optional[List[dict]] = None) -> List[IRCrossLink]:
     """Compare connector pin-net maps of two ``BoardIR`` instances.
 
     Equal *normalized* net names are only candidate evidence: the same pin
     number and the same name can be accidental.  ``score == 1.0`` with at
     least two pins is reported as ``detected``, never ``confirmed``.
+
+    ``pin_map`` optionally carries declared mappings:
+    ``[{"a_board","a_ref","b_board","b_ref","mapping":[["1","2"],...],
+    "confidence":"declared"}]``.  A declared mapping is still reported as
+    ``declared`` evidence about the mapping, not as a confirmed physical link.
     """
+    def _mapping_entry(ref_a: str, ref_b: str):
+        for entry in (pin_map or []):
+            if not isinstance(entry, dict):
+                continue
+            if str(entry.get("a_ref", "")) != ref_a:
+                continue
+            if str(entry.get("b_ref", "")) != ref_b:
+                continue
+            a_board = str(entry.get("a_board", ""))
+            b_board = str(entry.get("b_board", ""))
+            if a_board and a_board != a.name:
+                continue
+            if b_board and b_board != b.name:
+                continue
+            return entry
+        return None
+
     rows: List[IRCrossLink] = []
     for ref_a, ca in sorted(a.connectors().items()):
         for ref_b, cb in sorted(b.connectors().items()):
-            common = sorted(set(ca["pins"]) & set(cb["pins"]))
-            if len(common) < min_common:
+            entry = _mapping_entry(ref_a, ref_b)
+            mapping_kind = "pin-number"
+            if entry is not None:
+                pairs = []
+                for item in entry.get("mapping", []) or []:
+                    if isinstance(item, (list, tuple)) and len(item) >= 2:
+                        pairs.append((str(item[0]), str(item[1])))
+                mapping_pairs = pairs
+                mapping_kind = str(entry.get("kind") or entry.get("confidence") or "declared")
+            else:
+                common_seed = sorted(set(ca["pins"]) & set(cb["pins"]))
+                mapping_pairs = [(p, p) for p in common_seed]
+            if len(mapping_pairs) < min_common:
                 continue
+
             exact = 0
+            signal_exact = 0
+            power_exact = 0
             diffs = []
-            for pin in common:
-                na = normalize_net(ca["pins"].get(pin))
-                nb = normalize_net(cb["pins"].get(pin))
+            for apin, bpin in mapping_pairs:
+                na = normalize_net(ca["pins"].get(apin))
+                nb = normalize_net(cb["pins"].get(bpin))
                 if na and na == nb:
                     exact += 1
+                    if power_rail_key(na):
+                        power_exact += 1
+                    else:
+                        signal_exact += 1
                 else:
                     diffs.append({
-                        "pin": pin,
-                        "a_net": ca["pins"].get(pin),
-                        "b_net": cb["pins"].get(pin),
+                        "pin": apin,
+                        "b_pin": bpin,
+                        "a_net": ca["pins"].get(apin),
+                        "b_net": cb["pins"].get(bpin),
                     })
-            score = round(exact / len(common), 4) if common else 0.0
-            confidence = CONFIDENCE_DETECTED if score >= 1.0 and exact >= 2 \
-                else CONFIDENCE_CANDIDATE
+            score = round(exact / len(mapping_pairs), 4) if mapping_pairs else 0.0
+            signal_exact_score = round(signal_exact / len(mapping_pairs), 4) \
+                if mapping_pairs else 0.0
+
+            nets_a = {normalize_net(n) for n in ca["pins"].values()}
+            nets_b = {normalize_net(n) for n in cb["pins"].values()}
+            nets_a.discard("")
+            nets_b.discard("")
+            shared = sorted(nets_a & nets_b)
+            net_score = round(len(shared) / min(len(nets_a), len(nets_b)), 4) \
+                if nets_a and nets_b else 0.0
+
+            sig_a = {n for n in nets_a if not power_rail_key(n)}
+            sig_b = {n for n in nets_b if not power_rail_key(n)}
+            sig_shared = sorted(sig_a & sig_b)
+            signal_score = round(len(sig_shared) / min(len(sig_a), len(sig_b)), 4) \
+                if sig_a and sig_b else 0.0
+
+            rails_a = {power_rail_key(n) for n in nets_a if power_rail_key(n)}
+            rails_b = {power_rail_key(n) for n in nets_b if power_rail_key(n)}
+            rail_shared = sorted(rails_a & rails_b)
+            rail_score = round(len(rail_shared) / min(len(rails_a), len(rails_b)), 4) \
+                if rails_a and rails_b else 0.0
+
+            if entry is not None and str(entry.get("confidence", "")).lower() == CONFIDENCE_DECLARED:
+                confidence = CONFIDENCE_DECLARED
+            elif score >= 1.0 and exact >= 2:
+                confidence = CONFIDENCE_DETECTED
+            else:
+                confidence = CONFIDENCE_CANDIDATE
+
+            note = (
+                f"net_overlap={len(shared)} net_score={net_score}; "
+                f"signal_overlap={len(sig_shared)} signal_score={signal_score}; "
+                f"signal_exact={signal_exact} power_exact={power_exact}; "
+                f"rail_overlap={len(rail_shared)} rail_score={rail_score}; "
+                f"mapping={mapping_kind}"
+            )
             rows.append(IRCrossLink(
                 a_board=a.name, a_format=a.format, a_ref=ref_a, a_lib=ca["lib_id"],
                 b_board=b.name, b_format=b.format, b_ref=ref_b, b_lib=cb["lib_id"],
-                common_pins=len(common), exact_pins=exact,
+                common_pins=len(mapping_pairs), exact_pins=exact,
                 diff_count=len(diffs), score=score, confidence=confidence,
+                net_overlap=len(shared), net_score=net_score,
+                signal_overlap=len(sig_shared), signal_score=signal_score,
+                signal_exact_pins=signal_exact, signal_exact_score=signal_exact_score,
+                power_exact_pins=power_exact,
+                rail_overlap=len(rail_shared), rail_score=rail_score,
+                mapping=mapping_kind, mapping_pairs=mapping_pairs[:64],
                 diffs=diffs[:20],
                 evidence=IREvidence(
                     kind=EVIDENCE_CALCULATED,
-                    source="pin-net-name comparison",
-                    note="normalized net names; candidate unless score==1.0",
+                    source="pin-net-name comparison + net-set overlap",
+                    note=note,
                     confidence=confidence,
                 ),
             ))
-    rows.sort(key=lambda r: (-r.score, -r.common_pins, r.a_board, r.b_board))
+    rows.sort(key=lambda r: (-r.score, -r.signal_score, -r.net_score,
+                             -r.rail_overlap, -r.common_pins,
+                             r.a_board, r.b_board))
     return rows
-
 
 def diff_boards(old: "BoardIR", new: "BoardIR") -> dict:
     """Version diff between two revisions of the same design lineage.
@@ -831,3 +963,13 @@ def diff_boards(old: "BoardIR", new: "BoardIR") -> dict:
         "nets_renamed_candidates": renamed_candidates,
         "nets_changed": nets_changed,
     }
+
+
+
+
+
+
+
+
+
+

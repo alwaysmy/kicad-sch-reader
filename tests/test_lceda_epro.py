@@ -146,5 +146,19 @@ class TestCbbExpansion(unittest.TestCase):
         self.assertTrue(any("D+" in (ref + msg) for ref, msg in rows))
 
 
+
+    def test_multi_unit_parts_are_detected_automatically(self):
+        confirmed = {
+            f["ref"] for f in self.report["findings"]
+            if f["code"] == "MULTI_UNIT_CONFIRMED"
+        }
+        self.assertIn("U1", confirmed)
+        self.assertIn("U24", confirmed)
+        self.assertNotIn(
+            "MULTI_UNIT_UNVERIFIED",
+            {f["code"] for f in self.report["findings"]},
+        )
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+

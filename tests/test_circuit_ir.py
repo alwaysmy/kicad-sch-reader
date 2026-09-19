@@ -56,6 +56,40 @@ class TestCircuitIRKiCad(unittest.TestCase):
         self.assertEqual(top.evidence.kind, circuit_ir.EVIDENCE_CALCULATED)
 
 
+    def test_power_rail_key_collapses_common_names(self):
+        self.assertEqual(circuit_ir.power_rail_key("+5VP"), "5V")
+        self.assertEqual(circuit_ir.power_rail_key("VCC_5V_BTBIN"), "5V")
+        self.assertEqual(circuit_ir.power_rail_key("3.3V"), "3V3")
+        self.assertEqual(circuit_ir.power_rail_key("DXN_0"), "GND")
+        self.assertEqual(circuit_ir.power_rail_key("/DAC_CLK"), "")
+
+    def test_cross_board_net_overlap_metrics(self):
+        rows = circuit_ir.compare_boards(self.main, self.power)
+        top = rows[0]
+        self.assertEqual(top.a_ref, "J102")
+        self.assertEqual(top.b_ref, "J103")
+        self.assertGreaterEqual(top.net_overlap, 2)
+        self.assertGreaterEqual(top.rail_overlap, 2)
+        self.assertEqual(top.mapping, "pin-number")
+        self.assertEqual(top.signal_exact_pins, 0)
+
+    def test_declared_pin_map_is_reported_as_declared(self):
+        pin_map = [{
+            "a_board": self.main.name,
+            "a_ref": "J102",
+            "b_board": self.power.name,
+            "b_ref": "J103",
+            "mapping": [["1", "1"], ["2", "2"]],
+            "confidence": "declared",
+        }]
+        rows = circuit_ir.compare_boards(
+            self.main, self.power, min_common=2, pin_map=pin_map)
+        declared = [r for r in rows if r.a_ref == "J102" and r.b_ref == "J103"]
+        self.assertTrue(declared)
+        self.assertEqual(declared[0].mapping, "declared")
+        self.assertEqual(declared[0].confidence, circuit_ir.CONFIDENCE_DECLARED)
+        self.assertEqual(declared[0].exact_pins, 2)
+
 @unittest.skipUnless(EPRO.exists(), "LIA_DigitalBoard_RevA .epro fixture missing")
 class TestCircuitIRLceda(unittest.TestCase):
     @classmethod
@@ -106,3 +140,4 @@ class TestCircuitIRLceda(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+

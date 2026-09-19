@@ -634,6 +634,24 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         if comp.get("designator"):
             comp_lookup[comp["designator"]].append(comp)
 
+    # R902: 接口方向语义核对 —— 网络名/MCU 复用引脚名（如 PB10/UART3TX）
+    # 中的方向词做声明级核对；引脚电气类型 LCEDA 侧缺失，不参与判定。
+    from kicad_sch_reader.rules import analyze_direction_group
+    dir_groups = defaultdict(list)
+    for (title, des, pinname), local_net in canonical_pin_net_map.items():
+        if not local_net:
+            continue
+        dir_groups[afind(lceda_reader.net_tokens(local_net)[0])].append(
+            {"ref": str(des), "pin": str(pinname), "pin_name": str(pinname),
+             "pin_type": "", "sheet": title, "net": str(local_net)})
+    for _group, dir_members in dir_groups.items():
+        if len(dir_members) < 2:
+            continue
+        net_display = sorted({m["net"] for m in dir_members})[0]
+        for f in analyze_direction_group(net_display, dir_members):
+            findings.append((f["severity"], "R902", dir_members[0]["sheet"], "",
+                             f["message"]))
+
     def member_detail(member):
         ref = member.get("ref", "")
         comps = comp_lookup.get(ref, [])

@@ -2,6 +2,64 @@
 
 本项目采用语义化版本。所有重要变更按时间倒序记录。
 
+## [0.1.5] - 2026-09-03
+
+### 新增 R902 接口方向语义核对 + interfaces 约束清单命令
+
+- **R902 接口方向语义**（declared 证据，warning/info，永不 error）：
+  - 方向词库 TX/RX（本地视角）与 MOSI/MISO/SDO/SDI/DOUT/DIN（主从/收发
+    视角），从网络名/标签名与 MCU 复用引脚名（`PB10/UART3TX`）提取；
+  - 双发送/全接收冲突：同一网络 ≥2 个不同器件引脚名同为发送语义（或全
+    为接收且无发送）→ warning，提示"确认哪端为发送、对端约束方向勿写反"；
+  - MOSI/MISO 互换：网络名与所连引脚名主从语义互斥 → warning；
+  - 引脚电气类型与命名语义矛盾 → **仅 info**：符号类型常不规范，不作为
+    判定依据（用户明确要求：input/output 不作强制规范）；
+  - 词法边界：方向词必须后跟 token 结尾——`TX_DISABLE`/`RX1_P`(USB-C/
+    PCIe 行业引脚名)/`DIN_14`(配置功能) 等不触发（jetson 实测 9 条误报
+    全部消除）。
+- **`interfaces` 命令**：接口方向核对表（JSON/文本），每条方向性网络列出
+  所连引脚的命名族、电气类型（仅参考）与建议约束方向；MOSI/MISO 标注
+  "主端out/从端in"。FPGA 引脚在原理图上无方向，此表即约束文件核对清单。
+- **link-check 方向语义标注**：跨板连接器对逐 pin 差异中，两端网络名同为
+  TX（或同为 RX）语义且名字不同 → 输出 `⚠ 两端均为发送语义` 提示。
+- LCEDA `.epro` 审查同步接入 R902（复用 `analyze_direction_group`，
+  基于 pin_net_map 的 MCU 复用引脚名；LCEDA 无电气类型不参与判定）。
+  SOM 板实测 73 条方向词网络零误报（findings 保持 55）。
+
+### 验证
+
+- 单元测试 38/38（新增 TestInterfaceDirection 5 项：双发送告警、健康
+  TX→RX 对通过、MOSI/MISO 互换、类型矛盾仅 info、词法边界）
+- 11 工程批量：各板 issues 与 0.1.4 基线完全一致（jetson 646，R902 0 条）
+- LIA MainBoard `interfaces` 实测：/ADC_MOSI、/ADC_MISO 跨板网络与
+  N$106/N$114（ADS127L11 引脚名 MOSI/MISO）主从推断正确
+
+## [0.1.4] - 2026-09-02
+
+### 审查报告降噪（本机 11 工程实测驱动）
+
+- 高噪音清单规则改为分组汇总，报告信息密度大幅提升（总条数普遍降 40%~90%）：
+  - R103 位号跳号：9 条/工程 → 1 条汇总行；只枚举同一百位段内
+    （且段内 ≥2 个元件）的"段内缺号"，跨页 hundreds 分段编号的空号
+    只计数不列举（Lock-In-Amplifier MainBoard 88→35 条）
+  - R304 NC 清单：按器件分组（一个连接器 24 个空脚 → 1 行，含引脚号
+    汇总与类型）；power_in 被 NC 仍逐脚保留并升级 warning
+  - R701 DNP 清单：按图纸分组一行，测试点/机械件（TP*/H*）计数合并，
+    其余器件单列提示确认 DNP 意图
+- ERC 转写引脚归属正则兼容中英文（`Symbol X pin N` / `Symbol X 引脚 N`），
+  KiCad 界面语言切换后不再丢失 ref/pin 归属
+- 修复 `rules.py` 缺失的 `typing.Tuple` 导入；报告概览的 KiCad ERC 摘要
+  由原始 dict 改为 `errors=N, warnings=N` 格式
+- 新增 `TestRuleGrouping` 回归测试（合成工程验证三条规则的分组行为与
+  双语 ERC 归属），单元测试 33/33 通过
+
+### 验证
+
+- LIA MainBoard：88 → 35 条（info 68 → 15），warning 全部为官方 ERC 转写
+- 11 工程批量（--no-netlist）：jetson 1195 → 646（剩余主体为 R302/R303
+  真实单引脚网/悬空标签）、pic_programmer 81 → 10、video 386 → 189
+- 连通性无改动；此前 11 工程官方网表交叉验证全部 missing=0 的基线不受影响
+
 ## [0.1.3] - 2026-08-18
 
 ### 本地多工程实测驱动修复

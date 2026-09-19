@@ -270,7 +270,7 @@ def cmd_nets(args) -> None:
     netlist = _netlist(project)
     rows = []
     for net in netlist:
-        if args.name and args.name.lower() not in net.name.lower():
+        if args.name and not _net_matches(net, args.name):
             continue
         if args.sheet and not any(p.sheet_path == args.sheet for p in net.pins):
             continue
@@ -295,17 +295,36 @@ def cmd_nets(args) -> None:
         _print_json(rows)
 
 
+def _net_search_names(net: Net) -> List[str]:
+    """网络本名 + 层次/全局/本地/电源别名，供 netfind/nets 按任一名检索。"""
+    names = [net.name]
+    for group in (net.hierarchical_names, net.global_names, net.labels, net.power_names):
+        for name in group or []:
+            if name and name not in names:
+                names.append(name)
+    return names
+
+
+def _net_matches(net: Net, query: str, exact: bool = False) -> bool:
+    q = (query or "").lower()
+    if not q:
+        return True
+    for name in _net_search_names(net):
+        if (name.lower() == q) if exact else (q in name.lower()):
+            return True
+    return False
+
+
 def cmd_netfind(args) -> None:
     project = _project(args)
     netlist = _netlist(project)
-    if getattr(args, "exact", False):
-        matches = [n for n in netlist if n.name.lower() == args.name.lower()]
-    else:
-        matches = [n for n in netlist if args.name.lower() in n.name.lower()]
+    matches = [n for n in netlist if _net_matches(n, args.name, getattr(args, "exact", False))]
     if args.json:
         _print_json([
             {
                 "name": n.name,
+                "aliases": [x for x in _net_search_names(n) if x != n.name],
+                "matched": args.name,
                 "pins": [
                     {
                         "sheet_path": p.sheet_path,
@@ -324,7 +343,9 @@ def cmd_netfind(args) -> None:
         ])
         return
     for net in matches:
-        print(f"== {net.name} ==")
+        aliases = [x for x in _net_search_names(net) if x != net.name]
+        suffix = f"  (别名: {', '.join(aliases[:8])})" if aliases else ""
+        print(f"== {net.name} =={suffix}")
         for p in net.pins:
             print(f"  {p.sheet_path:28s} {p.ref}.{p.pin_number}  {p.lib_id}  {p.value}")
 
@@ -535,17 +556,25 @@ def cmd_link_check(args) -> None:
             exact = 0
             diffs = []
             for pin in common_pins:
-                if a["pins"].get(pin) and a["pins"][pin] == b["pins"][pin]:
+                a_net, b_net = a["pins"].get(pin), b["pins"].get(pin)
+                if a_net and a_net == b_net:
                     exact += 1
                 else:
-                    diffs.append((pin, a["pins"].get(pin), b["pins"].get(pin)))
+                    entry = {"pin": pin, "a_net": a_net, "b_net": b_net}
+                    fa = rules.direction_family(a_net or "")
+                    fb = rules.direction_family(b_net or "")
+                    if fa and fb and fa == fb and fa in ("tx", "rx") and a_net != b_net:
+                        entry["dir_note"] = (
+                            f"两端均为{'发送' if fa == 'tx' else '接收'}({fa.upper()})语义，"
+                            f"确认对端应为{'接收' if fa == 'tx' else '发送'}，约束方向勿写反")
+                    diffs.append(entry)
             rows.append({
                 "a_ref": ref_a, "a_lib": a["lib_id"], "a_sheet": a["sheet"],
                 "b_ref": ref_b, "b_lib": b["lib_id"], "b_sheet": b["sheet"],
                 "common_pins": len(common_pins),
                 "exact_pins": exact,
                 "diff_count": len(diffs),
-                "diffs": [{"pin": d[0], "a_net": d[1], "b_net": d[2]} for d in diffs[:12]],
+                "diffs": diffs[:12],
             })
     rows.sort(key=lambda r: (-r["exact_pins"], -r["common_pins"], r["a_ref"], r["b_ref"]))
     if args.json:
@@ -564,7 +593,69 @@ def cmd_link_check(args) -> None:
               f"{r['b_ref']} ({r['b_lib']}, {r['b_sheet']})  "
               f"exact={r['exact_pins']}/{r['common_pins']} diff={r['diff_count']}")
         for d in r["diffs"][:5]:
-            print(f"      pin {d['pin']}: {d['a_net']} != {d['b_net']}")
+            note = f"  ⚠ {d['dir_note']}" if d.get("dir_note") else ""
+            print(f"      pin {d['pin']}: {d['a_net']} != {d['b_net']}{note}")
+
+
+def cmd_interfaces(args) -> None:
+    """Interface direction table: nets carrying TX/RX/MOSI-style semantics,
+    each attached pin with its name family and the direction a constraint
+    file should use.  Pin electrical types are shown for reference only."""
+    project = _project_named(args.input)
+    netlist = _netlist(project)
+    dir_of = {"tx": "out", "sdo": "out", "dout": "out", "rx": "in",
+              "sdi": "in", "din": "in"}
+    rows = []
+    for net in netlist:
+        net_fam = rules.direction_family(net.name) or next(
+            (f for lbl in (net.labels + net.global_names)
+             for f in [rules.direction_family(lbl)] if f), "")
+        members = []
+        for p in net.pins:
+            if p.ref.startswith("#") or p.lib_id.startswith("power:"):
+                continue
+            fam = rules.direction_family(p.pin_name) or ""
+            if not net_fam and not fam:
+                continue
+            if fam in dir_of:
+                inferred = f"{dir_of[fam]}(引脚名)"
+            elif fam == "mosi":
+                inferred = "主端out/从端in"
+            elif fam == "miso":
+                inferred = "从端out/主端in"
+            elif net_fam in dir_of:
+                inferred = f"{'in' if dir_of[net_fam] == 'out' else 'out'}?(按网络语义,待确认)"
+            else:
+                inferred = "?"
+            members.append({
+                "net": net.name, "net_family": net_fam,
+                "ref": p.ref, "pin": p.pin_number,
+                "pin_name": p.pin_name, "pin_family": fam,
+                "pin_type": p.pin_type, "inferred_direction": inferred,
+                "sheet_path": p.sheet_path,
+            })
+        rows.extend(members)
+    rows.sort(key=lambda r: (r["net"], r["ref"], r["pin"]))
+    if args.json:
+        _print_json({"project": str(project.root), "interfaces": rows})
+        return
+    if not rows:
+        print("未发现带方向语义（TX/RX/MOSI/SDO/DIN...）的网络")
+        return
+    print(f"接口方向核对表 — {project.root}")
+    print("（方向依据=网络名/引脚名语义；引脚电气类型仅参考，常不规范）")
+    print("")
+    cur = None
+    for r in rows:
+        if r["net"] != cur:
+            cur = r["net"]
+            nf = f" [{r['net_family'].upper()}]" if r["net_family"] else ""
+            print(f"  {r['net']}{nf}")
+        print(f"    {r['ref']}.{r['pin']:<4s} {r['pin_name'] or '-':<24s} "
+              f"{r['pin_family'] or '-':<5s} 类型={r['pin_type']:<12s} → {r['inferred_direction']}")
+    warn = [r for r in rows if r["inferred_direction"].startswith("?") and r["pin_family"]]
+    print("")
+    print(f"共 {len(rows)} 行；? 行表示命名语义不完整，FPGA/对端约束方向请以数据手册/主从角色复核")
 
 
 def _project_named(path):
@@ -771,6 +862,11 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("input_a")
     p.add_argument("input_b")
     p.set_defaults(func=cmd_link_check)
+
+    p = sub.add_parser("interfaces", help="接口方向核对表（TX/RX/MOSI 语义 + 约束方向清单）")
+    add_json(p)
+    add_input(p)
+    p.set_defaults(func=cmd_interfaces)
 
     p = sub.add_parser("diff", help="两个工程版本间的元件/网络差异对比（候选级证据）")
     add_json(p)

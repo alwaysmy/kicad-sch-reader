@@ -315,18 +315,25 @@ def parse_sheet_ref(node) -> Optional[SheetRef]:
         pins.append(SheetPin(name=pname, direction=direction, pos=(px, py)))
 
     raw_paths: List[str] = []
+    path_pages: Dict[str, str] = {}
     instances = sexpr.first(node, "instances")
     if instances is not None:
         for proj in sexpr.children(instances, "project"):
-            path_node = sexpr.first(proj, "path")
-            if path_node is not None and len(path_node) > 1:
-                raw_paths.append(_text(path_node[1]))
+            for path_node in sexpr.children(proj, "path"):
+                if len(path_node) < 2:
+                    continue
+                raw_path = _text(path_node[1])
+                raw_paths.append(raw_path)
+                page_node = sexpr.first(path_node, "page")
+                if page_node is not None and len(page_node) > 1:
+                    path_pages[raw_path] = _text(page_node[1])
     uuid = _text(uuid_node[1]) if uuid_node is not None and len(uuid_node) > 1 else ""
-    # In KiCad 10 root sheets the instances list can contain the *root* path
-    # plus a page number instead of the child-instance path.  Keep only paths
-    # that really point at this sheet uuid; the project loader synthesizes the
-    # rest from the parent path.
+    # KiCad 10 root sheet instances store (path /<sheet_uuid> (page "N")).
+    # Keep paths that really point at this sheet uuid together with their page
+    # numbers; the project loader uses them as PDF page map.
     paths = [p for p in raw_paths if uuid and (p == f"/{uuid}" or p.endswith(f"/{uuid}"))]
+    pages = {p: path_pages[p] for p in paths if p in path_pages}
+    first_page = next((v for v in path_pages.values() if v), "")
     return SheetRef(
         name=props.get("Sheetname", ""),
         file=props.get("Sheetfile", ""),
@@ -334,7 +341,9 @@ def parse_sheet_ref(node) -> Optional[SheetRef]:
         size=(sx, sy),
         uuid=uuid,
         pins=pins,
+        page=first_page,
         paths=paths,
+        pages=pages,
     )
 
 
@@ -518,6 +527,7 @@ def load_project(input_path) -> Project:
     project = Project(root=root_file.parent)
     visited: set[str] = set()
     queue: list[tuple[str, Path]] = [("/", root_file)]
+    page_by_path: Dict[str, int] = {"/": 1}
     while queue:
         path, file = queue.pop(0)
         key = str(Path(path))
@@ -525,6 +535,7 @@ def load_project(input_path) -> Project:
             continue
         visited.add(key)
         sheet = parse_sheet_file(file, path)
+        sheet.page_no = page_by_path.get(path, 0)
         project.sheets[path] = sheet
         project.sheet_order.append(path)
         project.files.append(file.resolve())
@@ -538,6 +549,9 @@ def load_project(input_path) -> Project:
                 candidates.append(file.parent / child_file)
             resolved = next((c for c in candidates if c.exists()), candidates[0])
             for child_path in child_paths:
+                page_text = ref.pages.get(child_path, "") or ref.page
+                if str(page_text).isdigit():
+                    page_by_path[child_path] = int(page_text)
                 if child_path not in visited:
                     queue.append((child_path, resolved))
     return project

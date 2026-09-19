@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import re
 from collections import defaultdict
-from typing import Dict, Iterable, List, Optional, Set
+from typing import Dict, Iterable, List, Optional, Set, Tuple
 
 from .model import Issue, Net, PinNet, Project, SymbolInstance
 
@@ -193,12 +193,42 @@ def check_floating_pins(project: Project, netlist: Iterable[Net]) -> List[Issue]
     return issues
 
 
+def _net_alias_names(net: Net) -> List[str]:
+    out: List[str] = []
+    for group in (net.hierarchical_names, net.global_names, net.power_names, net.labels):
+        for name in group or []:
+            if name and name != net.name and name not in out:
+                out.append(name)
+    return out
+
+
 def check_single_pin_nets(netlist: Iterable[Net]) -> List[Issue]:
     issues: List[Issue] = []
     for net in netlist:
         if net.pin_count() == 1:
             pin = net.pins[0]
             only_power = pin.lib_id.startswith("power:") or pin.ref.startswith("#PWR")
+            aliases = _net_alias_names(net)
+            is_port = bool(net.hierarchical_names or net.global_names)
+            if is_port:
+                issues.append(Issue(
+                    code="R302H",
+                    evidence="structural",
+                    severity="info",
+                    title="层次/全局端口网络单点连接",
+                    message=(
+                        f"网络 {net.name} 有层次/全局端口别名 "
+                        f"{', '.join(aliases[:6]) or net.name}；本图只有 "
+                        f"{pin.ref}.{pin.pin_number} 一个连接点。"
+                        f"若该端口在父图/其他子图有连接属正常形态；若全板仅此处，则当前未使用"
+                    ),
+                    sheet_path=pin.sheet_path,
+                    ref=pin.ref,
+                    pin=pin.pin_number,
+                    net=net.name,
+                    details={"aliases": ", ".join(aliases)},
+                ))
+                continue
             issues.append(Issue(
                 code="R302",
                 evidence="structural",
@@ -213,13 +243,17 @@ def check_single_pin_nets(netlist: Iterable[Net]) -> List[Issue]:
                 pin=pin.pin_number,
                 net=net.name,
             ))
-        elif net.pin_count() == 0 and (net.labels or net.global_names or net.power_names):
+        elif net.pin_count() == 0 and (net.labels or net.global_names or net.hierarchical_names or net.power_names):
             issues.append(Issue(
                 code="R303",
                 evidence="structural",
                 severity="warning",
                 title="标签悬空",
-                message=f"标签/电源符号 {', '.join(net.labels + net.global_names + net.power_names)} 没有连接到任何元件引脚",
+                message=(
+                    "标签/层次端口/电源符号 "
+                    f"{', '.join(net.labels + net.global_names + net.hierarchical_names + net.power_names)} "
+                    "没有连接到任何元件引脚"
+                ),
                 net=net.name,
             ))
     return issues
@@ -310,18 +344,38 @@ def check_hierarchical_sheet_pins(project: Project) -> List[Issue]:
 
 
 def check_dnp_inventory(project: Project) -> List[Issue]:
-    issues: List[Issue] = []
+    """DNP inventory, grouped one issue per sheet.
+
+    A list of not-fitted parts is a review *context*, not one finding per
+    part.  Grouping keeps the reviewer's attention on which DNP choices look
+    unusual (an IC or a resistor that changes circuit behaviour) instead of
+    drowning them in rows of test points.
+    """
+    per_sheet: Dict[str, List[SymbolInstance]] = defaultdict(list)
     for sym in project.all_symbols():
         if sym.dnp:
-            issues.append(Issue(
-                code="R701",
-                evidence="structural",
-                severity="info",
-                title="DNP 器件",
-                message=f"{sym.ref}（{sym.value or sym.lib_id}）被标记为不焊接（DNP）",
-                sheet_path=sym.sheet_path,
-                ref=sym.ref,
-            ))
+            per_sheet[sym.sheet_path].append(sym)
+    issues: List[Issue] = []
+    for path, syms in sorted(per_sheet.items()):
+        notable = [s for s in syms if not (s.ref.startswith("TP") or s.ref.startswith("H"))]
+        shown_all = ", ".join(
+            f"{s.ref}({s.value or s.lib_id})" for s in syms[:16])
+        extra = f" …(+{len(syms) - 16})" if len(syms) > 16 else ""
+        message = (
+            f"{len(syms)} 个器件标记为不焊接（DNP）: {shown_all}{extra}"
+        )
+        if len(notable) < len(syms):
+            message += f"；其中 {len(syms) - len(notable)} 个为测试点/机械件，其余 {len(notable)} 个请确认 DNP 意图"
+        issues.append(Issue(
+            code="R701",
+            severity="info",
+            title="DNP 器件清单（按图纸汇总）",
+            message=message,
+            sheet_path=path,
+            details={"refs": ", ".join(s.ref for s in syms),
+                     "notable": ", ".join(s.ref for s in notable)},
+            evidence="structural",
+        ))
     return issues
 
 
@@ -337,13 +391,15 @@ def erc_markers_to_issues(markers: List[dict]) -> List[Issue]:
         sheet_path = str(marker.get("sheet_path", ""))
         ref = ""
         pin = ""
-        # KiCad 10 puts a human-readable "Symbol U101 引脚 1" inside items[].
+        # KiCad 10 puts a human-readable "Symbol U101 pin 1" inside items[].
+        # The wording follows the KiCad UI language: zh-CN uses 引脚, en uses
+        # pin — match both so ref/pin attribution survives locale changes.
         if isinstance(marker.get("items"), list):
             for item in marker["items"]:
                 if not isinstance(item, dict):
                     continue
                 desc_item = str(item.get("description", ""))
-                match = re.match(r"^Symbol\s+(\S+)\s+引脚\s+(\S+)", desc_item)
+                match = re.match(r"^Symbol\s+(\S+)\s+(?:引脚|[Pp]in)\s+(\S+)", desc_item)
                 if match:
                     ref, pin = match.group(1), match.group(2)
                 elif not ref:
@@ -378,8 +434,9 @@ def check_nc_pin_inventory(project: Project) -> List[Issue]:
 
     Mirrors the lceda-sch-reader review discipline: an X marker is a design
     *decision* ("this pin really is unused"), so each one must be confirmable
-    against the datasheet.  Power-input pins marked NC are suspicious enough
-    to escalate to warning; everything else stays informational.
+    against the datasheet.  Reporting is grouped one issue per component —
+    a 24-unused-pin connector is one review item, not 24.  Power-input pins
+    marked NC stay per-pin and escalate to warning (always suspicious).
     """
     issues: List[Issue] = []
     for path in project.sheet_order:
@@ -389,31 +446,54 @@ def check_nc_pin_inventory(project: Project) -> List[Issue]:
         nc_points = {(round(p.pos[0], 3), round(p.pos[1], 3)) for p in sheet.no_connects}
         if not nc_points:
             continue
+        per_component: Dict[Tuple[str, str], List] = defaultdict(list)
         for sym in sheet.symbols:
             for pin in sym.pins:
                 key = (round(pin.pos[0], 3), round(pin.pos[1], 3))
                 # The parser records no_connect on pins only when it saw an
                 # explicit per-pin flag; the X symbol itself is geometric, so
                 # match by position.
-                marked_nc = pin.no_connect or key in nc_points
-                if not marked_nc:
+                if not (pin.no_connect or key in nc_points):
                     continue
-                ptype = (pin.electrical_type or "unknown").lower()
-                sev = "warning" if ptype == "power_in" else "info"
+                per_component[(sym.ref, sym.value or sym.lib_id)].append(pin)
+        for (ref, value), pins in sorted(per_component.items()):
+            power_pins = [p for p in pins
+                          if (p.electrical_type or "").lower() == "power_in"]
+            for p in power_pins:
                 issues.append(Issue(
                     code="R304",
-                    severity=sev,
-                    title="NC 引脚确认清单",
+                    severity="warning",
+                    title="电源输入引脚被 NC（逐脚确认）",
                     message=(
-                        f"{sym.ref}.{pin.number}（{pin.name or sym.lib_id}，类型 {pin.electrical_type}）"
-                        f"被标记为 no-connect；请对照手册确认该脚确实可悬空"
-                        + ("——电源输入引脚被 NC 尤为可疑" if sev == "warning" else "")
+                        f"{ref}.{p.number}（{p.name or value}，power_in）被标记为"
+                        f" no-connect——电源输入引脚被 NC 尤为可疑，请对照手册确认"
                     ),
                     sheet_path=path,
-                    ref=sym.ref,
-                    pin=pin.number,
+                    ref=ref,
+                    pin=p.number,
                     evidence="structural",
                 ))
+            plain = [p for p in pins if p not in power_pins]
+            if not plain:
+                continue
+            nums = [p.number for p in plain]
+            shown = ", ".join(nums[:12])
+            extra = f" …(+{len(nums) - 12})" if len(nums) > 12 else ""
+            ptypes = {((p.electrical_type or "unknown").lower()) for p in plain}
+            issues.append(Issue(
+                code="R304",
+                severity="info",
+                title="NC 引脚确认清单（按器件汇总）",
+                message=(
+                    f"{ref}（{value}）有 {len(plain)} 个引脚被标记为 no-connect:"
+                    f" {shown}{extra}（类型 {', '.join(sorted(ptypes))}）；"
+                    f"请对照手册确认这些脚确实可悬空"
+                ),
+                sheet_path=path,
+                ref=ref,
+                details={"pins": ", ".join(nums)},
+                evidence="structural",
+            ))
     return issues
 
 
@@ -451,9 +531,11 @@ def check_reference_sequences(project: Project) -> List[Issue]:
     """Report gaps in reference-designator numbering (R1,R2,R5 -> R3,R4 missing)
     and designators that do not match the <letters><digits> convention.
 
-    Purely informational: gaps usually mean deleted parts during iteration,
-    which is fine — but a fresh reviewer should know the numbering is not
-    contiguous before using ranges like "R1..R12 are the gain resistors".
+    Purely informational and aggregated: one issue per problem class, never
+    one row per prefix.  Missing numbers are only enumerated *within the same
+    hundred-block* (R201..R205 missing R203): page-hundreds numbering
+    (C2xx/C3xx/C7xx on different sheets) makes cross-block gaps meaningless,
+    so those are counted but not listed.
     """
     groups: Dict[str, Set[int]] = defaultdict(set)
     nonstandard: List[str] = []
@@ -481,23 +563,45 @@ def check_reference_sequences(project: Project) -> List[Issue]:
             details={"refs": ", ".join(sorted(nonstandard))},
             evidence="heuristic",
         ))
+    gap_summaries: List[str] = []
+    gap_details: List[str] = []
     for prefix in sorted(groups):
         numbers = groups[prefix]
         lo, hi = min(numbers), max(numbers)
-        missing = [n for n in range(lo, hi + 1) if n not in numbers]
-        if not missing:
+        if lo == hi:
             continue
-        shown = ", ".join(f"{prefix}{n}" for n in missing[:8])
-        extra = f" …(+{len(missing) - 8})" if len(missing) > 8 else ""
+        missing_total = (hi - lo + 1) - len(numbers)
+        if missing_total <= 0:
+            continue
+        # Enumerate only gaps inside hundred-blocks that actually hold parts
+        # (>=2 refs present): these are plausible "deleted during iteration"
+        # skips a reviewer could act on.  Empty hundred-blocks are just the
+        # page-hundreds numbering scheme and carry no signal.
+        near: List[int] = []
+        blocks: Dict[int, Set[int]] = defaultdict(set)
+        for n in numbers:
+            blocks[n // 100].add(n)
+        for block, present in sorted(blocks.items()):
+            if len(present) < 2:
+                continue
+            blo, bhi = min(present), max(present)
+            near.extend(n for n in range(blo, bhi + 1) if n not in numbers)
+        shown = ", ".join(f"{prefix}{n}" for n in near[:8])
+        extra = f" …(+{len(near) - 8})" if len(near) > 8 else ""
+        near_txt = f"；段内缺号: {shown}{extra}" if near else ""
+        gap_summaries.append(f"{prefix} 缺{missing_total}（{prefix}{lo}..{prefix}{hi}{near_txt}）")
+        gap_details.append(f"{prefix}: {missing_total}{near_txt}")
+    if gap_summaries:
         issues.append(Issue(
             code="R103",
             severity="info",
-            title="位号编号不连续",
+            title="位号编号不连续（汇总）",
             message=(
-                f"{prefix} 序列在 {prefix}{lo}..{prefix}{hi} 内缺号 {len(missing)} 个: "
-                f"{shown}{extra}（通常是迭代删除所致，仅供审阅时参考）"
+                f"{len(gap_summaries)} 个前缀的位号有缺号: {', '.join(gap_summaries)}。"
+                f"跨页编 hundreds 的工程跨段空号属正常（按页分段编号），"
+                f"段内缺号通常是迭代删除，仅供审阅时参考"
             ),
-            details={"missing": shown},
+            details={"per_prefix": " | ".join(gap_details)},
             evidence="heuristic",
         ))
     return issues
@@ -592,6 +696,129 @@ def _is_power_like(net: Net) -> bool:
     )
 
 
+# ---------------- R902: interface direction semantics ----------------
+#
+# Signal-direction words (TX/RX, MOSI/MISO, SDO/SDI, DOUT/DIN) are checked as
+# *declared* evidence: net/label names and composite MCU pin names
+# ("PB10/UART3TX/I2C2SCL").  Pin electrical types are NOT authoritative here
+# (symbol authors mark them inconsistently) — a type conflict is info only,
+# never error.  Master-view names (MOSI/MISO) keep one name across the whole
+# bus, so same-family pins on one net are normal there; local-view names
+# (TX/SDO/DOUT are outputs, RX/SDI/DIN are inputs) collide when two different
+# chips both claim the same direction on one net.
+
+_DIR_WORD_RE = re.compile(
+    r"(?<![A-Za-z])(?:UART\d*_?)?"
+    r"(?P<word>TXD|RXD|TX|RX|MOSI|MISO|SDO|SDI|DOUT|DIN)(?![A-Za-z0-9_])",
+    re.IGNORECASE,
+)
+
+# The lookahead must exclude digits/underscore on purpose:
+# * "RX1_P"/"RX_{1}-" are USB-C/PCIe *industry-standard pin names*, not the
+#   designer's direction declaration — exempting them kills the diff-pair
+#   false positives on connector names;
+# * "TX_DISABLE"/"TX_FAULT"/"DIN_14" are control/config functions, not
+#   direction.  A direction word must therefore end the token.
+
+_OUT_LOCAL = {"tx", "sdo", "dout"}
+_IN_LOCAL = {"rx", "sdi", "din"}
+_R902_TITLES = {
+    "collision_out": "接口方向语义冲突（双发送）",
+    "collision_in": "接口方向语义冲突（全接收）",
+    "mosi_swap": "MOSI/MISO 命名互换嫌疑",
+    "type_mismatch": "引脚电气类型与命名语义不符",
+}
+
+
+def direction_family(text) -> Optional[str]:
+    """First interface-direction family found in a net/pin name.
+
+    Returns one of tx/rx/mosi/miso/sdo/sdi/dout/din, or None.  The optional
+    UART prefix ("UART3TX", "UART_TX") is tolerated; matches must sit on
+    token boundaries so "CTX"/"TXT"/"BOARDING" never fire.
+    """
+    m = _DIR_WORD_RE.search(str(text or ""))
+    if not m:
+        return None
+    word = m.group("word").lower()
+    return {"txd": "tx", "rxd": "rx"}.get(word, word)
+
+
+def analyze_direction_group(net_name: str, members: List[dict]) -> List[dict]:
+    """Shared direction-semantics analysis over one net's non-power pins.
+
+    *members* items: {"ref", "pin", "pin_name", "pin_type" (optional str)}.
+    Used verbatim by the KiCad rule engine and by the LCEDA `.epro` review.
+    """
+    findings: List[dict] = []
+
+    def fmt(m: dict) -> str:
+        return f"{m['ref']}.{m['pin']}({m.get('pin_name') or '?'})"
+
+    pin_fams = [(m, direction_family(m.get("pin_name"))) for m in members]
+    pin_fams = [(m, f) for m, f in pin_fams if f]
+    if not pin_fams:
+        return findings
+
+    outs = [(m, f) for m, f in pin_fams if f in _OUT_LOCAL]
+    ins = [(m, f) for m, f in pin_fams if f in _IN_LOCAL]
+    out_refs = {m["ref"] for m, _ in outs}
+    in_refs = {m["ref"] for m, _ in ins}
+    if len(out_refs) >= 2:
+        findings.append({"kind": "collision_out", "severity": "warning", "message":
+            f"网络 {net_name} 上 {len(out_refs)} 个器件的引脚名均为发送语义"
+            f"（{', '.join(fmt(m) for m, _ in sorted(outs, key=lambda x: x[0]['ref']))}）；"
+            f"单向信号只应有一个驱动方，请确认哪端为发送，对端（FPGA/MCU）约束方向勿写反"})
+    if len(in_refs) >= 2 and not outs:
+        findings.append({"kind": "collision_in", "severity": "warning", "message":
+            f"网络 {net_name} 上 {len(in_refs)} 个器件的引脚名均为接收语义且无发送语义引脚"
+            f"（{', '.join(fmt(m) for m, _ in sorted(ins, key=lambda x: x[0]['ref']))}）；请确认驱动方是否缺失"})
+
+    net_fam = direction_family(net_name)
+    for m, f in pin_fams:
+        if (net_fam == "mosi" and f == "miso") or (net_fam == "miso" and f == "mosi"):
+            findings.append({"kind": "mosi_swap", "severity": "warning", "message":
+                f"网络 {net_name}（{net_fam.upper()} 语义）连接了 {fmt(m)}"
+                f"（{f.upper()} 语义）；MOSI/MISO 命名疑似互换，请核对主从数据方向"})
+
+    for m, f in pin_fams:
+        tl = str(m.get("pin_type") or "").lower()
+        if f in _OUT_LOCAL and tl == "input":
+            bad = "发送(TX/SDO/DOUT)", "input"
+        elif f in _IN_LOCAL and tl == "output":
+            bad = "接收(RX/SDI/DIN)", "output"
+        else:
+            continue
+        findings.append({"kind": "type_mismatch", "severity": "info", "message":
+            f"{fmt(m)} 引脚名为{bad[0]}语义，但符号电气类型标注为 {bad[1]}；"
+            f"符号电气类型常不规范，仅提示人工核对，不作为判定依据"})
+    return findings
+
+
+def check_interface_direction(project: Project, netlist: Iterable[Net]) -> List[Issue]:
+    """R902: interface-direction semantics over net/label names and composite
+    MCU pin names.  Deliberately *not* based on pin electrical types except as
+    an informational cross-check (symbol types are frequently sloppy)."""
+    issues: List[Issue] = []
+    for net in netlist:
+        members = [{"ref": p.ref, "pin": p.pin_number, "pin_name": p.pin_name,
+                    "pin_type": p.pin_type}
+                   for p in net.pins
+                   if not (p.ref.startswith("#") or p.lib_id.startswith("power:"))]
+        if len(members) < 2:
+            continue
+        for f in analyze_direction_group(net.name, members):
+            issues.append(Issue(
+                code="R902",
+                severity=f["severity"],
+                title=_R902_TITLES[f["kind"]],
+                message=f["message"],
+                net=net.name,
+                evidence="declared",
+            ))
+    return issues
+
+
 def load_config(path) -> dict:
     """Load a review-rule config JSON (enabled/severity per rule code)."""
     import json
@@ -644,6 +871,7 @@ def run_all_checks(
     issues.extend(check_title_blocks(project))
     issues.extend(check_polar_devices(project, netlist))
     issues.extend(check_dnp_inventory(project))
+    issues.extend(check_interface_direction(project, netlist))
     if erc_markers:
         issues.extend(erc_markers_to_issues(erc_markers))
     issues.sort(key=lambda i: i.sort_key())

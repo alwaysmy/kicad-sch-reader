@@ -157,7 +157,9 @@ class SheetRef:
     size: Tuple[float, float]
     uuid: str
     pins: List[SheetPin]
+    page: str = ""
     paths: List[str] = field(default_factory=list)
+    pages: Dict[str, str] = field(default_factory=dict)
 
     @property
     def first_path(self) -> str:
@@ -171,6 +173,7 @@ class SheetData:
     title: str = ""
     version: str = ""
     generator: str = ""
+    page_no: int = 0
     uuid: str = ""
     paper: str = ""
     # Raw title_block fields: title/date/rev/company/comment<N>.

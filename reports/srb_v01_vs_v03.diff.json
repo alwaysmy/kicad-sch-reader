@@ -1,0 +1,6814 @@
+{
+  "old": "D:\\MyProjects\\EmoeR_D\\NIM\\SuperResistanceBridge\\SuperResistantBridge_MAIN_BRD_V0.1",
+  "new": "D:\\MyProjects\\EmoeR_D\\NIM\\SuperResistanceBridge\\SuperResistantBridge_MAIN_BRD_V0.3",
+  "summary": {
+    "components_added": 91,
+    "components_removed": 51,
+    "components_changed": 109,
+    "nets_added": 77,
+    "nets_removed": 82,
+    "nets_renamed_candidates": 22,
+    "nets_changed": 194
+  },
+  "components_added": [
+    {
+      "ref": "C1011",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1015",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1025",
+      "value": "10nF C0G",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1026",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1027",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1028",
+      "value": "10nF C0G",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1029",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1030",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1031",
+      "value": "10nF C0G",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1032",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1033",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1034",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_1206_3216Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C1114",
+      "value": "100nF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C416",
+      "value": "100nF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C516",
+      "value": "100nF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C701",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C702",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C703",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C704",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C901",
+      "value": "2.2uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C902",
+      "value": "2.2uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C903",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C904",
+      "value": "2.2uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C905",
+      "value": "2.2uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C906",
+      "value": "100nF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C907",
+      "value": "100nF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C908",
+      "value": "10uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "D101",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D102",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D103",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D104",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D201",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D202",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D203",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D204",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D301",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D302",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D303",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D304",
+      "value": "ESD601DPYRQ1",
+      "lib_id": "Diode:ESD9B3.3ST5G",
+      "footprint": "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm",
+      "pin_count": 2
+    },
+    {
+      "ref": "D603",
+      "value": "BZT52H-C3V0",
+      "lib_id": "Device:D_Zener_Small",
+      "footprint": "Diode_SMD:D_SOD-123F",
+      "pin_count": 2
+    },
+    {
+      "ref": "D604",
+      "value": "BZT52H-C3V0",
+      "lib_id": "Device:D_Zener_Small",
+      "footprint": "Diode_SMD:D_SOD-123F",
+      "pin_count": 2
+    },
+    {
+      "ref": "FB701",
+      "value": "GZ2012D101TF",
+      "lib_id": "Device:FerriteBead_Small",
+      "footprint": "Inductor_SMD:L_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "FB901",
+      "value": "GZ1608D601TF",
+      "lib_id": "Device:FerriteBead_Small",
+      "footprint": "Inductor_SMD:L_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "J205",
+      "value": "BNJ",
+      "lib_id": "Connector_Generic:Conn_01x01",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical",
+      "pin_count": 1
+    },
+    {
+      "ref": "J206",
+      "value": "XH2.54 4P",
+      "lib_id": "Connector_Generic:Conn_01x04",
+      "footprint": "Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical",
+      "pin_count": 4
+    },
+    {
+      "ref": "J305",
+      "value": "BNJ",
+      "lib_id": "Connector_Generic:Conn_01x01",
+      "footprint": "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical",
+      "pin_count": 1
+    },
+    {
+      "ref": "J306",
+      "value": "XH2.54 4P",
+      "lib_id": "Connector_Generic:Conn_01x04",
+      "footprint": "Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical",
+      "pin_count": 4
+    },
+    {
+      "ref": "L601",
+      "value": "SWPA4030S101MT",
+      "lib_id": "Device:L_Small",
+      "footprint": "Inductor_SMD:L_Sunlord_SWPA4030S",
+      "pin_count": 2
+    },
+    {
+      "ref": "L706",
+      "value": "FNR6045S680MT",
+      "lib_id": "Device:L_Small",
+      "footprint": "Inductor_SMD:L_Changjiang_FNR6045S",
+      "pin_count": 2
+    },
+    {
+      "ref": "L707",
+      "value": "FNR6045S680MT",
+      "lib_id": "Device:L_Small",
+      "footprint": "Inductor_SMD:L_Changjiang_FNR6045S",
+      "pin_count": 2
+    },
+    {
+      "ref": "L708",
+      "value": "FNR6045S680MT",
+      "lib_id": "Device:L_Small",
+      "footprint": "Inductor_SMD:L_Changjiang_FNR6045S",
+      "pin_count": 2
+    },
+    {
+      "ref": "L709",
+      "value": "FNR6045S680MT",
+      "lib_id": "Device:L_Small",
+      "footprint": "Inductor_SMD:L_Changjiang_FNR6045S",
+      "pin_count": 2
+    },
+    {
+      "ref": "Q201",
+      "value": "AO3401A",
+      "lib_id": "Transistor_FET:AO3401A",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pin_count": 3
+    },
+    {
+      "ref": "Q301",
+      "value": "AO3401A",
+      "lib_id": "Transistor_FET:AO3401A",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pin_count": 3
+    },
+    {
+      "ref": "Q610",
+      "value": "AO3401A",
+      "lib_id": "Transistor_FET:AO3401A",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pin_count": 3
+    },
+    {
+      "ref": "R112",
+      "value": "33R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R114",
+      "value": "33R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R117",
+      "value": "33R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R202",
+      "value": "220R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R203",
+      "value": "100k",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R302",
+      "value": "100k",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R303",
+      "value": "220R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R406",
+      "value": "10R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R407",
+      "value": "10R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R408",
+      "value": "10R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R409",
+      "value": "RT0603BRD07100RL",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R410",
+      "value": "RT0603BRD07100RL",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R411",
+      "value": "1k",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R506",
+      "value": "10R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R507",
+      "value": "10R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R508",
+      "value": "10R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R509",
+      "value": "RT0603BRD07100RL",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R510",
+      "value": "RT0603BRD07100RL",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R511",
+      "value": "1k",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R621",
+      "value": "100k",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R622",
+      "value": "100k",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R623",
+      "value": "220R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R902",
+      "value": "0R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R903",
+      "value": "0R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R904",
+      "value": "0R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R905",
+      "value": "0R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R906",
+      "value": "22R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "U1",
+      "value": "TPA5581",
+      "lib_id": "Amplifier_Operational:ADA4807-1",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-6",
+      "pin_count": 6
+    },
+    {
+      "ref": "U1106",
+      "value": "USBLC6-2P6",
+      "lib_id": "Power_Protection:USBLC6-2P6",
+      "footprint": "Package_TO_SOT_SMD:SOT-666",
+      "pin_count": 6
+    },
+    {
+      "ref": "U2",
+      "value": "TPR7050",
+      "lib_id": "Emoe_Analog_Devices:TPR7025",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "pin_count": 8
+    },
+    {
+      "ref": "U206",
+      "value": "GAQY212GS",
+      "lib_id": "Emoe_Analog_Devices:GAQY212GS",
+      "footprint": "Package_SO:SO-4_4.4x4.3mm_P2.54mm",
+      "pin_count": 4
+    },
+    {
+      "ref": "U304",
+      "value": "GAQY212GS",
+      "lib_id": "Emoe_Analog_Devices:GAQY212GS",
+      "footprint": "Package_SO:SO-4_4.4x4.3mm_P2.54mm",
+      "pin_count": 4
+    },
+    {
+      "ref": "U610",
+      "value": "DAC8830IDR",
+      "lib_id": "Emoe_ADDA:AD5541",
+      "footprint": "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm",
+      "pin_count": 8
+    },
+    {
+      "ref": "U901",
+      "value": "LHA7532B",
+      "lib_id": "Emoe_ADDA:LHA7532B",
+      "footprint": "Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm",
+      "pin_count": 20
+    },
+    {
+      "ref": "U902",
+      "value": "LP5907MFX-3.3",
+      "lib_id": "Regulator_Linear:LP5907MFX-3.3",
+      "footprint": "Package_TO_SOT_SMD:SOT-23-5",
+      "pin_count": 5
+    },
+    {
+      "ref": "Y901",
+      "value": "SX3M4.9152M20F30TNN",
+      "lib_id": "Oscillator:ASE-xxxMHz",
+      "footprint": "Oscillator:Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm",
+      "pin_count": 4
+    }
+  ],
+  "components_removed": [
+    {
+      "ref": "C206",
+      "value": "100nF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C211",
+      "value": "100nF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C607",
+      "value": "100nF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C618",
+      "value": "100nF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C620",
+      "value": "100nF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C718",
+      "value": "NFM21PC105",
+      "lib_id": "Device:C_Feedthrough",
+      "footprint": "Emoe_Filter_PowerLine:NFM21PC225B0J3D",
+      "pin_count": 3
+    },
+    {
+      "ref": "C737",
+      "value": "NFM21PC105",
+      "lib_id": "Device:C_Feedthrough",
+      "footprint": "Emoe_Filter_PowerLine:NFM21PC225B0J3D",
+      "pin_count": 3
+    },
+    {
+      "ref": "C751",
+      "value": "NFM21PC105",
+      "lib_id": "Device:C_Feedthrough",
+      "footprint": "Emoe_Filter_PowerLine:NFM21PC225B0J3D",
+      "pin_count": 3
+    },
+    {
+      "ref": "C763",
+      "value": "NFM21PC105",
+      "lib_id": "Device:C_Feedthrough",
+      "footprint": "Emoe_Filter_PowerLine:NFM21PC225B0J3D",
+      "pin_count": 3
+    },
+    {
+      "ref": "C775",
+      "value": "1uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "C776",
+      "value": "1uF",
+      "lib_id": "Device:C_Small",
+      "footprint": "Capacitor_SMD:C_0805_2012Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "FB601",
+      "value": "GZ1608D601TF",
+      "lib_id": "Device:FerriteBead_Small",
+      "footprint": "Inductor_SMD:L_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "H1002",
+      "value": "M2.5",
+      "lib_id": "Mechanical:MountingHole",
+      "footprint": "MountingHole:MountingHole_2.7mm_M2.5_DIN965",
+      "pin_count": 0
+    },
+    {
+      "ref": "H1004",
+      "value": "M2.5",
+      "lib_id": "Mechanical:MountingHole",
+      "footprint": "MountingHole:MountingHole_2.7mm_M2.5_DIN965",
+      "pin_count": 0
+    },
+    {
+      "ref": "H901",
+      "value": "M2",
+      "lib_id": "Mechanical:MountingHole",
+      "footprint": "MountingHole:MountingHole_2.2mm_M2_DIN965",
+      "pin_count": 0
+    },
+    {
+      "ref": "J1001",
+      "value": "2.54mm_1x6P",
+      "lib_id": "Connector_Generic:Conn_01x06",
+      "footprint": "Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical",
+      "pin_count": 6
+    },
+    {
+      "ref": "J1002",
+      "value": "2.54mm_1x6P",
+      "lib_id": "Connector_Generic:Conn_01x06",
+      "footprint": "Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical",
+      "pin_count": 6
+    },
+    {
+      "ref": "Q604",
+      "value": "MMBT3906",
+      "lib_id": "Transistor_BJT:MMBT3906",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pin_count": 3
+    },
+    {
+      "ref": "Q605",
+      "value": "MMBT3906",
+      "lib_id": "Transistor_BJT:MMBT3906",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pin_count": 3
+    },
+    {
+      "ref": "Q606",
+      "value": "MMBFJ112",
+      "lib_id": "Transistor_FET:MMBFJ112",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pin_count": 3
+    },
+    {
+      "ref": "Q607",
+      "value": "MMBT3906",
+      "lib_id": "Transistor_BJT:MMBT3906",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pin_count": 3
+    },
+    {
+      "ref": "Q608",
+      "value": "MMBT3906",
+      "lib_id": "Transistor_BJT:MMBT3906",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pin_count": 3
+    },
+    {
+      "ref": "Q609",
+      "value": "MMBT3906",
+      "lib_id": "Transistor_BJT:MMBT3906",
+      "footprint": "Package_TO_SOT_SMD:SOT-23",
+      "pin_count": 3
+    },
+    {
+      "ref": "R1019",
+      "value": "0R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R1020",
+      "value": "0R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R1021",
+      "value": "0R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R1022",
+      "value": "0R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R1023",
+      "value": "0R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R133",
+      "value": "33R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R135",
+      "value": "33R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R145",
+      "value": "33R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R149",
+      "value": "33R",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0402_1005Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R201",
+      "value": "PT100",
+      "lib_id": "Device:R_US",
+      "footprint": "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P2.54mm_Vertical",
+      "pin_count": 2
+    },
+    {
+      "ref": "R301",
+      "value": "PT100",
+      "lib_id": "Device:R_US",
+      "footprint": "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P2.54mm_Vertical",
+      "pin_count": 2
+    },
+    {
+      "ref": "R614",
+      "value": "200k",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "R615",
+      "value": "200k",
+      "lib_id": "Device:R_Small_US",
+      "footprint": "Resistor_SMD:R_0603_1608Metric",
+      "pin_count": 2
+    },
+    {
+      "ref": "TP1008",
+      "value": "TP",
+      "lib_id": "Connector:TestPoint_Alt",
+      "footprint": "TestPoint:TestPoint_Pad_1.0x1.0mm",
+      "pin_count": 1
+    },
+    {
+      "ref": "TP1009",
+      "value": "TP",
+      "lib_id": "Connector:TestPoint_Alt",
+      "footprint": "TestPoint:TestPoint_Pad_1.0x1.0mm",
+      "pin_count": 1
+    },
+    {
+      "ref": "TP1010",
+      "value": "TP",
+      "lib_id": "Connector:TestPoint_Alt",
+      "footprint": "TestPoint:TestPoint_Pad_1.0x1.0mm",
+      "pin_count": 1
+    },
+    {
+      "ref": "TP608",
+      "value": "TP",
+      "lib_id": "Connector:TestPoint_Alt",
+      "footprint": "TestPoint:TestPoint_Pad_1.0x1.0mm",
+      "pin_count": 1
+    },
+    {
+      "ref": "TP801",
+      "value": "TP",
+      "lib_id": "Connector:TestPoint_Alt",
+      "footprint": "TestPoint:TestPoint_Pad_1.0x1.0mm",
+      "pin_count": 1
+    },
+    {
+      "ref": "TP802",
+      "value": "TP",
+      "lib_id": "Connector:TestPoint_Alt",
+      "footprint": "TestPoint:TestPoint_Pad_1.0x1.0mm",
+      "pin_count": 1
+    },
+    {
+      "ref": "TP803",
+      "value": "TP",
+      "lib_id": "Connector:TestPoint_Alt",
+      "footprint": "TestPoint:TestPoint_Pad_1.0x1.0mm",
+      "pin_count": 1
+    },
+    {
+      "ref": "TP804",
+      "value": "TP",
+      "lib_id": "Connector:TestPoint_Alt",
+      "footprint": "TestPoint:TestPoint_Pad_1.0x1.0mm",
+      "pin_count": 1
+    },
+    {
+      "ref": "U202",
+      "value": "ADG1436YCPZ",
+      "lib_id": "Emoe_Analog_Devices:ADG2436",
+      "footprint": "Package_CSP:LFCSP-16-1EP_4x4mm_P0.65mm_EP2.6x2.6mm",
+      "pin_count": 17
+    },
+    {
+      "ref": "U407",
+      "value": "LT5400-8",
+      "lib_id": "Emoe_Analog_Devices:LT5400-8",
+      "footprint": "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+      "pin_count": 9
+    },
+    {
+      "ref": "U408",
+      "value": "LT5400-7",
+      "lib_id": "Emoe_Analog_Devices:LT5400-7",
+      "footprint": "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+      "pin_count": 9
+    },
+    {
+      "ref": "U409",
+      "value": "ADA4523-1BCPZ",
+      "lib_id": "Emoe_OpAmps:ADA4523-1",
+      "footprint": "Package_CSP:LFCSP-8-1EP_3x3mm_P0.5mm_EP1.6x2.34mm",
+      "pin_count": 9
+    },
+    {
+      "ref": "U507",
+      "value": "LT5400-8",
+      "lib_id": "Emoe_Analog_Devices:LT5400-8",
+      "footprint": "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+      "pin_count": 9
+    },
+    {
+      "ref": "U508",
+      "value": "LT5400-7",
+      "lib_id": "Emoe_Analog_Devices:LT5400-7",
+      "footprint": "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+      "pin_count": 9
+    },
+    {
+      "ref": "U509",
+      "value": "ADA4523-1BCPZ",
+      "lib_id": "Emoe_OpAmps:ADA4523-1",
+      "footprint": "Package_CSP:LFCSP-8-1EP_3x3mm_P0.5mm_EP1.6x2.34mm",
+      "pin_count": 9
+    }
+  ],
+  "components_changed": [
+    {
+      "ref": "C1001",
+      "changes": {
+        "value": [
+          "1uF",
+          "1uF 3216"
+        ]
+      }
+    },
+    {
+      "ref": "C1002",
+      "changes": {
+        "value": [
+          "10nF",
+          "10nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C1003",
+      "changes": {
+        "value": [
+          "100nF",
+          "10nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C1004",
+      "changes": {
+        "value": [
+          "100nF",
+          "1nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C1005",
+      "changes": {
+        "value": [
+          "1uF",
+          "1uF 3216"
+        ],
+        "lib_id": [
+          "Device:C_Small",
+          "Device:C_Polarized_Small"
+        ],
+        "footprint": [
+          "Capacitor_SMD:C_0603_1608Metric",
+          "Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A"
+        ]
+      }
+    },
+    {
+      "ref": "C1006",
+      "changes": {
+        "value": [
+          "1uF",
+          "1uF 3216"
+        ]
+      }
+    },
+    {
+      "ref": "C1007",
+      "changes": {
+        "value": [
+          "100nF",
+          "10nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C1008",
+      "changes": {
+        "value": [
+          "100nF",
+          "10nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C1009",
+      "changes": {
+        "value": [
+          "100nF",
+          "10nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C1010",
+      "changes": {
+        "value": [
+          "100nF",
+          "1nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C1012",
+      "changes": {
+        "value": [
+          "100nF",
+          "1nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C1013",
+      "changes": {
+        "value": [
+          "1uF",
+          "1uF 3216"
+        ]
+      }
+    },
+    {
+      "ref": "C1014",
+      "changes": {
+        "value": [
+          "100nF",
+          "10nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C1023",
+      "changes": {
+        "value": [
+          "100nF",
+          "10uF"
+        ],
+        "footprint": [
+          "Capacitor_SMD:C_0402_1005Metric",
+          "Capacitor_SMD:C_0805_2012Metric"
+        ]
+      }
+    },
+    {
+      "ref": "C105",
+      "changes": {
+        "value": [
+          "1nF",
+          "100pF 2kV"
+        ]
+      }
+    },
+    {
+      "ref": "C1112",
+      "changes": {
+        "value": [
+          "4.7uF",
+          "10uF"
+        ]
+      }
+    },
+    {
+      "ref": "C401",
+      "changes": {
+        "value": [
+          "1nF",
+          "100nF"
+        ]
+      }
+    },
+    {
+      "ref": "C402",
+      "changes": {
+        "value": [
+          "1nF",
+          "1nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C403",
+      "changes": {
+        "value": [
+          "47pF",
+          "1nF C0G"
+        ],
+        "footprint": [
+          "Capacitor_SMD:C_0402_1005Metric",
+          "Capacitor_SMD:C_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "C404",
+      "changes": {
+        "value": [
+          "10nF",
+          "10nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C405",
+      "changes": {
+        "value": [
+          "1nF",
+          "1nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C406",
+      "changes": {
+        "value": [
+          "1nF",
+          "1nF C0G"
+        ],
+        "footprint": [
+          "Capacitor_SMD:C_0402_1005Metric",
+          "Capacitor_SMD:C_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "C407",
+      "changes": {
+        "value": [
+          "47pF",
+          "100nF"
+        ]
+      }
+    },
+    {
+      "ref": "C501",
+      "changes": {
+        "value": [
+          "1nF",
+          "100nF"
+        ]
+      }
+    },
+    {
+      "ref": "C502",
+      "changes": {
+        "value": [
+          "1nF",
+          "1nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C503",
+      "changes": {
+        "value": [
+          "47pF",
+          "1nF C0G"
+        ],
+        "footprint": [
+          "Capacitor_SMD:C_0402_1005Metric",
+          "Capacitor_SMD:C_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "C504",
+      "changes": {
+        "value": [
+          "10nF",
+          "10nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C505",
+      "changes": {
+        "value": [
+          "1nF",
+          "1nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C506",
+      "changes": {
+        "value": [
+          "1nF",
+          "1nF C0G"
+        ],
+        "footprint": [
+          "Capacitor_SMD:C_0402_1005Metric",
+          "Capacitor_SMD:C_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "C507",
+      "changes": {
+        "value": [
+          "47pF",
+          "100nF"
+        ]
+      }
+    },
+    {
+      "ref": "C601",
+      "changes": {
+        "value": [
+          "100nF",
+          "10nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C602",
+      "changes": {
+        "value": [
+          "10uF 3216",
+          "1uF 3216"
+        ]
+      }
+    },
+    {
+      "ref": "C604",
+      "changes": {
+        "value": [
+          "2.2uF",
+          "10uF"
+        ],
+        "footprint": [
+          "Capacitor_SMD:C_0603_1608Metric",
+          "Capacitor_SMD:C_0805_2012Metric"
+        ]
+      }
+    },
+    {
+      "ref": "C605",
+      "changes": {
+        "value": [
+          "2.2uF",
+          "10uF"
+        ],
+        "footprint": [
+          "Capacitor_SMD:C_0603_1608Metric",
+          "Capacitor_SMD:C_0805_2012Metric"
+        ]
+      }
+    },
+    {
+      "ref": "C608",
+      "changes": {
+        "value": [
+          "2.2uF",
+          "1uF"
+        ]
+      }
+    },
+    {
+      "ref": "C612",
+      "changes": {
+        "value": [
+          "1nF",
+          "1nF C0G"
+        ]
+      }
+    },
+    {
+      "ref": "C708",
+      "changes": {
+        "value": [
+          "NFM21PC105",
+          "EMZR250ARA221MF80G"
+        ],
+        "lib_id": [
+          "Device:C_Feedthrough",
+          "Device:C_Polarized_Small"
+        ],
+        "footprint": [
+          "Emoe_Filter_PowerLine:NFM21PC225B0J3D",
+          "Capacitor_SMD:CP_Elec_6.3x7.7"
+        ],
+        "pin_count": [
+          3,
+          2
+        ]
+      }
+    },
+    {
+      "ref": "C725",
+      "changes": {
+        "value": [
+          "4.7uF",
+          "10uF"
+        ]
+      }
+    },
+    {
+      "ref": "C728",
+      "changes": {
+        "value": [
+          "4.7uF",
+          "10uF"
+        ]
+      }
+    },
+    {
+      "ref": "C729",
+      "changes": {
+        "value": [
+          "4.7uF",
+          "10uF"
+        ]
+      }
+    },
+    {
+      "ref": "C736",
+      "changes": {
+        "value": [
+          "4.7uF",
+          "10uF"
+        ]
+      }
+    },
+    {
+      "ref": "C739",
+      "changes": {
+        "value": [
+          "4.7uF",
+          "10uF"
+        ]
+      }
+    },
+    {
+      "ref": "C740",
+      "changes": {
+        "value": [
+          "4.7uF",
+          "10uF"
+        ]
+      }
+    },
+    {
+      "ref": "C741",
+      "changes": {
+        "value": [
+          "4.7uF",
+          "10uF"
+        ]
+      }
+    },
+    {
+      "ref": "C744",
+      "changes": {
+        "value": [
+          "4.7uF",
+          "10uF"
+        ]
+      }
+    },
+    {
+      "ref": "C747",
+      "changes": {
+        "value": [
+          "4.7uF",
+          "10uF"
+        ]
+      }
+    },
+    {
+      "ref": "D602",
+      "changes": {
+        "value": [
+          "1N4148WS",
+          "1N4148W-7-F"
+        ],
+        "footprint": [
+          "Diode_SMD:D_SOD-323",
+          "Diode_SMD:D_SOD-123"
+        ]
+      }
+    },
+    {
+      "ref": "J1104",
+      "changes": {
+        "value": [
+          "XH2.54mm_4P",
+          "TC2030-NL"
+        ],
+        "lib_id": [
+          "Connector_Generic:Conn_01x04",
+          "Connector:Conn_ARM_SWD_TagConnect_TC2030-NL"
+        ],
+        "footprint": [
+          "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",
+          "Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical"
+        ],
+        "pin_count": [
+          4,
+          6
+        ]
+      }
+    },
+    {
+      "ref": "J701",
+      "changes": {
+        "value": [
+          "KF2.54-4P",
+          "VH3.96 2P"
+        ],
+        "lib_id": [
+          "Connector_Generic:Conn_01x04",
+          "Connector_Generic:Conn_01x02"
+        ],
+        "footprint": [
+          "Emoe_Connector:KF2EDGR-2.5-4P",
+          "Connector_JST:JST_VH_B2P-VH-B_1x02_P3.96mm_Vertical"
+        ],
+        "pin_count": [
+          4,
+          2
+        ]
+      }
+    },
+    {
+      "ref": "L701",
+      "changes": {
+        "value": [
+          "FTC252012S3R3MBCA",
+          "FTC252010S4R7MBCA"
+        ]
+      }
+    },
+    {
+      "ref": "L702",
+      "changes": {
+        "value": [
+          "FTC252012S6R8MBCA",
+          "FTC252010S4R7MBCA"
+        ]
+      }
+    },
+    {
+      "ref": "L704",
+      "changes": {
+        "value": [
+          "FTC252012S3R3MBCA",
+          "FTC252010S4R7MBCA"
+        ]
+      }
+    },
+    {
+      "ref": "L705",
+      "changes": {
+        "value": [
+          "FTC252012S6R8MBCA",
+          "FTC252010S4R7MBCA"
+        ]
+      }
+    },
+    {
+      "ref": "Q603",
+      "changes": {
+        "value": [
+          "MMBT3906",
+          "AO3401A"
+        ],
+        "lib_id": [
+          "Transistor_BJT:MMBT3906",
+          "Transistor_FET:AO3401A"
+        ]
+      }
+    },
+    {
+      "ref": "R1004",
+      "changes": {
+        "value": [
+          "10k",
+          "100R"
+        ]
+      }
+    },
+    {
+      "ref": "R1007",
+      "changes": {
+        "footprint": [
+          "Resistor_SMD:R_0805_2012Metric",
+          "Resistor_SMD:R_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "R1009",
+      "changes": {
+        "value": [
+          "0R",
+          "1k"
+        ]
+      }
+    },
+    {
+      "ref": "R1011",
+      "changes": {
+        "value": [
+          "100R",
+          "RT0603BRD07100RL"
+        ]
+      }
+    },
+    {
+      "ref": "R1012",
+      "changes": {
+        "value": [
+          "4.7k",
+          "0R"
+        ]
+      }
+    },
+    {
+      "ref": "R1014",
+      "changes": {
+        "value": [
+          "100R",
+          "RT0603BRD07100RL"
+        ]
+      }
+    },
+    {
+      "ref": "R1016",
+      "changes": {
+        "value": [
+          "4.7k",
+          "RT0603BRD07100RL"
+        ]
+      }
+    },
+    {
+      "ref": "R1017",
+      "changes": {
+        "value": [
+          "10k",
+          "RT0603BRD07100RL"
+        ],
+        "footprint": [
+          "Resistor_SMD:R_0402_1005Metric",
+          "Resistor_SMD:R_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "R401",
+      "changes": {
+        "value": [
+          "RT0603BRD07100RL",
+          "100R"
+        ]
+      }
+    },
+    {
+      "ref": "R402",
+      "changes": {
+        "value": [
+          "RT0603BRD07100RL",
+          "100R"
+        ]
+      }
+    },
+    {
+      "ref": "R403",
+      "changes": {
+        "value": [
+          "10k",
+          "100R"
+        ],
+        "footprint": [
+          "Resistor_SMD:R_0402_1005Metric",
+          "Resistor_SMD:R_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "R404",
+      "changes": {
+        "value": [
+          "10k",
+          "100R"
+        ],
+        "footprint": [
+          "Resistor_SMD:R_0402_1005Metric",
+          "Resistor_SMD:R_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "R405",
+      "changes": {
+        "value": [
+          "1k",
+          "10R"
+        ],
+        "footprint": [
+          "Resistor_SMD:R_0402_1005Metric",
+          "Resistor_SMD:R_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "R501",
+      "changes": {
+        "value": [
+          "RT0603BRD07100RL",
+          "100R"
+        ]
+      }
+    },
+    {
+      "ref": "R502",
+      "changes": {
+        "value": [
+          "RT0603BRD07100RL",
+          "100R"
+        ]
+      }
+    },
+    {
+      "ref": "R503",
+      "changes": {
+        "value": [
+          "10k",
+          "100R"
+        ],
+        "footprint": [
+          "Resistor_SMD:R_0402_1005Metric",
+          "Resistor_SMD:R_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "R504",
+      "changes": {
+        "value": [
+          "10k",
+          "100R"
+        ],
+        "footprint": [
+          "Resistor_SMD:R_0402_1005Metric",
+          "Resistor_SMD:R_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "R505",
+      "changes": {
+        "value": [
+          "1k",
+          "10R"
+        ],
+        "footprint": [
+          "Resistor_SMD:R_0402_1005Metric",
+          "Resistor_SMD:R_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "R601",
+      "changes": {
+        "value": [
+          "4.7k",
+          "1k"
+        ],
+        "footprint": [
+          "Resistor_SMD:R_0402_1005Metric",
+          "Resistor_SMD:R_0603_1608Metric"
+        ]
+      }
+    },
+    {
+      "ref": "R602",
+      "changes": {
+        "value": [
+          "10R",
+          "RT0603BRD07100RL"
+        ]
+      }
+    },
+    {
+      "ref": "R608",
+      "changes": {
+        "value": [
+          "0R",
+          "100k"
+        ],
+        "footprint": [
+          "Resistor_SMD:R_0603_1608Metric",
+          "Resistor_SMD:R_0402_1005Metric"
+        ]
+      }
+    },
+    {
+      "ref": "R611",
+      "changes": {
+        "value": [
+          "100R",
+          "2k"
+        ]
+      }
+    },
+    {
+      "ref": "R613",
+      "changes": {
+        "value": [
+          "200k",
+          "220R"
+        ]
+      }
+    },
+    {
+      "ref": "R620",
+      "changes": {
+        "value": [
+          "0R",
+          "100R"
+        ]
+      }
+    },
+    {
+      "ref": "R713",
+      "changes": {
+        "value": [
+          "24.9k 0.1%",
+          "24.9k"
+        ]
+      }
+    },
+    {
+      "ref": "R714",
+      "changes": {
+        "value": [
+          "61.9k 0.1%",
+          "61.9k"
+        ]
+      }
+    },
+    {
+      "ref": "R722",
+      "changes": {
+        "value": [
+          "54.9k 0.1%",
+          "54.9k"
+        ]
+      }
+    },
+    {
+      "ref": "TP1004",
+      "changes": {
+        "value": [
+          "2.54mm",
+          "TP"
+        ],
+        "lib_id": [
+          "Connector:TestPoint_2Pole",
+          "Connector:TestPoint_Alt"
+        ],
+        "footprint": [
+          "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm",
+          "TestPoint:TestPoint_Pad_1.0x1.0mm"
+        ],
+        "pin_count": [
+          2,
+          1
+        ]
+      }
+    },
+    {
+      "ref": "TP1005",
+      "changes": {
+        "value": [
+          "2.54mm",
+          "TP"
+        ],
+        "lib_id": [
+          "Connector:TestPoint_2Pole",
+          "Connector:TestPoint_Alt"
+        ],
+        "footprint": [
+          "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm",
+          "TestPoint:TestPoint_Pad_1.0x1.0mm"
+        ],
+        "pin_count": [
+          2,
+          1
+        ]
+      }
+    },
+    {
+      "ref": "U1001",
+      "changes": {
+        "value": [
+          "LT5400-1",
+          "LHE5400-1"
+        ]
+      }
+    },
+    {
+      "ref": "U1002",
+      "changes": {
+        "value": [
+          "OPA2189IDR",
+          "TPA1882-SR"
+        ]
+      }
+    },
+    {
+      "ref": "U1003",
+      "changes": {
+        "value": [
+          "ADA4807-1ARJZ",
+          "TPR7050"
+        ],
+        "lib_id": [
+          "Amplifier_Operational:ADA4807-1",
+          "Emoe_Analog_Devices:TPR7025"
+        ],
+        "footprint": [
+          "Package_TO_SOT_SMD:SOT-23-6",
+          "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+        ],
+        "pin_count": [
+          6,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U1004",
+      "changes": {
+        "value": [
+          "LT5400-1",
+          "TPR7050"
+        ],
+        "lib_id": [
+          "Emoe_Analog_Devices:LT5400-1",
+          "Emoe_Analog_Devices:TPR7025"
+        ],
+        "footprint": [
+          "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+          "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+        ],
+        "pin_count": [
+          9,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U1005",
+      "changes": {
+        "value": [
+          "ADA4523-1BCPZ",
+          "TPR7050"
+        ],
+        "lib_id": [
+          "Emoe_OpAmps:ADA4523-1",
+          "Emoe_Analog_Devices:TPR7025"
+        ],
+        "footprint": [
+          "Package_CSP:LFCSP-8-1EP_3x3mm_P0.5mm_EP1.6x2.34mm",
+          "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+        ],
+        "pin_count": [
+          9,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U1006",
+      "changes": {
+        "value": [
+          "LT5400-8",
+          "LHE5400-8"
+        ]
+      }
+    },
+    {
+      "ref": "U1007",
+      "changes": {
+        "value": [
+          "OPA2189IDR",
+          "TPA1882-SR"
+        ]
+      }
+    },
+    {
+      "ref": "U1008",
+      "changes": {
+        "value": [
+          "LT5400-8",
+          "LHE5400-8"
+        ]
+      }
+    },
+    {
+      "ref": "U401",
+      "changes": {
+        "value": [
+          "OPA2189IDR",
+          "OPA210IDR"
+        ],
+        "lib_id": [
+          "Amplifier_Operational:ADA4522-2",
+          "Emoe_OpAmps:OPA1611"
+        ]
+      }
+    },
+    {
+      "ref": "U402",
+      "changes": {
+        "value": [
+          "LT5400-7",
+          "OPA210IDR"
+        ],
+        "lib_id": [
+          "Emoe_Analog_Devices:LT5400-7",
+          "Emoe_OpAmps:OPA1611"
+        ],
+        "footprint": [
+          "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+          "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+        ],
+        "pin_count": [
+          9,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U403",
+      "changes": {
+        "value": [
+          "MUX509IPWR",
+          "OPA210IDR"
+        ],
+        "lib_id": [
+          "Emoe_AnalogSwitch:MUX509",
+          "Emoe_OpAmps:OPA1611"
+        ],
+        "footprint": [
+          "Package_SO:TSSOP-16_4.4x5mm_P0.65mm",
+          "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+        ],
+        "pin_count": [
+          16,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U404",
+      "changes": {
+        "value": [
+          "LT5400-6",
+          "OPA210IDR"
+        ],
+        "lib_id": [
+          "Emoe_Analog_Devices:LT5400-6",
+          "Emoe_OpAmps:OPA1611"
+        ],
+        "footprint": [
+          "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+          "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+        ],
+        "pin_count": [
+          9,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U405",
+      "changes": {
+        "value": [
+          "LT5400-7",
+          "THP210DR"
+        ],
+        "lib_id": [
+          "Emoe_Analog_Devices:LT5400-7",
+          "Emoe_OpAmps:THP210"
+        ],
+        "footprint": [
+          "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+          "Package_SO:MSOP-8_3x3mm_P0.65mm"
+        ],
+        "pin_count": [
+          9,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U406",
+      "changes": {
+        "value": [
+          "ADA4523-1BCPZ",
+          "LHE5400-4"
+        ],
+        "lib_id": [
+          "Emoe_OpAmps:ADA4523-1",
+          "Emoe_Analog_Devices:LT5400-4"
+        ],
+        "footprint": [
+          "Package_CSP:LFCSP-8-1EP_3x3mm_P0.5mm_EP1.6x2.34mm",
+          "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm"
+        ]
+      }
+    },
+    {
+      "ref": "U501",
+      "changes": {
+        "value": [
+          "OPA2189IDR",
+          "OPA210IDR"
+        ],
+        "lib_id": [
+          "Amplifier_Operational:ADA4522-2",
+          "Emoe_OpAmps:OPA1611"
+        ]
+      }
+    },
+    {
+      "ref": "U502",
+      "changes": {
+        "value": [
+          "LT5400-7",
+          "OPA210IDR"
+        ],
+        "lib_id": [
+          "Emoe_Analog_Devices:LT5400-7",
+          "Emoe_OpAmps:OPA1611"
+        ],
+        "footprint": [
+          "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+          "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+        ],
+        "pin_count": [
+          9,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U503",
+      "changes": {
+        "value": [
+          "MUX509IPWR",
+          "OPA210IDR"
+        ],
+        "lib_id": [
+          "Emoe_AnalogSwitch:MUX509",
+          "Emoe_OpAmps:OPA1611"
+        ],
+        "footprint": [
+          "Package_SO:TSSOP-16_4.4x5mm_P0.65mm",
+          "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+        ],
+        "pin_count": [
+          16,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U504",
+      "changes": {
+        "value": [
+          "LT5400-6",
+          "OPA210IDR"
+        ],
+        "lib_id": [
+          "Emoe_Analog_Devices:LT5400-6",
+          "Emoe_OpAmps:OPA1611"
+        ],
+        "footprint": [
+          "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+          "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+        ],
+        "pin_count": [
+          9,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U505",
+      "changes": {
+        "value": [
+          "LT5400-7",
+          "THP210DR"
+        ],
+        "lib_id": [
+          "Emoe_Analog_Devices:LT5400-7",
+          "Emoe_OpAmps:THP210"
+        ],
+        "footprint": [
+          "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm",
+          "Package_SO:MSOP-8_3x3mm_P0.65mm"
+        ],
+        "pin_count": [
+          9,
+          8
+        ]
+      }
+    },
+    {
+      "ref": "U506",
+      "changes": {
+        "value": [
+          "ADA4523-1BCPZ",
+          "LHE5400-4"
+        ],
+        "lib_id": [
+          "Emoe_OpAmps:ADA4523-1",
+          "Emoe_Analog_Devices:LT5400-4"
+        ],
+        "footprint": [
+          "Package_CSP:LFCSP-8-1EP_3x3mm_P0.5mm_EP1.6x2.34mm",
+          "Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm"
+        ]
+      }
+    },
+    {
+      "ref": "U601",
+      "changes": {
+        "value": [
+          "AD8675ARZ",
+          "OPA189IDR"
+        ]
+      }
+    },
+    {
+      "ref": "U604",
+      "changes": {
+        "value": [
+          "AD5541ARMZ",
+          "GAQY212GS"
+        ],
+        "lib_id": [
+          "Emoe_ADDA:AD5541ARMZ",
+          "Emoe_Analog_Devices:GAQY212GS"
+        ],
+        "footprint": [
+          "Package_SO:MSOP-10_3x3mm_P0.5mm",
+          "Package_SO:SO-4_4.4x4.3mm_P2.54mm"
+        ],
+        "pin_count": [
+          10,
+          4
+        ]
+      }
+    },
+    {
+      "ref": "U605",
+      "changes": {
+        "value": [
+          "LT5400-6",
+          "LHE5400-6"
+        ]
+      }
+    },
+    {
+      "ref": "U606",
+      "changes": {
+        "value": [
+          "OPA2140AIDR",
+          "TPA1882-SR"
+        ]
+      }
+    },
+    {
+      "ref": "U607",
+      "changes": {
+        "value": [
+          "OPA2140AIDR",
+          "TPA1882-SR"
+        ]
+      }
+    },
+    {
+      "ref": "U608",
+      "changes": {
+        "value": [
+          "LT5400-4",
+          "LHE5400-7"
+        ],
+        "lib_id": [
+          "Emoe_Analog_Devices:LT5400-4",
+          "Emoe_Analog_Devices:LT5400-7"
+        ]
+      }
+    }
+  ],
+  "nets_added": [
+    {
+      "name": "-2V5",
+      "pin_count": 8,
+      "members": [
+        "#PWR0415.1",
+        "#PWR0435.1",
+        "#PWR0515.1",
+        "#PWR0535.1",
+        "C416.1",
+        "C516.1",
+        "U405.6",
+        "U505.6"
+      ]
+    },
+    {
+      "name": "/25mV_CAL",
+      "pin_count": 9,
+      "members": [
+        "C1013.1",
+        "R1013.1",
+        "R1015.1",
+        "TP1011.1",
+        "U608.1",
+        "U801.11",
+        "U802.11",
+        "U804.11",
+        "U805.11"
+      ]
+    },
+    {
+      "name": "/Analog Input MUX Array CH2/MEAS_MODE_SEL",
+      "pin_count": 3,
+      "members": [
+        "Q301.1",
+        "R106.2",
+        "R302.2"
+      ]
+    },
+    {
+      "name": "/Analog Input MUX Array/MEAS_MODE_SEL",
+      "pin_count": 3,
+      "members": [
+        "Q201.1",
+        "R103.2",
+        "R203.2"
+      ]
+    },
+    {
+      "name": "/Controller Unit/PE10",
+      "pin_count": 1,
+      "members": [
+        "U1102.40"
+      ]
+    },
+    {
+      "name": "/Controller Unit/PE9",
+      "pin_count": 1,
+      "members": [
+        "U1102.39"
+      ]
+    },
+    {
+      "name": "/PB3",
+      "pin_count": 2,
+      "members": [
+        "R101.1",
+        "U1102.89"
+      ]
+    },
+    {
+      "name": "/Reference BRD/250mV_CAL",
+      "pin_count": 9,
+      "members": [
+        "C1006.1",
+        "R1008.1",
+        "R1010.1",
+        "TP1006.1",
+        "U1008.8",
+        "U801.12",
+        "U802.12",
+        "U804.12",
+        "U805.12"
+      ]
+    },
+    {
+      "name": "/VDACO",
+      "pin_count": 7,
+      "members": [
+        "R621.1",
+        "U603.4",
+        "U607.5",
+        "U801.9",
+        "U802.9",
+        "U804.9",
+        "U805.9"
+      ]
+    },
+    {
+      "name": "/Voltage Controlled Current Source/CURR_SRC_PWR_SW",
+      "pin_count": 3,
+      "members": [
+        "Q610.1",
+        "R115.2",
+        "R622.2"
+      ]
+    },
+    {
+      "name": "/Voltage Controlled Current Source/DAC_CAL_SW",
+      "pin_count": 3,
+      "members": [
+        "Q603.1",
+        "R112.2",
+        "R608.2"
+      ]
+    },
+    {
+      "name": "N$114",
+      "pin_count": 4,
+      "members": [
+        "C201.1",
+        "D201.2",
+        "FB201.1",
+        "U204.2"
+      ]
+    },
+    {
+      "name": "N$115",
+      "pin_count": 2,
+      "members": [
+        "FB201.2",
+        "J201.1"
+      ]
+    },
+    {
+      "name": "N$119",
+      "pin_count": 2,
+      "members": [
+        "Q201.3",
+        "U206.1"
+      ]
+    },
+    {
+      "name": "N$13",
+      "pin_count": 3,
+      "members": [
+        "C1030.2",
+        "R1014.2",
+        "U1005.6"
+      ]
+    },
+    {
+      "name": "N$139",
+      "pin_count": 3,
+      "members": [
+        "C406.1",
+        "R410.2",
+        "U405.4"
+      ]
+    },
+    {
+      "name": "N$140",
+      "pin_count": 2,
+      "members": [
+        "R401.2",
+        "U401.3"
+      ]
+    },
+    {
+      "name": "N$146",
+      "pin_count": 2,
+      "members": [
+        "R501.2",
+        "U501.3"
+      ]
+    },
+    {
+      "name": "N$148",
+      "pin_count": 3,
+      "members": [
+        "C601.2",
+        "R604.2",
+        "U601.2"
+      ]
+    },
+    {
+      "name": "N$149",
+      "pin_count": 3,
+      "members": [
+        "C105.1",
+        "H106.1",
+        "R116.2"
+      ]
+    },
+    {
+      "name": "N$150",
+      "pin_count": 3,
+      "members": [
+        "C605.2",
+        "D603.2",
+        "L601.2"
+      ]
+    },
+    {
+      "name": "N$159",
+      "pin_count": 4,
+      "members": [
+        "C702.2",
+        "C752.2",
+        "FB710.1",
+        "L706.2"
+      ]
+    },
+    {
+      "name": "N$16",
+      "pin_count": 3,
+      "members": [
+        "C1027.2",
+        "R1011.2",
+        "U1004.6"
+      ]
+    },
+    {
+      "name": "N$160",
+      "pin_count": 5,
+      "members": [
+        "C712.2",
+        "C713.2",
+        "D701.1",
+        "L708.1",
+        "R706.2"
+      ]
+    },
+    {
+      "name": "N$177",
+      "pin_count": 2,
+      "members": [
+        "C906.1",
+        "U901.4"
+      ]
+    },
+    {
+      "name": "N$178",
+      "pin_count": 2,
+      "members": [
+        "R906.1",
+        "U901.9"
+      ]
+    },
+    {
+      "name": "N$179",
+      "pin_count": 2,
+      "members": [
+        "R903.1",
+        "U901.2"
+      ]
+    },
+    {
+      "name": "N$195",
+      "pin_count": 2,
+      "members": [
+        "FB204.1",
+        "J204.1"
+      ]
+    },
+    {
+      "name": "N$196",
+      "pin_count": 2,
+      "members": [
+        "J206.2",
+        "U204.8"
+      ]
+    },
+    {
+      "name": "N$197",
+      "pin_count": 3,
+      "members": [
+        "U201.1",
+        "U203.9",
+        "U204.1"
+      ]
+    },
+    {
+      "name": "N$208",
+      "pin_count": 2,
+      "members": [
+        "Q602.1",
+        "R612.2"
+      ]
+    },
+    {
+      "name": "N$209",
+      "pin_count": 2,
+      "members": [
+        "Q602.2",
+        "U609.1"
+      ]
+    },
+    {
+      "name": "N$211",
+      "pin_count": 4,
+      "members": [
+        "D601.1",
+        "R607.2",
+        "U602.2",
+        "U602.6"
+      ]
+    },
+    {
+      "name": "N$212",
+      "pin_count": 3,
+      "members": [
+        "D702.1",
+        "L702.2",
+        "U703.18"
+      ]
+    },
+    {
+      "name": "N$213",
+      "pin_count": 3,
+      "members": [
+        "R718.2",
+        "R720.1",
+        "U707.5"
+      ]
+    },
+    {
+      "name": "N$225",
+      "pin_count": 4,
+      "members": [
+        "C902.1",
+        "FB901.1",
+        "Y901.1",
+        "Y901.4"
+      ]
+    },
+    {
+      "name": "N$226",
+      "pin_count": 2,
+      "members": [
+        "R902.2",
+        "U901.1"
+      ]
+    },
+    {
+      "name": "N$228",
+      "pin_count": 4,
+      "members": [
+        "C303.1",
+        "D302.2",
+        "FB303.1",
+        "U303.1"
+      ]
+    },
+    {
+      "name": "N$229",
+      "pin_count": 2,
+      "members": [
+        "FB304.1",
+        "J304.1"
+      ]
+    },
+    {
+      "name": "N$230",
+      "pin_count": 5,
+      "members": [
+        "C304.1",
+        "D304.2",
+        "FB304.2",
+        "U303.9",
+        "U304.4"
+      ]
+    },
+    {
+      "name": "N$231",
+      "pin_count": 2,
+      "members": [
+        "Q301.3",
+        "U304.1"
+      ]
+    },
+    {
+      "name": "N$232",
+      "pin_count": 2,
+      "members": [
+        "R402.2",
+        "U403.3"
+      ]
+    },
+    {
+      "name": "N$233",
+      "pin_count": 2,
+      "members": [
+        "R502.2",
+        "U503.3"
+      ]
+    },
+    {
+      "name": "N$234",
+      "pin_count": 3,
+      "members": [
+        "TP603.1",
+        "U607.3",
+        "U610.1"
+      ]
+    },
+    {
+      "name": "N$235",
+      "pin_count": 2,
+      "members": [
+        "Q603.3",
+        "U603.1"
+      ]
+    },
+    {
+      "name": "N$236",
+      "pin_count": 4,
+      "members": [
+        "C703.2",
+        "C709.2",
+        "FB703.1",
+        "L708.2"
+      ]
+    },
+    {
+      "name": "N$237",
+      "pin_count": 5,
+      "members": [
+        "C755.2",
+        "C756.2",
+        "D703.1",
+        "L706.1",
+        "R726.2"
+      ]
+    },
+    {
+      "name": "N$263",
+      "pin_count": 3,
+      "members": [
+        "R406.1",
+        "U403.2",
+        "U403.6"
+      ]
+    },
+    {
+      "name": "N$265",
+      "pin_count": 2,
+      "members": [
+        "Q610.3",
+        "U604.1"
+      ]
+    },
+    {
+      "name": "N$266",
+      "pin_count": 2,
+      "members": [
+        "D602.1",
+        "U604.3"
+      ]
+    },
+    {
+      "name": "N$28",
+      "pin_count": 3,
+      "members": [
+        "C1009.1",
+        "R1008.2",
+        "U1007.1"
+      ]
+    },
+    {
+      "name": "N$289",
+      "pin_count": 5,
+      "members": [
+        "Q601.2",
+        "R609.2",
+        "TP605.1",
+        "U605.2",
+        "U605.3"
+      ]
+    },
+    {
+      "name": "N$290",
+      "pin_count": 2,
+      "members": [
+        "C750.2",
+        "R723.1"
+      ]
+    },
+    {
+      "name": "N$291",
+      "pin_count": 3,
+      "members": [
+        "D704.1",
+        "L705.2",
+        "U710.18"
+      ]
+    },
+    {
+      "name": "N$292",
+      "pin_count": 4,
+      "members": [
+        "C735.2",
+        "FB706.1",
+        "U705.10",
+        "U705.9"
+      ]
+    },
+    {
+      "name": "N$293",
+      "pin_count": 3,
+      "members": [
+        "C736.2",
+        "R714.1",
+        "U705.7"
+      ]
+    },
+    {
+      "name": "N$294",
+      "pin_count": 3,
+      "members": [
+        "R508.1",
+        "U504.2",
+        "U504.6"
+      ]
+    },
+    {
+      "name": "N$307",
+      "pin_count": 3,
+      "members": [
+        "C610.2",
+        "D604.2",
+        "U606.1"
+      ]
+    },
+    {
+      "name": "N$327",
+      "pin_count": 4,
+      "members": [
+        "C754.1",
+        "R725.2",
+        "R728.1",
+        "U709.3"
+      ]
+    },
+    {
+      "name": "N$328",
+      "pin_count": 2,
+      "members": [
+        "C758.2",
+        "U709.14"
+      ]
+    },
+    {
+      "name": "N$340",
+      "pin_count": 2,
+      "members": [
+        "C1117.1",
+        "U1102.73"
+      ]
+    },
+    {
+      "name": "N$359",
+      "pin_count": 5,
+      "members": [
+        "C719.2",
+        "C720.2",
+        "D702.2",
+        "L709.1",
+        "R711.2"
+      ]
+    },
+    {
+      "name": "N$373",
+      "pin_count": 6,
+      "members": [
+        "C753.2",
+        "FB710.2",
+        "TP712.1",
+        "U709.13",
+        "U709.15",
+        "U709.16"
+      ]
+    },
+    {
+      "name": "N$387",
+      "pin_count": 6,
+      "members": [
+        "C767.2",
+        "FB701.2",
+        "TP713.1",
+        "U711.13",
+        "U711.15",
+        "U711.16"
+      ]
+    },
+    {
+      "name": "N$39",
+      "pin_count": 2,
+      "members": [
+        "J1101.3",
+        "R1102.2"
+      ]
+    },
+    {
+      "name": "N$404",
+      "pin_count": 2,
+      "members": [
+        "R616.2",
+        "U609.9"
+      ]
+    },
+    {
+      "name": "N$405",
+      "pin_count": 2,
+      "members": [
+        "C716.2",
+        "R709.1"
+      ]
+    },
+    {
+      "name": "N$425",
+      "pin_count": 5,
+      "members": [
+        "C764.2",
+        "C765.2",
+        "D704.2",
+        "L707.1",
+        "R731.2"
+      ]
+    },
+    {
+      "name": "N$5",
+      "pin_count": 6,
+      "members": [
+        "R1004.2",
+        "TP1001.1",
+        "U1001.8",
+        "U1002.1",
+        "U1002.2",
+        "U1006.1"
+      ]
+    },
+    {
+      "name": "N$59",
+      "pin_count": 2,
+      "members": [
+        "D1103.2",
+        "R1115.1"
+      ]
+    },
+    {
+      "name": "N$64",
+      "pin_count": 3,
+      "members": [
+        "C1014.2",
+        "R1015.2",
+        "U1007.6"
+      ]
+    },
+    {
+      "name": "N$66",
+      "pin_count": 2,
+      "members": [
+        "R1104.1",
+        "U1101.1"
+      ]
+    },
+    {
+      "name": "N$7",
+      "pin_count": 3,
+      "members": [
+        "C1009.2",
+        "R1010.2",
+        "U1007.2"
+      ]
+    },
+    {
+      "name": "N$73",
+      "pin_count": 3,
+      "members": [
+        "C1023.2",
+        "R1016.2",
+        "U1003.6"
+      ]
+    },
+    {
+      "name": "N$74",
+      "pin_count": 2,
+      "members": [
+        "R1106.2",
+        "U1102.94"
+      ]
+    },
+    {
+      "name": "N$77",
+      "pin_count": 2,
+      "members": [
+        "J1103.3",
+        "U1106.3"
+      ]
+    },
+    {
+      "name": "N$96",
+      "pin_count": 2,
+      "members": [
+        "R142.1",
+        "U101.12"
+      ]
+    }
+  ],
+  "nets_removed": [
+    {
+      "name": "/+10V_VOUT",
+      "pin_count": 3,
+      "members": [
+        "J1001.5",
+        "R1011.2",
+        "TP1005.2"
+      ]
+    },
+    {
+      "name": "/ADC Channel Switch/REF_VOLT_1",
+      "pin_count": 9,
+      "members": [
+        "J1001.1",
+        "R1014.2",
+        "R1016.1",
+        "TP1010.1",
+        "U1007.1",
+        "U801.12",
+        "U802.12",
+        "U804.12",
+        "U805.12"
+      ]
+    },
+    {
+      "name": "/Analog Input MUX Array/IN_MUX_REFSW",
+      "pin_count": 3,
+      "members": [
+        "R115.2",
+        "U202.15",
+        "U202.6"
+      ]
+    },
+    {
+      "name": "/PE10",
+      "pin_count": 2,
+      "members": [
+        "R106.1",
+        "U1102.40"
+      ]
+    },
+    {
+      "name": "/PE9",
+      "pin_count": 2,
+      "members": [
+        "R103.1",
+        "U1102.39"
+      ]
+    },
+    {
+      "name": "/PGIA1/GAIN_CTL_A0",
+      "pin_count": 2,
+      "members": [
+        "R103.2",
+        "U503.1"
+      ]
+    },
+    {
+      "name": "/PGIA1/GAIN_CTL_A1",
+      "pin_count": 2,
+      "members": [
+        "R106.2",
+        "U503.16"
+      ]
+    },
+    {
+      "name": "/PGIA2/GAIN_CTL_A0",
+      "pin_count": 2,
+      "members": [
+        "R133.2",
+        "U403.1"
+      ]
+    },
+    {
+      "name": "/PGIA2/GAIN_CTL_A1",
+      "pin_count": 2,
+      "members": [
+        "R135.2",
+        "U403.16"
+      ]
+    },
+    {
+      "name": "/Reference BRD/100mV_CAL",
+      "pin_count": 8,
+      "members": [
+        "C1013.1",
+        "R1013.1",
+        "R1015.1",
+        "TP1011.1",
+        "U801.9",
+        "U802.9",
+        "U804.9",
+        "U805.9"
+      ]
+    },
+    {
+      "name": "/Reference BRD/1V_CAL",
+      "pin_count": 9,
+      "members": [
+        "C1006.1",
+        "R1008.1",
+        "R1010.1",
+        "TP1006.1",
+        "U1008.8",
+        "U801.11",
+        "U802.11",
+        "U804.11",
+        "U805.11"
+      ]
+    },
+    {
+      "name": "/Voltage Controlled Current Source/CSRC_PWR",
+      "pin_count": 2,
+      "members": [
+        "R145.2",
+        "R601.2"
+      ]
+    },
+    {
+      "name": "/Voltage Controlled Current Source/DAC_LDAC",
+      "pin_count": 2,
+      "members": [
+        "R149.2",
+        "U604.8"
+      ]
+    },
+    {
+      "name": "N$100",
+      "pin_count": 3,
+      "members": [
+        "R1022.2",
+        "R1023.1",
+        "U1009.3"
+      ]
+    },
+    {
+      "name": "N$117",
+      "pin_count": 3,
+      "members": [
+        "C201.1",
+        "FB201.1",
+        "U204.2"
+      ]
+    },
+    {
+      "name": "N$12",
+      "pin_count": 2,
+      "members": [
+        "C1002.2",
+        "R1002.1"
+      ]
+    },
+    {
+      "name": "N$120",
+      "pin_count": 2,
+      "members": [
+        "FB102.1",
+        "J102.1"
+      ]
+    },
+    {
+      "name": "N$137",
+      "pin_count": 2,
+      "members": [
+        "FB104.1",
+        "J104.1"
+      ]
+    },
+    {
+      "name": "N$14",
+      "pin_count": 4,
+      "members": [
+        "C1004.1",
+        "R1020.2",
+        "U1001.6",
+        "U1001.7"
+      ]
+    },
+    {
+      "name": "N$143",
+      "pin_count": 7,
+      "members": [
+        "U401.7",
+        "U402.4",
+        "U403.13",
+        "U404.4",
+        "U405.4",
+        "U407.4",
+        "U408.4"
+      ]
+    },
+    {
+      "name": "N$144",
+      "pin_count": 2,
+      "members": [
+        "U401.6",
+        "U403.9"
+      ]
+    },
+    {
+      "name": "N$155",
+      "pin_count": 3,
+      "members": [
+        "C601.2",
+        "R604.1",
+        "U601.2"
+      ]
+    },
+    {
+      "name": "N$157",
+      "pin_count": 4,
+      "members": [
+        "R618.1",
+        "TP610.1",
+        "U609.16",
+        "U609.8"
+      ]
+    },
+    {
+      "name": "N$163",
+      "pin_count": 3,
+      "members": [
+        "D701.2",
+        "L701.2",
+        "U703.20"
+      ]
+    },
+    {
+      "name": "N$205",
+      "pin_count": 5,
+      "members": [
+        "C708.3",
+        "C710.2",
+        "U702.13",
+        "U702.15",
+        "U702.16"
+      ]
+    },
+    {
+      "name": "N$206",
+      "pin_count": 2,
+      "members": [
+        "C715.2",
+        "U702.14"
+      ]
+    },
+    {
+      "name": "N$218",
+      "pin_count": 3,
+      "members": [
+        "TP603.1",
+        "U604.2",
+        "U607.3"
+      ]
+    },
+    {
+      "name": "N$219",
+      "pin_count": 2,
+      "members": [
+        "R601.1",
+        "U603.1"
+      ]
+    },
+    {
+      "name": "N$221",
+      "pin_count": 2,
+      "members": [
+        "L703.1",
+        "U707.11"
+      ]
+    },
+    {
+      "name": "N$222",
+      "pin_count": 3,
+      "members": [
+        "R730.1",
+        "R731.1",
+        "U710.11"
+      ]
+    },
+    {
+      "name": "N$224",
+      "pin_count": 2,
+      "members": [
+        "R703.2",
+        "U703.6"
+      ]
+    },
+    {
+      "name": "N$23",
+      "pin_count": 3,
+      "members": [
+        "C1003.2",
+        "R1006.2",
+        "U1002.6"
+      ]
+    },
+    {
+      "name": "N$241",
+      "pin_count": 2,
+      "members": [
+        "R405.2",
+        "U403.2"
+      ]
+    },
+    {
+      "name": "N$243",
+      "pin_count": 4,
+      "members": [
+        "U503.11",
+        "U504.2",
+        "U504.3",
+        "U504.5"
+      ]
+    },
+    {
+      "name": "N$244",
+      "pin_count": 3,
+      "members": [
+        "U403.7",
+        "U405.1",
+        "U405.2"
+      ]
+    },
+    {
+      "name": "N$245",
+      "pin_count": 3,
+      "members": [
+        "U403.10",
+        "U405.5",
+        "U405.6"
+      ]
+    },
+    {
+      "name": "N$246",
+      "pin_count": 2,
+      "members": [
+        "U405.3",
+        "U405.7"
+      ]
+    },
+    {
+      "name": "N$248",
+      "pin_count": 2,
+      "members": [
+        "Q603.3",
+        "Q604.2"
+      ]
+    },
+    {
+      "name": "N$249",
+      "pin_count": 2,
+      "members": [
+        "Q604.3",
+        "Q605.2"
+      ]
+    },
+    {
+      "name": "N$250",
+      "pin_count": 4,
+      "members": [
+        "C401.1",
+        "U402.7",
+        "U402.8",
+        "U406.2"
+      ]
+    },
+    {
+      "name": "N$251",
+      "pin_count": 4,
+      "members": [
+        "C403.2",
+        "U402.5",
+        "U402.6",
+        "U406.3"
+      ]
+    },
+    {
+      "name": "N$252",
+      "pin_count": 3,
+      "members": [
+        "C401.2",
+        "R401.1",
+        "U406.6"
+      ]
+    },
+    {
+      "name": "N$253",
+      "pin_count": 2,
+      "members": [
+        "R403.2",
+        "U406.1"
+      ]
+    },
+    {
+      "name": "N$254",
+      "pin_count": 5,
+      "members": [
+        "C740.1",
+        "FB708.1",
+        "R715.1",
+        "U706.1",
+        "U706.2"
+      ]
+    },
+    {
+      "name": "N$255",
+      "pin_count": 3,
+      "members": [
+        "D703.2",
+        "L704.2",
+        "U710.20"
+      ]
+    },
+    {
+      "name": "N$256",
+      "pin_count": 2,
+      "members": [
+        "L704.1",
+        "U710.1"
+      ]
+    },
+    {
+      "name": "N$258",
+      "pin_count": 7,
+      "members": [
+        "C718.3",
+        "C726.2",
+        "U704.1",
+        "U704.13",
+        "U704.2",
+        "U704.3",
+        "U704.5"
+      ]
+    },
+    {
+      "name": "N$277",
+      "pin_count": 4,
+      "members": [
+        "C503.2",
+        "U502.5",
+        "U502.6",
+        "U506.3"
+      ]
+    },
+    {
+      "name": "N$278",
+      "pin_count": 3,
+      "members": [
+        "C501.2",
+        "R501.1",
+        "U506.6"
+      ]
+    },
+    {
+      "name": "N$285",
+      "pin_count": 4,
+      "members": [
+        "U503.5",
+        "U507.1",
+        "U507.6",
+        "U507.7"
+      ]
+    },
+    {
+      "name": "N$296",
+      "pin_count": 3,
+      "members": [
+        "C506.2",
+        "R502.1",
+        "U509.6"
+      ]
+    },
+    {
+      "name": "N$297",
+      "pin_count": 4,
+      "members": [
+        "C506.1",
+        "U508.7",
+        "U508.8",
+        "U509.2"
+      ]
+    },
+    {
+      "name": "N$298",
+      "pin_count": 2,
+      "members": [
+        "R504.2",
+        "U509.1"
+      ]
+    },
+    {
+      "name": "N$299",
+      "pin_count": 2,
+      "members": [
+        "R610.2",
+        "U606.5"
+      ]
+    },
+    {
+      "name": "N$301",
+      "pin_count": 3,
+      "members": [
+        "C760.1",
+        "R730.2",
+        "U710.12"
+      ]
+    },
+    {
+      "name": "N$305",
+      "pin_count": 3,
+      "members": [
+        "C611.1",
+        "R616.1",
+        "U607.6"
+      ]
+    },
+    {
+      "name": "N$334",
+      "pin_count": 2,
+      "members": [
+        "D1101.2",
+        "R1113.1"
+      ]
+    },
+    {
+      "name": "N$34",
+      "pin_count": 3,
+      "members": [
+        "C1009.1",
+        "R1008.2",
+        "U1002.1"
+      ]
+    },
+    {
+      "name": "N$351",
+      "pin_count": 3,
+      "members": [
+        "C610.2",
+        "R611.1",
+        "U606.1"
+      ]
+    },
+    {
+      "name": "N$352",
+      "pin_count": 7,
+      "members": [
+        "C719.2",
+        "C720.2",
+        "C775.1",
+        "D702.2",
+        "FB704.1",
+        "R711.2",
+        "TP704.1"
+      ]
+    },
+    {
+      "name": "N$355",
+      "pin_count": 5,
+      "members": [
+        "C763.3",
+        "C767.2",
+        "U711.13",
+        "U711.15",
+        "U711.16"
+      ]
+    },
+    {
+      "name": "N$36",
+      "pin_count": 3,
+      "members": [
+        "C1101.1",
+        "FB1101.2",
+        "Y1101.4"
+      ]
+    },
+    {
+      "name": "N$367",
+      "pin_count": 7,
+      "members": [
+        "C755.2",
+        "C756.2",
+        "C776.2",
+        "D703.1",
+        "FB710.1",
+        "R726.2",
+        "TP712.1"
+      ]
+    },
+    {
+      "name": "N$385",
+      "pin_count": 6,
+      "members": [
+        "Q601.2",
+        "Q603.2",
+        "Q606.1",
+        "Q606.2",
+        "Q607.1",
+        "R613.1"
+      ]
+    },
+    {
+      "name": "N$386",
+      "pin_count": 3,
+      "members": [
+        "Q608.1",
+        "R613.2",
+        "R614.1"
+      ]
+    },
+    {
+      "name": "N$42",
+      "pin_count": 4,
+      "members": [
+        "R1012.1",
+        "TP1008.1",
+        "U1006.1",
+        "U1007.7"
+      ]
+    },
+    {
+      "name": "N$420",
+      "pin_count": 3,
+      "members": [
+        "R726.1",
+        "R727.2",
+        "U710.5"
+      ]
+    },
+    {
+      "name": "N$421",
+      "pin_count": 2,
+      "members": [
+        "R729.2",
+        "U710.10"
+      ]
+    },
+    {
+      "name": "N$429",
+      "pin_count": 7,
+      "members": [
+        "C764.2",
+        "C765.2",
+        "C776.1",
+        "D704.2",
+        "FB711.1",
+        "R731.2",
+        "TP713.1"
+      ]
+    },
+    {
+      "name": "N$43",
+      "pin_count": 2,
+      "members": [
+        "R1012.2",
+        "U1007.6"
+      ]
+    },
+    {
+      "name": "N$430",
+      "pin_count": 7,
+      "members": [
+        "C712.2",
+        "C713.2",
+        "C775.2",
+        "D701.1",
+        "FB703.1",
+        "R706.2",
+        "TP703.1"
+      ]
+    },
+    {
+      "name": "N$431",
+      "pin_count": 2,
+      "members": [
+        "C759.2",
+        "R729.1"
+      ]
+    },
+    {
+      "name": "N$432",
+      "pin_count": 3,
+      "members": [
+        "C763.1",
+        "C766.2",
+        "FB711.2"
+      ]
+    },
+    {
+      "name": "N$44",
+      "pin_count": 2,
+      "members": [
+        "R1102.1",
+        "U1101.3"
+      ]
+    },
+    {
+      "name": "N$45",
+      "pin_count": 2,
+      "members": [
+        "J1101.2",
+        "R1102.2"
+      ]
+    },
+    {
+      "name": "N$65",
+      "pin_count": 3,
+      "members": [
+        "C1014.1",
+        "R1013.2",
+        "U1009.6"
+      ]
+    },
+    {
+      "name": "N$68",
+      "pin_count": 3,
+      "members": [
+        "C1014.2",
+        "R1015.2",
+        "U1009.2"
+      ]
+    },
+    {
+      "name": "N$75",
+      "pin_count": 2,
+      "members": [
+        "U1105.2",
+        "Y1101.3"
+      ]
+    },
+    {
+      "name": "N$76",
+      "pin_count": 2,
+      "members": [
+        "R1105.1",
+        "U1105.4"
+      ]
+    },
+    {
+      "name": "N$80",
+      "pin_count": 2,
+      "members": [
+        "R1017.1",
+        "U1005.1"
+      ]
+    },
+    {
+      "name": "N$82",
+      "pin_count": 3,
+      "members": [
+        "R1018.1",
+        "R1019.1",
+        "U1002.3"
+      ]
+    },
+    {
+      "name": "VDD",
+      "pin_count": 4,
+      "members": [
+        "#PWR01128.1",
+        "#PWR01158.1",
+        "J1102.1",
+        "J1104.1"
+      ]
+    }
+  ],
+  "nets_renamed_candidates": [
+    {
+      "old": "N$108",
+      "new": "N$104",
+      "member_count": 2
+    },
+    {
+      "old": "N$109",
+      "new": "N$105",
+      "member_count": 2
+    },
+    {
+      "old": "N$133",
+      "new": "N$129",
+      "member_count": 2
+    },
+    {
+      "old": "N$154",
+      "new": "N$147",
+      "member_count": 3
+    },
+    {
+      "old": "N$164",
+      "new": "N$162",
+      "member_count": 2
+    },
+    {
+      "old": "N$201",
+      "new": "N$210",
+      "member_count": 3
+    },
+    {
+      "old": "N$214",
+      "new": "N$227",
+      "member_count": 2
+    },
+    {
+      "old": "N$220",
+      "new": "N$238",
+      "member_count": 2
+    },
+    {
+      "old": "N$330",
+      "new": "N$332",
+      "member_count": 2
+    },
+    {
+      "old": "N$337",
+      "new": "N$339",
+      "member_count": 2
+    },
+    {
+      "old": "N$40",
+      "new": "N$35",
+      "member_count": 3
+    },
+    {
+      "old": "N$353",
+      "new": "N$360",
+      "member_count": 3
+    },
+    {
+      "old": "N$354",
+      "new": "N$361",
+      "member_count": 4
+    },
+    {
+      "old": "N$356",
+      "new": "N$362",
+      "member_count": 2
+    },
+    {
+      "old": "N$368",
+      "new": "N$374",
+      "member_count": 2
+    },
+    {
+      "old": "N$369",
+      "new": "N$375",
+      "member_count": 2
+    },
+    {
+      "old": "N$389",
+      "new": "N$390",
+      "member_count": 3
+    },
+    {
+      "old": "N$428",
+      "new": "N$424",
+      "member_count": 3
+    },
+    {
+      "old": "N$52",
+      "new": "N$47",
+      "member_count": 2
+    },
+    {
+      "old": "N$84",
+      "new": "N$81",
+      "member_count": 2
+    },
+    {
+      "old": "N$101",
+      "new": "N$97",
+      "member_count": 6
+    },
+    {
+      "old": "N$102",
+      "new": "N$98",
+      "member_count": 2
+    }
+  ],
+  "nets_changed": [
+    {
+      "name": "+12VA",
+      "gained": [],
+      "lost": [
+        "#PWR01014.1",
+        "#PWR0120.1",
+        "J1002.3",
+        "J1105.2"
+      ],
+      "gained_count": 0,
+      "lost_count": 4
+    },
+    {
+      "name": "+15VA",
+      "gained": [
+        "#PWR01014.1",
+        "#PWR01044.1",
+        "#PWR01055.1",
+        "#PWR01060.1",
+        "#PWR0406.1",
+        "#PWR0411.1",
+        "#PWR0413.1",
+        "#PWR0420.1",
+        "#PWR0424.1",
+        "#PWR0428.1",
+        "#PWR0506.1",
+        "#PWR0511.1",
+        "#PWR0513.1",
+        "#PWR0520.1",
+        "#PWR0524.1",
+        "#PWR0528.1",
+        "#PWR0659.1",
+        "C1015.2",
+        "C1026.2",
+        "C1029.2",
+        "C1032.2",
+        "C407.1",
+        "C411.1",
+        "C413.1"
+      ],
+      "lost": [
+        "#PWR01034.1",
+        "#PWR01047.1",
+        "#PWR0209.1",
+        "#PWR0233.1",
+        "#PWR0431.1",
+        "#PWR0432.1",
+        "#PWR0531.1",
+        "#PWR0532.1",
+        "#PWR0644.1",
+        "C1023.1",
+        "C211.1",
+        "C410.1",
+        "C510.1",
+        "C618.1",
+        "J1002.1",
+        "U1005.7",
+        "U202.11",
+        "U401.8",
+        "U403.14",
+        "U501.8",
+        "U503.14",
+        "U603.3"
+      ],
+      "gained_count": 42,
+      "lost_count": 22
+    },
+    {
+      "name": "+3.3V",
+      "gained": [
+        "#PWR01128.1",
+        "#PWR01141.1",
+        "#PWR01168.1",
+        "#PWR0259.1",
+        "#PWR0341.1",
+        "#PWR0618.1",
+        "#PWR0660.1",
+        "C1114.2",
+        "J1102.1",
+        "J1104.1",
+        "R202.2",
+        "R303.2",
+        "R613.2",
+        "R623.2",
+        "U1106.5"
+      ],
+      "lost": [
+        "#PWR0436.1",
+        "#PWR0536.1",
+        "#PWR0611.1",
+        "#PWR0823.1",
+        "C606.1",
+        "R405.1",
+        "R505.1",
+        "R734.1",
+        "U604.10"
+      ],
+      "gained_count": 15,
+      "lost_count": 9
+    },
+    {
+      "name": "+5V5A",
+      "gained": [
+        "#PWR0914.1",
+        "#PWR0920.1",
+        "C606.1",
+        "C608.2",
+        "C904.1",
+        "C907.1",
+        "C908.1",
+        "U610.8",
+        "U901.5",
+        "U902.1",
+        "U902.3"
+      ],
+      "lost": [
+        "C607.1",
+        "C608.1",
+        "U604.1"
+      ],
+      "gained_count": 11,
+      "lost_count": 3
+    },
+    {
+      "name": "+6VA",
+      "gained": [
+        "#PWR01009.1",
+        "#PWR0419.1",
+        "#PWR0433.1",
+        "#PWR0519.1",
+        "#PWR0533.1",
+        "C415.1",
+        "C515.1",
+        "R1009.2",
+        "R411.2",
+        "R511.2",
+        "U1.6",
+        "U405.3",
+        "U505.3"
+      ],
+      "lost": [
+        "#PWR01002.1",
+        "#PWR01025.1",
+        "#PWR0405.1",
+        "#PWR0406.1",
+        "#PWR0411.1",
+        "#PWR0413.1",
+        "#PWR0415.1",
+        "#PWR0505.1",
+        "#PWR0506.1",
+        "#PWR0511.1",
+        "#PWR0513.1",
+        "#PWR0515.1",
+        "C412.1",
+        "C414.1",
+        "C512.1",
+        "C514.1",
+        "R1004.1",
+        "R1017.2",
+        "R403.1",
+        "R404.1",
+        "R503.1",
+        "R504.1",
+        "U1003.6",
+        "U406.7"
+      ],
+      "gained_count": 13,
+      "lost_count": 27
+    },
+    {
+      "name": "-15VA",
+      "gained": [
+        "#PWR0405.1",
+        "#PWR0412.1",
+        "#PWR0414.1",
+        "#PWR0422.1",
+        "#PWR0426.1",
+        "#PWR0430.1",
+        "#PWR0505.1",
+        "#PWR0512.1",
+        "#PWR0514.1",
+        "#PWR0522.1",
+        "#PWR0526.1",
+        "#PWR0530.1",
+        "C410.1",
+        "C412.1",
+        "C414.1",
+        "C510.1",
+        "C512.1",
+        "C514.1",
+        "U402.4",
+        "U403.4",
+        "U404.4",
+        "U502.4",
+        "U503.4",
+        "U504.4"
+      ],
+      "lost": [
+        "#PWR0210.1",
+        "#PWR0214.1",
+        "#PWR0219.1",
+        "#PWR0433.1",
+        "#PWR0438.1",
+        "#PWR0533.1",
+        "#PWR0538.1",
+        "#PWR0646.1",
+        "C206.1",
+        "C411.1",
+        "C511.1",
+        "C620.1",
+        "U202.17",
+        "U202.3",
+        "U403.3",
+        "U503.3"
+      ],
+      "gained_count": 24,
+      "lost_count": 16
+    },
+    {
+      "name": "-2V5A",
+      "gained": [],
+      "lost": [
+        "#PWR01043.1",
+        "#PWR0412.1",
+        "#PWR0414.1",
+        "#PWR0426.1",
+        "#PWR0428.1",
+        "#PWR0512.1",
+        "#PWR0514.1",
+        "#PWR0526.1",
+        "#PWR0528.1",
+        "C413.1",
+        "C415.1",
+        "C513.1",
+        "C515.1",
+        "U1005.4",
+        "U1005.9",
+        "U406.4",
+        "U406.9",
+        "U409.4",
+        "U409.9",
+        "U506.4",
+        "U506.9",
+        "U509.4",
+        "U509.9"
+      ],
+      "gained_count": 0,
+      "lost_count": 23
+    },
+    {
+      "name": "/+5V_VOUT",
+      "gained": [
+        "C1033.2",
+        "C1034.2",
+        "R1011.1",
+        "R1014.1",
+        "R1016.1",
+        "R1017.1",
+        "TP1007.1",
+        "U1002.3"
+      ],
+      "lost": [
+        "J1001.3",
+        "R1009.2",
+        "TP1002.1",
+        "TP1004.1",
+        "U1005.3"
+      ],
+      "gained_count": 8,
+      "lost_count": 5
+    },
+    {
+      "name": "/5V_VREF",
+      "gained": [
+        "C1005.1",
+        "C901.1",
+        "R620.2",
+        "U901.18"
+      ],
+      "lost": [
+        "C1005.2",
+        "R620.1",
+        "TP1001.1",
+        "U1001.8"
+      ],
+      "gained_count": 4,
+      "lost_count": 4
+    },
+    {
+      "name": "/ADC BRD/ADC_CS",
+      "gained": [
+        "U901.14"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC BRD/ADC_MISO",
+      "gained": [
+        "U901.12"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC BRD/ADC_MOSI",
+      "gained": [
+        "U901.13"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC BRD/ADC_SCLK",
+      "gained": [
+        "U901.11"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC BRD/IN1_N",
+      "gained": [
+        "C502.2",
+        "C504.2",
+        "R509.2",
+        "R905.2",
+        "U506.1"
+      ],
+      "lost": [
+        "C504.1",
+        "C505.2",
+        "R502.2",
+        "U508.2"
+      ],
+      "gained_count": 5,
+      "lost_count": 4
+    },
+    {
+      "name": "/ADC BRD/IN1_P",
+      "gained": [
+        "C504.1",
+        "C505.2",
+        "R510.1",
+        "R904.1",
+        "U506.4"
+      ],
+      "lost": [
+        "C502.2",
+        "C504.2",
+        "R501.2",
+        "U502.2"
+      ],
+      "gained_count": 5,
+      "lost_count": 4
+    },
+    {
+      "name": "/ADC BRD/IN2_N",
+      "gained": [
+        "C402.2",
+        "C404.2",
+        "R409.2",
+        "R903.2",
+        "U406.1"
+      ],
+      "lost": [
+        "C404.1",
+        "C405.2",
+        "R402.2",
+        "U408.2"
+      ],
+      "gained_count": 5,
+      "lost_count": 4
+    },
+    {
+      "name": "/ADC BRD/IN2_P",
+      "gained": [
+        "C404.1",
+        "C405.2",
+        "R410.1",
+        "R902.1",
+        "U406.4"
+      ],
+      "lost": [
+        "C402.2",
+        "C404.2",
+        "R401.2",
+        "U402.2"
+      ],
+      "gained_count": 5,
+      "lost_count": 4
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN1+_CH1",
+      "gained": [
+        "R114.1"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN1+_CH3",
+      "gained": [
+        "J206.4"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN1+_CH4",
+      "gained": [
+        "J306.4"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN1-_CH1",
+      "gained": [
+        "R117.1"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN1-_CH3",
+      "gained": [
+        "J206.1"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN1-_CH4",
+      "gained": [
+        "J306.1"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN1_+",
+      "gained": [
+        "R501.1",
+        "R502.1"
+      ],
+      "lost": [
+        "TP801.1",
+        "U501.3"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN1_-",
+      "gained": [
+        "R503.1",
+        "R504.1"
+      ],
+      "lost": [
+        "TP803.1",
+        "U501.5"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN2+_CH2",
+      "gained": [],
+      "lost": [
+        "R201.2",
+        "U204.16"
+      ],
+      "gained_count": 0,
+      "lost_count": 2
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN2+_CH3",
+      "gained": [],
+      "lost": [
+        "R301.2",
+        "U302.16"
+      ],
+      "gained_count": 0,
+      "lost_count": 2
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN2+_CH4",
+      "gained": [
+        "R114.2"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN2-_CH2",
+      "gained": [],
+      "lost": [
+        "R201.1",
+        "U204.8"
+      ],
+      "gained_count": 0,
+      "lost_count": 2
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN2-_CH3",
+      "gained": [],
+      "lost": [
+        "R301.1",
+        "U302.8"
+      ],
+      "gained_count": 0,
+      "lost_count": 2
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN2-_CH4",
+      "gained": [
+        "R117.2"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN2_+",
+      "gained": [
+        "R401.1",
+        "R402.1"
+      ],
+      "lost": [
+        "TP802.1",
+        "U401.3"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "/ADC Channel Switch/PGIA_IN2_-",
+      "gained": [
+        "R403.1",
+        "R404.1"
+      ],
+      "lost": [
+        "TP804.1",
+        "U401.5"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "/Analog Input MUX Array/INPUT_MUX_AR_EN",
+      "gained": [],
+      "lost": [
+        "U202.12"
+      ],
+      "gained_count": 0,
+      "lost_count": 1
+    },
+    {
+      "name": "/CURR_GUARD",
+      "gained": [
+        "R601.2"
+      ],
+      "lost": [
+        "R606.1",
+        "TP604.1",
+        "U606.6",
+        "U606.7"
+      ],
+      "gained_count": 1,
+      "lost_count": 4
+    },
+    {
+      "name": "/Controller Unit/PD1",
+      "gained": [
+        "R112.1"
+      ],
+      "lost": [
+        "R145.1"
+      ],
+      "gained_count": 1,
+      "lost_count": 1
+    },
+    {
+      "name": "/Controller Unit/SPI3_LDAC",
+      "gained": [],
+      "lost": [
+        "R149.1"
+      ],
+      "gained_count": 0,
+      "lost_count": 1
+    },
+    {
+      "name": "/LPUART1_RX",
+      "gained": [
+        "U1106.4"
+      ],
+      "lost": [
+        "J1103.3"
+      ],
+      "gained_count": 1,
+      "lost_count": 1
+    },
+    {
+      "name": "/LPUART1_TX",
+      "gained": [
+        "U1106.6"
+      ],
+      "lost": [
+        "J1103.2"
+      ],
+      "gained_count": 1,
+      "lost_count": 1
+    },
+    {
+      "name": "/NRST",
+      "gained": [
+        "J1104.3"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "/PD8",
+      "gained": [],
+      "lost": [
+        "R101.1"
+      ],
+      "gained_count": 0,
+      "lost_count": 1
+    },
+    {
+      "name": "/PE7",
+      "gained": [
+        "R106.1"
+      ],
+      "lost": [
+        "R133.1"
+      ],
+      "gained_count": 1,
+      "lost_count": 1
+    },
+    {
+      "name": "/PE8",
+      "gained": [
+        "R103.1"
+      ],
+      "lost": [
+        "R135.1"
+      ],
+      "gained_count": 1,
+      "lost_count": 1
+    },
+    {
+      "name": "/Reference BRD/2V5_VCM",
+      "gained": [
+        "C401.1",
+        "C501.1",
+        "U405.2",
+        "U505.2"
+      ],
+      "lost": [
+        "U402.3",
+        "U408.3",
+        "U502.3",
+        "U508.3"
+      ],
+      "gained_count": 4,
+      "lost_count": 4
+    },
+    {
+      "name": "/SWCLK",
+      "gained": [
+        "J1104.4"
+      ],
+      "lost": [
+        "J1104.3"
+      ],
+      "gained_count": 1,
+      "lost_count": 1
+    },
+    {
+      "name": "/Voltage Controlled Current Source/DAC_CS",
+      "gained": [
+        "U610.4"
+      ],
+      "lost": [
+        "U604.5"
+      ],
+      "gained_count": 1,
+      "lost_count": 1
+    },
+    {
+      "name": "/Voltage Controlled Current Source/DAC_MOSI",
+      "gained": [
+        "U610.6"
+      ],
+      "lost": [
+        "U604.7"
+      ],
+      "gained_count": 1,
+      "lost_count": 1
+    },
+    {
+      "name": "/Voltage Controlled Current Source/DAC_SCLK",
+      "gained": [
+        "U610.5"
+      ],
+      "lost": [
+        "U604.6"
+      ],
+      "gained_count": 1,
+      "lost_count": 1
+    },
+    {
+      "name": "CLK_1.2M",
+      "gained": [],
+      "lost": [
+        "R712.2",
+        "TP715.1",
+        "U703.2",
+        "U710.2"
+      ],
+      "gained_count": 0,
+      "lost_count": 4
+    },
+    {
+      "name": "CLK_2.4M",
+      "gained": [
+        "R712.2",
+        "TP715.1",
+        "U703.2",
+        "U710.2"
+      ],
+      "lost": [],
+      "gained_count": 4,
+      "lost_count": 0
+    },
+    {
+      "name": "CURR_SRC_EXC",
+      "gained": [
+        "U604.4"
+      ],
+      "lost": [
+        "D602.1",
+        "TP608.1"
+      ],
+      "gained_count": 1,
+      "lost_count": 2
+    },
+    {
+      "name": "EXT_REF_SENSE1",
+      "gained": [
+        "D104.2"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "EXT_REF_SENSE2",
+      "gained": [
+        "D103.2"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "EXT_REF_TERM_1",
+      "gained": [
+        "D101.2"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "EXT_REF_TERM_2",
+      "gained": [
+        "D102.2"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "GND",
+      "gained": [
+        "#PWR010001.1",
+        "#PWR01002.1",
+        "#PWR01025.1",
+        "#PWR01034.1",
+        "#PWR01043.1",
+        "#PWR01047.1",
+        "#PWR01053.1",
+        "#PWR01054.1",
+        "#PWR01056.1",
+        "#PWR01057.1",
+        "#PWR01058.1",
+        "#PWR01059.1",
+        "#PWR01061.1",
+        "#PWR01062.1",
+        "#PWR01142.1",
+        "#PWR01158.1",
+        "#PWR0120.1",
+        "#PWR0129.1",
+        "#PWR0130.1",
+        "#PWR0131.1",
+        "#PWR0252.1",
+        "#PWR0253.1",
+        "#PWR0254.1",
+        "#PWR0255.1"
+      ],
+      "lost": [
+        "#PWR01009.1",
+        "#PWR01044.1",
+        "#PWR0222.1",
+        "#PWR0228.1",
+        "#PWR0229.1",
+        "#PWR0238.1",
+        "#PWR0419.1",
+        "#PWR0420.1",
+        "#PWR0422.1",
+        "#PWR0424.1",
+        "#PWR0430.1",
+        "#PWR0435.1",
+        "#PWR0437.1",
+        "#PWR0439.1",
+        "#PWR0519.1",
+        "#PWR0520.1",
+        "#PWR0522.1",
+        "#PWR0524.1",
+        "#PWR0530.1",
+        "#PWR0535.1",
+        "#PWR0537.1",
+        "#PWR0539.1",
+        "#PWR0601.1",
+        "#PWR0620.1"
+      ],
+      "gained_count": 132,
+      "lost_count": 85
+    },
+    {
+      "name": "N$10",
+      "gained": [
+        "U1001.1",
+        "U1001.2"
+      ],
+      "lost": [
+        "U1001.3",
+        "U1001.4"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$103",
+      "gained": [
+        "U1204.16",
+        "U1205.4",
+        "U1206.12",
+        "U1206.4",
+        "U1212.12",
+        "U1212.4"
+      ],
+      "lost": [
+        "U1203.2",
+        "U1205.1"
+      ],
+      "gained_count": 6,
+      "lost_count": 2
+    },
+    {
+      "name": "N$107",
+      "gained": [
+        "C1025.2",
+        "U1003.5"
+      ],
+      "lost": [
+        "U1204.16",
+        "U1205.4",
+        "U1206.12",
+        "U1206.4",
+        "U1212.12",
+        "U1212.4"
+      ],
+      "gained_count": 2,
+      "lost_count": 6
+    },
+    {
+      "name": "N$11",
+      "gained": [
+        "C1002.2",
+        "R1002.1"
+      ],
+      "lost": [
+        "U1001.1",
+        "U1001.2"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$118",
+      "gained": [
+        "FB102.1",
+        "J102.1"
+      ],
+      "lost": [
+        "FB201.2",
+        "J201.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$130",
+      "gained": [
+        "C301.1",
+        "D301.2",
+        "FB301.1",
+        "U302.2"
+      ],
+      "lost": [
+        "U201.1",
+        "U202.8"
+      ],
+      "gained_count": 4,
+      "lost_count": 2
+    },
+    {
+      "name": "N$131",
+      "gained": [
+        "FB301.2",
+        "J301.1"
+      ],
+      "lost": [
+        "U201.9",
+        "U202.16"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$134",
+      "gained": [
+        "FB104.1",
+        "J104.1"
+      ],
+      "lost": [
+        "FB301.2",
+        "J301.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$145",
+      "gained": [
+        "C506.1",
+        "R510.2",
+        "U505.4"
+      ],
+      "lost": [
+        "U401.2",
+        "U403.8"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$15",
+      "gained": [
+        "C1003.1",
+        "R1003.2",
+        "U1002.7"
+      ],
+      "lost": [
+        "R1020.1",
+        "R1021.1",
+        "U1002.5"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$151",
+      "gained": [
+        "R618.1",
+        "TP610.1",
+        "U609.16",
+        "U609.8"
+      ],
+      "lost": [
+        "U501.7",
+        "U502.4",
+        "U503.13",
+        "U504.4",
+        "U505.4",
+        "U507.4",
+        "U508.4"
+      ],
+      "gained_count": 4,
+      "lost_count": 7
+    },
+    {
+      "name": "N$152",
+      "gained": [
+        "D602.2",
+        "Q601.3",
+        "R610.1"
+      ],
+      "lost": [
+        "U501.6",
+        "U503.9"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$153",
+      "gained": [
+        "D604.1",
+        "Q601.1",
+        "R611.2"
+      ],
+      "lost": [
+        "U501.2",
+        "U503.8"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$156",
+      "gained": [
+        "R601.1",
+        "R606.1",
+        "TP604.1",
+        "U606.6",
+        "U606.7"
+      ],
+      "lost": [
+        "C105.1",
+        "H106.1",
+        "R116.2"
+      ],
+      "gained_count": 5,
+      "lost_count": 3
+    },
+    {
+      "name": "N$158",
+      "gained": [
+        "R620.1",
+        "U601.3"
+      ],
+      "lost": [
+        "Q601.1",
+        "R611.2"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$161",
+      "gained": [
+        "D701.2",
+        "L701.2",
+        "U703.20"
+      ],
+      "lost": [
+        "R620.2",
+        "U601.3"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$17",
+      "gained": [
+        "C1028.2",
+        "U1004.5"
+      ],
+      "lost": [
+        "C1003.1",
+        "R1003.2",
+        "U1002.7"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$18",
+      "gained": [
+        "R1002.2",
+        "R1005.1",
+        "U1.4"
+      ],
+      "lost": [
+        "R1004.2",
+        "U1003.5"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$180",
+      "gained": [
+        "C906.2",
+        "U901.3"
+      ],
+      "lost": [
+        "C202.1",
+        "FB202.2",
+        "U204.10"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$182",
+      "gained": [
+        "Q201.2",
+        "R202.1",
+        "R203.1"
+      ],
+      "lost": [
+        "U202.9",
+        "U203.9"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$183",
+      "gained": [
+        "D202.2"
+      ],
+      "lost": [],
+      "gained_count": 1,
+      "lost_count": 0
+    },
+    {
+      "name": "N$184",
+      "gained": [
+        "C202.1",
+        "D203.2",
+        "FB202.2",
+        "U204.10"
+      ],
+      "lost": [
+        "FB203.2",
+        "J203.1"
+      ],
+      "gained_count": 4,
+      "lost_count": 2
+    },
+    {
+      "name": "N$185",
+      "gained": [
+        "FB203.2",
+        "J203.1"
+      ],
+      "lost": [
+        "FB302.1",
+        "J302.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$186",
+      "gained": [
+        "FB302.1",
+        "J302.1"
+      ],
+      "lost": [
+        "U202.1",
+        "U203.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$187",
+      "gained": [
+        "Q301.2",
+        "R302.1",
+        "R303.1"
+      ],
+      "lost": [
+        "C302.1",
+        "FB302.2",
+        "U302.10"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$188",
+      "gained": [
+        "U201.9",
+        "U203.1",
+        "U204.9"
+      ],
+      "lost": [
+        "C301.1",
+        "FB301.1",
+        "U302.2"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$189",
+      "gained": [
+        "C302.1",
+        "D303.2",
+        "FB302.2",
+        "U302.10"
+      ],
+      "lost": [
+        "U301.9",
+        "U302.9"
+      ],
+      "gained_count": 4,
+      "lost_count": 2
+    },
+    {
+      "name": "N$19",
+      "gained": [
+        "C1031.2",
+        "U1005.5"
+      ],
+      "lost": [
+        "TP1005.1",
+        "U1004.8"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$190",
+      "gained": [
+        "J306.2",
+        "U302.8"
+      ],
+      "lost": [
+        "U301.1",
+        "U302.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$191",
+      "gained": [
+        "J306.3",
+        "U302.16"
+      ],
+      "lost": [
+        "FB204.1",
+        "J204.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$192",
+      "gained": [
+        "U301.1",
+        "U302.1"
+      ],
+      "lost": [
+        "C204.1",
+        "FB204.2",
+        "U205.9"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$193",
+      "gained": [
+        "U301.9",
+        "U302.9"
+      ],
+      "lost": [
+        "U202.10",
+        "U204.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$194",
+      "gained": [
+        "C204.1",
+        "D204.2",
+        "FB204.2",
+        "U205.9",
+        "U206.4"
+      ],
+      "lost": [
+        "U202.2",
+        "U204.9"
+      ],
+      "gained_count": 5,
+      "lost_count": 2
+    },
+    {
+      "name": "N$198",
+      "gained": [
+        "J206.3",
+        "U204.16"
+      ],
+      "lost": [
+        "C602.1",
+        "C603.1",
+        "R602.2",
+        "R604.2",
+        "U604.4"
+      ],
+      "gained_count": 2,
+      "lost_count": 5
+    },
+    {
+      "name": "N$199",
+      "gained": [
+        "R403.2",
+        "U402.3"
+      ],
+      "lost": [
+        "Q602.1",
+        "R612.2"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$20",
+      "gained": [
+        "C1003.2",
+        "R1006.2",
+        "U1002.6"
+      ],
+      "lost": [
+        "U1004.1",
+        "U1004.2"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$200",
+      "gained": [
+        "R407.1",
+        "U402.2",
+        "U402.6"
+      ],
+      "lost": [
+        "Q602.2",
+        "U609.1"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$202",
+      "gained": [
+        "R503.2",
+        "U502.3"
+      ],
+      "lost": [
+        "D601.1",
+        "R607.2",
+        "U602.2",
+        "U602.6"
+      ],
+      "gained_count": 2,
+      "lost_count": 4
+    },
+    {
+      "name": "N$203",
+      "gained": [
+        "R507.1",
+        "U502.2",
+        "U502.6"
+      ],
+      "lost": [
+        "D702.1",
+        "L702.2",
+        "U703.18"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$204",
+      "gained": [
+        "C602.1",
+        "C603.1",
+        "R602.2",
+        "R604.1",
+        "U610.3"
+      ],
+      "lost": [
+        "R718.2",
+        "R720.1",
+        "U707.5"
+      ],
+      "gained_count": 5,
+      "lost_count": 3
+    },
+    {
+      "name": "N$207",
+      "gained": [
+        "Q602.3",
+        "U605.1",
+        "U606.3"
+      ],
+      "lost": [
+        "C711.1",
+        "R705.2",
+        "R708.1",
+        "U702.3"
+      ],
+      "gained_count": 3,
+      "lost_count": 4
+    },
+    {
+      "name": "N$21",
+      "gained": [
+        "R1018.1",
+        "U1006.7",
+        "U1006.8"
+      ],
+      "lost": [
+        "U1004.3",
+        "U1004.4"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$215",
+      "gained": [
+        "C710.2",
+        "FB703.2",
+        "TP703.1",
+        "U702.13",
+        "U702.15",
+        "U702.16"
+      ],
+      "lost": [
+        "C303.1",
+        "FB303.1",
+        "U303.1"
+      ],
+      "gained_count": 6,
+      "lost_count": 3
+    },
+    {
+      "name": "N$216",
+      "gained": [
+        "C715.2",
+        "U702.14"
+      ],
+      "lost": [
+        "FB304.1",
+        "J304.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$217",
+      "gained": [
+        "C711.1",
+        "R705.2",
+        "R708.1",
+        "U702.3"
+      ],
+      "lost": [
+        "C304.1",
+        "FB304.2",
+        "U303.9"
+      ],
+      "gained_count": 4,
+      "lost_count": 3
+    },
+    {
+      "name": "N$22",
+      "gained": [
+        "U1006.2",
+        "U1006.4"
+      ],
+      "lost": [
+        "R1002.2",
+        "R1005.1",
+        "U1003.4"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$239",
+      "gained": [
+        "L703.1",
+        "U707.11"
+      ],
+      "lost": [
+        "U403.6",
+        "U404.1",
+        "U404.6",
+        "U404.7"
+      ],
+      "gained_count": 2,
+      "lost_count": 4
+    },
+    {
+      "name": "N$24",
+      "gained": [
+        "C1002.1",
+        "R1007.2",
+        "R1012.1",
+        "U1.1"
+      ],
+      "lost": [
+        "U1006.6",
+        "U1006.7"
+      ],
+      "gained_count": 4,
+      "lost_count": 2
+    },
+    {
+      "name": "N$240",
+      "gained": [
+        "R730.1",
+        "R731.1",
+        "U710.11"
+      ],
+      "lost": [
+        "U403.11",
+        "U404.2",
+        "U404.3",
+        "U404.5"
+      ],
+      "gained_count": 3,
+      "lost_count": 4
+    },
+    {
+      "name": "N$242",
+      "gained": [
+        "R703.2",
+        "U703.6"
+      ],
+      "lost": [
+        "U503.6",
+        "U504.1",
+        "U504.6",
+        "U504.7"
+      ],
+      "gained_count": 2,
+      "lost_count": 4
+    },
+    {
+      "name": "N$25",
+      "gained": [
+        "C1012.1",
+        "U1007.5",
+        "U1008.5",
+        "U1008.6"
+      ],
+      "lost": [
+        "U1006.5",
+        "U1006.8"
+      ],
+      "gained_count": 4,
+      "lost_count": 2
+    },
+    {
+      "name": "N$257",
+      "gained": [
+        "R404.2",
+        "U404.3"
+      ],
+      "lost": [
+        "R704.1",
+        "U703.7",
+        "U703.9"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$259",
+      "gained": [
+        "R504.2",
+        "U504.3"
+      ],
+      "lost": [
+        "C727.2",
+        "FB705.1",
+        "U704.10",
+        "U704.11",
+        "U704.12"
+      ],
+      "gained_count": 2,
+      "lost_count": 5
+    },
+    {
+      "name": "N$26",
+      "gained": [
+        "U1008.2",
+        "U1008.3"
+      ],
+      "lost": [
+        "C1007.1",
+        "U1003.3",
+        "U1005.6"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$260",
+      "gained": [
+        "R405.1",
+        "U401.2",
+        "U401.6"
+      ],
+      "lost": [
+        "U401.1",
+        "U402.1",
+        "U403.4",
+        "U404.8",
+        "U405.8",
+        "U407.8",
+        "U408.1"
+      ],
+      "gained_count": 3,
+      "lost_count": 7
+    },
+    {
+      "name": "N$261",
+      "gained": [
+        "R411.1",
+        "U405.7"
+      ],
+      "lost": [
+        "U403.5",
+        "U407.1",
+        "U407.6",
+        "U407.7"
+      ],
+      "gained_count": 2,
+      "lost_count": 4
+    },
+    {
+      "name": "N$262",
+      "gained": [
+        "R405.2",
+        "R406.2",
+        "U406.2"
+      ],
+      "lost": [
+        "U403.12",
+        "U407.2",
+        "U407.3",
+        "U407.5"
+      ],
+      "gained_count": 3,
+      "lost_count": 4
+    },
+    {
+      "name": "N$267",
+      "gained": [
+        "C406.2",
+        "U405.1",
+        "U406.5",
+        "U406.6"
+      ],
+      "lost": [
+        "C407.2",
+        "U408.5",
+        "U408.6",
+        "U409.3"
+      ],
+      "gained_count": 4,
+      "lost_count": 4
+    },
+    {
+      "name": "N$268",
+      "gained": [
+        "C403.2",
+        "U405.8",
+        "U406.7",
+        "U406.8"
+      ],
+      "lost": [
+        "C406.2",
+        "R402.1",
+        "U409.6"
+      ],
+      "gained_count": 4,
+      "lost_count": 3
+    },
+    {
+      "name": "N$269",
+      "gained": [
+        "C740.1",
+        "FB708.1",
+        "R715.1",
+        "U706.1",
+        "U706.2"
+      ],
+      "lost": [
+        "C406.1",
+        "U408.7",
+        "U408.8",
+        "U409.2"
+      ],
+      "gained_count": 5,
+      "lost_count": 4
+    },
+    {
+      "name": "N$27",
+      "gained": [
+        "U1008.1",
+        "U1008.4"
+      ],
+      "lost": [
+        "R1009.1",
+        "R1011.1",
+        "TP1007.1",
+        "U1007.5"
+      ],
+      "gained_count": 2,
+      "lost_count": 4
+    },
+    {
+      "name": "N$270",
+      "gained": [
+        "D703.2",
+        "L704.2",
+        "U710.20"
+      ],
+      "lost": [
+        "R404.2",
+        "U409.1"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$271",
+      "gained": [
+        "L704.1",
+        "U710.1"
+      ],
+      "lost": [
+        "R505.2",
+        "U503.2"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$272",
+      "gained": [
+        "R704.1",
+        "U703.7",
+        "U703.9"
+      ],
+      "lost": [
+        "U503.7",
+        "U505.1",
+        "U505.2"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$273",
+      "gained": [
+        "C726.2",
+        "FB704.2",
+        "TP704.1",
+        "U704.1",
+        "U704.13",
+        "U704.2",
+        "U704.3",
+        "U704.5"
+      ],
+      "lost": [
+        "U503.10",
+        "U505.5",
+        "U505.6"
+      ],
+      "gained_count": 8,
+      "lost_count": 3
+    },
+    {
+      "name": "N$274",
+      "gained": [
+        "C727.2",
+        "FB705.1",
+        "U704.10",
+        "U704.11",
+        "U704.12"
+      ],
+      "lost": [
+        "U505.3",
+        "U505.7"
+      ],
+      "gained_count": 5,
+      "lost_count": 2
+    },
+    {
+      "name": "N$275",
+      "gained": [
+        "R408.1",
+        "U404.2",
+        "U404.6"
+      ],
+      "lost": [
+        "C605.2",
+        "FB601.2",
+        "U603.4"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$276",
+      "gained": [
+        "R407.2",
+        "R408.2",
+        "U406.3"
+      ],
+      "lost": [
+        "C501.1",
+        "U502.7",
+        "U502.8",
+        "U506.2"
+      ],
+      "gained_count": 3,
+      "lost_count": 4
+    },
+    {
+      "name": "N$279",
+      "gained": [
+        "R904.2",
+        "U901.20"
+      ],
+      "lost": [
+        "R503.2",
+        "U506.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$280",
+      "gained": [
+        "C403.1",
+        "R409.1",
+        "U405.5"
+      ],
+      "lost": [
+        "C604.2",
+        "FB601.1",
+        "TP601.1",
+        "U605.5",
+        "U605.6",
+        "U605.7",
+        "U605.8"
+      ],
+      "gained_count": 3,
+      "lost_count": 7
+    },
+    {
+      "name": "N$281",
+      "gained": [
+        "R505.1",
+        "U501.2",
+        "U501.6"
+      ],
+      "lost": [
+        "Q601.3",
+        "R609.2",
+        "TP605.1",
+        "U605.2",
+        "U605.3"
+      ],
+      "gained_count": 3,
+      "lost_count": 5
+    },
+    {
+      "name": "N$282",
+      "gained": [
+        "R511.1",
+        "U505.7"
+      ],
+      "lost": [
+        "C750.2",
+        "R723.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$283",
+      "gained": [
+        "R505.2",
+        "R506.2",
+        "U506.2"
+      ],
+      "lost": [
+        "D704.1",
+        "L705.2",
+        "U710.18"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$284",
+      "gained": [
+        "R506.1",
+        "U503.2",
+        "U503.6"
+      ],
+      "lost": [
+        "U501.1",
+        "U502.1",
+        "U503.4",
+        "U504.8",
+        "U505.8",
+        "U507.8",
+        "U508.1"
+      ],
+      "gained_count": 3,
+      "lost_count": 7
+    },
+    {
+      "name": "N$286",
+      "gained": [
+        "C506.2",
+        "U505.1",
+        "U506.5",
+        "U506.6"
+      ],
+      "lost": [
+        "U503.12",
+        "U507.2",
+        "U507.3",
+        "U507.5"
+      ],
+      "gained_count": 4,
+      "lost_count": 4
+    },
+    {
+      "name": "N$287",
+      "gained": [
+        "C503.2",
+        "U505.8",
+        "U506.7",
+        "U506.8"
+      ],
+      "lost": [
+        "C735.2",
+        "FB706.1",
+        "U705.10",
+        "U705.9"
+      ],
+      "gained_count": 4,
+      "lost_count": 4
+    },
+    {
+      "name": "N$288",
+      "gained": [
+        "C604.2",
+        "L601.1",
+        "TP601.1",
+        "U605.6",
+        "U605.7",
+        "U605.8"
+      ],
+      "lost": [
+        "C736.2",
+        "R714.1",
+        "U705.7"
+      ],
+      "gained_count": 6,
+      "lost_count": 3
+    },
+    {
+      "name": "N$29",
+      "gained": [
+        "R1004.1",
+        "U1009.3"
+      ],
+      "lost": [
+        "C1002.1",
+        "R1007.2",
+        "U1003.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$295",
+      "gained": [
+        "R507.2",
+        "R508.2",
+        "U506.3"
+      ],
+      "lost": [
+        "C507.2",
+        "U508.5",
+        "U508.6",
+        "U509.3"
+      ],
+      "gained_count": 3,
+      "lost_count": 4
+    },
+    {
+      "name": "N$30",
+      "gained": [
+        "C1007.2",
+        "R1001.2",
+        "U1009.2"
+      ],
+      "lost": [
+        "C1008.1",
+        "TP1004.2",
+        "U1004.6",
+        "U1004.7"
+      ],
+      "gained_count": 3,
+      "lost_count": 4
+    },
+    {
+      "name": "N$302",
+      "gained": [
+        "C903.1",
+        "C905.1",
+        "FB901.2",
+        "U901.15",
+        "U902.5"
+      ],
+      "lost": [
+        "Q603.1",
+        "Q607.2"
+      ],
+      "gained_count": 5,
+      "lost_count": 2
+    },
+    {
+      "name": "N$303",
+      "gained": [
+        "C503.1",
+        "R509.1",
+        "U505.5"
+      ],
+      "lost": [
+        "C612.2",
+        "TP606.1",
+        "U607.1",
+        "U607.5",
+        "U608.4"
+      ],
+      "gained_count": 3,
+      "lost_count": 5
+    },
+    {
+      "name": "N$304",
+      "gained": [
+        "R905.1",
+        "U901.19"
+      ],
+      "lost": [
+        "C611.2",
+        "R612.1",
+        "TP607.1",
+        "U607.7"
+      ],
+      "gained_count": 2,
+      "lost_count": 4
+    },
+    {
+      "name": "N$306",
+      "gained": [
+        "R610.2",
+        "U606.5"
+      ],
+      "lost": [
+        "R715.2",
+        "R721.1",
+        "U706.3"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$308",
+      "gained": [
+        "C760.1",
+        "R730.2",
+        "U710.12"
+      ],
+      "lost": [
+        "Q604.1",
+        "Q607.3",
+        "Q608.2"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$309",
+      "gained": [
+        "C611.2",
+        "R612.1",
+        "TP607.1",
+        "U607.7"
+      ],
+      "lost": [
+        "Q602.3",
+        "R608.1",
+        "U605.1",
+        "U606.3"
+      ],
+      "gained_count": 4,
+      "lost_count": 4
+    },
+    {
+      "name": "N$31",
+      "gained": [
+        "C1101.1",
+        "FB1101.2",
+        "Y1101.4"
+      ],
+      "lost": [
+        "C1012.1",
+        "R1022.1",
+        "U1008.5",
+        "U1008.6"
+      ],
+      "gained_count": 3,
+      "lost_count": 4
+    },
+    {
+      "name": "N$310",
+      "gained": [
+        "C611.1",
+        "R616.1",
+        "U607.6"
+      ],
+      "lost": [
+        "R608.2",
+        "U605.4"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$311",
+      "gained": [
+        "R715.2",
+        "R721.1",
+        "U706.3"
+      ],
+      "lost": [
+        "U608.5",
+        "U608.6"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$312",
+      "gained": [
+        "Q603.2",
+        "R608.1",
+        "R613.1"
+      ],
+      "lost": [
+        "C612.1",
+        "U607.2",
+        "U608.2",
+        "U608.3"
+      ],
+      "gained_count": 3,
+      "lost_count": 4
+    },
+    {
+      "name": "N$313",
+      "gained": [
+        "C612.1",
+        "U607.2",
+        "U608.6"
+      ],
+      "lost": [],
+      "gained_count": 3,
+      "lost_count": 0
+    },
+    {
+      "name": "N$314",
+      "gained": [
+        "U608.2",
+        "U608.3",
+        "U608.4"
+      ],
+      "lost": [
+        "Q605.1",
+        "Q608.3",
+        "Q609.2"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$315",
+      "gained": [
+        "C612.2",
+        "TP606.1",
+        "U603.3",
+        "U607.1",
+        "U608.5"
+      ],
+      "lost": [
+        "C610.1",
+        "R609.1",
+        "U606.2"
+      ],
+      "gained_count": 5,
+      "lost_count": 3
+    },
+    {
+      "name": "N$316",
+      "gained": [
+        "C610.1",
+        "R609.1",
+        "U606.2"
+      ],
+      "lost": [
+        "R617.1",
+        "TP609.1",
+        "U609.10",
+        "U609.2"
+      ],
+      "gained_count": 3,
+      "lost_count": 4
+    },
+    {
+      "name": "N$317",
+      "gained": [
+        "R906.2",
+        "Y901.3"
+      ],
+      "lost": [
+        "R619.1",
+        "U609.12"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$318",
+      "gained": [
+        "R617.1",
+        "TP609.1",
+        "U609.10",
+        "U609.2"
+      ],
+      "lost": [
+        "C739.1",
+        "FB707.2",
+        "U706.5",
+        "U706.7",
+        "U706.8"
+      ],
+      "gained_count": 4,
+      "lost_count": 5
+    },
+    {
+      "name": "N$319",
+      "gained": [
+        "R619.1",
+        "U609.12"
+      ],
+      "lost": [
+        "C732.2",
+        "C733.2",
+        "C738.1",
+        "FB707.1",
+        "R718.1",
+        "R719.1",
+        "TP707.1",
+        "U707.7-8"
+      ],
+      "gained_count": 2,
+      "lost_count": 8
+    },
+    {
+      "name": "N$32",
+      "gained": [
+        "J1101.2",
+        "R1104.2"
+      ],
+      "lost": [
+        "U1008.2",
+        "U1008.3"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$320",
+      "gained": [
+        "C739.1",
+        "FB707.2",
+        "U706.5",
+        "U706.7",
+        "U706.8"
+      ],
+      "lost": [
+        "C707.2",
+        "R703.1"
+      ],
+      "gained_count": 5,
+      "lost_count": 2
+    },
+    {
+      "name": "N$321",
+      "gained": [
+        "C732.2",
+        "C733.2",
+        "C738.1",
+        "FB707.1",
+        "R718.1",
+        "R719.1",
+        "TP707.1",
+        "U707.7-8"
+      ],
+      "lost": [
+        "R706.1",
+        "R707.2",
+        "U703.5"
+      ],
+      "gained_count": 8,
+      "lost_count": 3
+    },
+    {
+      "name": "N$322",
+      "gained": [
+        "C707.2",
+        "R703.1"
+      ],
+      "lost": [
+        "C743.1",
+        "U707.3"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$323",
+      "gained": [
+        "R706.1",
+        "R707.2",
+        "U703.5"
+      ],
+      "lost": [
+        "C708.1",
+        "C709.2",
+        "FB703.2"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$324",
+      "gained": [
+        "C743.1",
+        "U707.3"
+      ],
+      "lost": [
+        "R709.2",
+        "U703.10"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$325",
+      "gained": [
+        "C704.2",
+        "C721.2",
+        "FB704.1",
+        "L709.2"
+      ],
+      "lost": [
+        "C754.1",
+        "R725.2",
+        "R728.1",
+        "U709.3"
+      ],
+      "gained_count": 4,
+      "lost_count": 4
+    },
+    {
+      "name": "N$326",
+      "gained": [
+        "R709.2",
+        "U703.10"
+      ],
+      "lost": [
+        "C758.2",
+        "U709.14"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$33",
+      "gained": [
+        "R1101.1",
+        "Y1101.1"
+      ],
+      "lost": [
+        "U1008.1",
+        "U1008.4"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$336",
+      "gained": [
+        "D1101.2",
+        "R1113.1"
+      ],
+      "lost": [
+        "D1102.2",
+        "R1114.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$338",
+      "gained": [
+        "D1102.2",
+        "R1114.1"
+      ],
+      "lost": [
+        "C1117.1",
+        "U1102.73"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$37",
+      "gained": [
+        "C1007.1",
+        "R1012.2",
+        "U1.3",
+        "U1009.6"
+      ],
+      "lost": [
+        "J1101.3",
+        "R1104.2"
+      ],
+      "gained_count": 4,
+      "lost_count": 2
+    },
+    {
+      "name": "N$38",
+      "gained": [
+        "R1102.1",
+        "U1101.3"
+      ],
+      "lost": [
+        "R1101.1",
+        "Y1101.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$4",
+      "gained": [
+        "U1006.5",
+        "U1006.6",
+        "U1007.3"
+      ],
+      "lost": [
+        "U1006.3",
+        "U1006.4"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$406",
+      "gained": [
+        "C717.1",
+        "R710.2",
+        "U703.12"
+      ],
+      "lost": [
+        "D602.2",
+        "Q605.3",
+        "Q609.3",
+        "R610.1",
+        "R615.2"
+      ],
+      "gained_count": 3,
+      "lost_count": 5
+    },
+    {
+      "name": "N$407",
+      "gained": [
+        "R717.2",
+        "U707.14"
+      ],
+      "lost": [
+        "Q609.1",
+        "R614.2",
+        "R615.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$408",
+      "gained": [
+        "C730.2",
+        "C731.2",
+        "FB711.2",
+        "R716.2",
+        "R717.1",
+        "U707.12-13"
+      ],
+      "lost": [
+        "C751.3",
+        "C753.2",
+        "U709.13",
+        "U709.15",
+        "U709.16"
+      ],
+      "gained_count": 6,
+      "lost_count": 5
+    },
+    {
+      "name": "N$409",
+      "gained": [
+        "R719.2",
+        "U707.2"
+      ],
+      "lost": [
+        "C751.1",
+        "C752.2",
+        "FB710.2"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$410",
+      "gained": [
+        "R1009.1",
+        "U1.5"
+      ],
+      "lost": [
+        "R616.2",
+        "U609.9"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$411",
+      "gained": [
+        "Q610.2",
+        "R622.1",
+        "R623.1"
+      ],
+      "lost": [
+        "C716.2",
+        "R709.1"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$412",
+      "gained": [
+        "R723.2",
+        "U710.6"
+      ],
+      "lost": [
+        "C717.1",
+        "R710.2",
+        "U703.12"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$413",
+      "gained": [
+        "C742.1",
+        "U706.6"
+      ],
+      "lost": [
+        "R717.2",
+        "U707.14"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$414",
+      "gained": [
+        "R724.1",
+        "U710.7",
+        "U710.9"
+      ],
+      "lost": [
+        "C730.2",
+        "C731.2",
+        "C737.3",
+        "R716.2",
+        "R717.1",
+        "U707.12-13"
+      ],
+      "gained_count": 3,
+      "lost_count": 6
+    },
+    {
+      "name": "N$415",
+      "gained": [
+        "R726.1",
+        "R727.2",
+        "U710.5"
+      ],
+      "lost": [
+        "C718.1",
+        "C721.2",
+        "FB704.2"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$416",
+      "gained": [
+        "R729.2",
+        "U710.10"
+      ],
+      "lost": [
+        "R719.2",
+        "U707.2"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$417",
+      "gained": [
+        "C1008.2",
+        "U2.5"
+      ],
+      "lost": [
+        "R723.2",
+        "U710.6"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$418",
+      "gained": [
+        "R734.2",
+        "U712.14",
+        "U712.2"
+      ],
+      "lost": [
+        "C742.1",
+        "U706.6"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$419",
+      "gained": [
+        "R736.1",
+        "U712.15",
+        "U712.3"
+      ],
+      "lost": [
+        "R724.1",
+        "U710.7",
+        "U710.9"
+      ],
+      "gained_count": 3,
+      "lost_count": 3
+    },
+    {
+      "name": "N$422",
+      "gained": [
+        "D705.2",
+        "R738.1"
+      ],
+      "lost": [
+        "R734.2",
+        "U712.14",
+        "U712.2"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$423",
+      "gained": [
+        "C746.2",
+        "FB709.1",
+        "U708.10",
+        "U708.9"
+      ],
+      "lost": [
+        "R736.1",
+        "U712.15",
+        "U712.3"
+      ],
+      "gained_count": 4,
+      "lost_count": 3
+    },
+    {
+      "name": "N$426",
+      "gained": [
+        "C759.2",
+        "R729.1"
+      ],
+      "lost": [
+        "D705.2",
+        "R738.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$427",
+      "gained": [
+        "C701.2",
+        "C766.2",
+        "FB701.1",
+        "L707.2"
+      ],
+      "lost": [
+        "C746.2",
+        "FB709.1",
+        "U708.10",
+        "U708.9"
+      ],
+      "gained_count": 4,
+      "lost_count": 4
+    },
+    {
+      "name": "N$61",
+      "gained": [
+        "C1014.1",
+        "R1013.2",
+        "U1007.7"
+      ],
+      "lost": [
+        "D1103.2",
+        "R1115.1"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$70",
+      "gained": [
+        "U1105.2",
+        "Y1101.3"
+      ],
+      "lost": [
+        "R1014.1",
+        "TP1009.1",
+        "U1007.3"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$71",
+      "gained": [
+        "R1105.1",
+        "U1105.4"
+      ],
+      "lost": [
+        "R1104.1",
+        "U1101.1"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$78",
+      "gained": [
+        "J1103.2",
+        "U1106.1"
+      ],
+      "lost": [
+        "R1016.2",
+        "U1007.2"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "N$79",
+      "gained": [
+        "C1011.2",
+        "R1017.2",
+        "U2.6"
+      ],
+      "lost": [
+        "R1106.2",
+        "U1102.94"
+      ],
+      "gained_count": 3,
+      "lost_count": 2
+    },
+    {
+      "name": "N$8",
+      "gained": [
+        "U1001.3",
+        "U1001.4"
+      ],
+      "lost": [
+        "C1007.2",
+        "R1001.2",
+        "U1005.2"
+      ],
+      "gained_count": 2,
+      "lost_count": 3
+    },
+    {
+      "name": "N$9",
+      "gained": [
+        "C1004.1",
+        "U1001.6",
+        "U1001.7",
+        "U1002.5"
+      ],
+      "lost": [
+        "C1009.2",
+        "R1010.2",
+        "U1002.2"
+      ],
+      "gained_count": 4,
+      "lost_count": 3
+    },
+    {
+      "name": "N$99",
+      "gained": [
+        "U1203.2",
+        "U1205.1"
+      ],
+      "lost": [
+        "R142.1",
+        "U101.12"
+      ],
+      "gained_count": 2,
+      "lost_count": 2
+    },
+    {
+      "name": "VBUS",
+      "gained": [
+        "#PWR01169.1",
+        "#PWR0706.1",
+        "C708.1",
+        "FB711.1",
+        "J1105.2",
+        "J701.2"
+      ],
+      "lost": [
+        "C737.1",
+        "J701.3",
+        "J701.4"
+      ],
+      "gained_count": 6,
+      "lost_count": 3
+    }
+  ]
+}

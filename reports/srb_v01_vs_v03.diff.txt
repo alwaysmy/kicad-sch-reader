@@ -1,0 +1,94 @@
+A: D:\MyProjects\EmoeR_D\NIM\SuperResistanceBridge\SuperResistantBridge_MAIN_BRD_V0.1
+B: D:\MyProjects\EmoeR_D\NIM\SuperResistanceBridge\SuperResistantBridge_MAIN_BRD_V0.3
+components: +91 -51 ~109 changed
+nets: +77 -82 ~194 changed  (renamed candidates: 22)
+  ~ C1001: value: '1uF'->'1uF 3216'
+  ~ C1002: value: '10nF'->'10nF C0G'
+  ~ C1003: value: '100nF'->'10nF C0G'
+  ~ C1004: value: '100nF'->'1nF C0G'
+  ~ C1005: value: '1uF'->'1uF 3216', lib_id: 'Device:C_Small'->'Device:C_Polarized_Small', footprint: 'Capacitor_SMD:C_0603_1608Metric'->'Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A'
+  ~ C1006: value: '1uF'->'1uF 3216'
+  ~ C1007: value: '100nF'->'10nF C0G'
+  ~ C1008: value: '100nF'->'10nF C0G'
+  ~ C1009: value: '100nF'->'10nF C0G'
+  ~ C1010: value: '100nF'->'1nF C0G'
+  ~ C1012: value: '100nF'->'1nF C0G'
+  ~ C1013: value: '1uF'->'1uF 3216'
+  ~ net +12VA: +0 -4 pins
+      - #PWR01014.1
+      - #PWR0120.1
+      - J1002.3
+      - J1105.2
+  ~ net +15VA: +42 -22 pins
+      + #PWR01014.1
+      + #PWR01044.1
+      + #PWR01055.1
+      + #PWR01060.1
+      - #PWR01034.1
+      - #PWR01047.1
+      - #PWR0209.1
+      - #PWR0233.1
+  ~ net +3.3V: +15 -9 pins
+      + #PWR01128.1
+      + #PWR01141.1
+      + #PWR01168.1
+      + #PWR0259.1
+      - #PWR0436.1
+      - #PWR0536.1
+      - #PWR0611.1
+      - #PWR0823.1
+  ~ net +5V5A: +11 -3 pins
+      + #PWR0914.1
+      + #PWR0920.1
+      + C606.1
+      + C608.2
+      - C607.1
+      - C608.1
+      - U604.1
+  ~ net +6VA: +13 -27 pins
+      + #PWR01009.1
+      + #PWR0419.1
+      + #PWR0433.1
+      + #PWR0519.1
+      - #PWR01002.1
+      - #PWR01025.1
+      - #PWR0405.1
+      - #PWR0406.1
+  ~ net -15VA: +24 -16 pins
+      + #PWR0405.1
+      + #PWR0412.1
+      + #PWR0414.1
+      + #PWR0422.1
+      - #PWR0210.1
+      - #PWR0214.1
+      - #PWR0219.1
+      - #PWR0433.1
+  ~ net -2V5A: +0 -23 pins
+      - #PWR01043.1
+      - #PWR0412.1
+      - #PWR0414.1
+      - #PWR0426.1
+  ~ net /+5V_VOUT: +8 -5 pins
+      + C1033.2
+      + C1034.2
+      + R1011.1
+      + R1014.1
+      - J1001.3
+      - R1009.2
+      - TP1002.1
+      - TP1004.1
+  ~ net /5V_VREF: +4 -4 pins
+      + C1005.1
+      + C901.1
+      + R620.2
+      + U901.18
+      - C1005.2
+      - R620.1
+      - TP1001.1
+      - U1001.8
+  ~ net /ADC BRD/ADC_CS: +1 -0 pins
+      + U901.14
+  ~ net /ADC BRD/ADC_MISO: +1 -0 pins
+      + U901.12
+  ~ net /ADC BRD/ADC_MOSI: +1 -0 pins
+      + U901.13

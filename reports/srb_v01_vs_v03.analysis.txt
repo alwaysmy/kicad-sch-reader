@@ -1,0 +1,1776 @@
+==============================================================================
+SRB V0.1 -> V0.3 原理图差异分析
+==============================================================================
+元件: +91 -51 ~109
+网络: +77 -82 ~194 (重命名候选 22)
+
+------------------------------------------------------------------------------
+[1] 元件增删 —— 按位号前缀统计
+------------------------------------------------------------------------------
+新增: C=27, D=14, FB=2, J=4, L=5, Q=3, R=27, U=8, Y=1
+删除: C=11, FB=1, H=3, J=2, Q=6, R=13, TP=8, U=7
+
+------------------------------------------------------------------------------
+[2] 新增的芯片/连接器/测试点明细
+------------------------------------------------------------------------------
+  D101     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D102     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D103     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D104     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D201     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D202     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D203     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D204     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D301     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D302     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D303     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D304     ESD601DPYRQ1             Diode:ESD9B3.3ST5G                       Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm
+  D603     BZT52H-C3V0              Device:D_Zener_Small                     Diode_SMD:D_SOD-123F
+  D604     BZT52H-C3V0              Device:D_Zener_Small                     Diode_SMD:D_SOD-123F
+  FB701    GZ2012D101TF             Device:FerriteBead_Small                 Inductor_SMD:L_0805_2012Metric
+  FB901    GZ1608D601TF             Device:FerriteBead_Small                 Inductor_SMD:L_0603_1608Metric
+  J205     BNJ                      Connector_Generic:Conn_01x01             Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical
+  J206     XH2.54 4P                Connector_Generic:Conn_01x04             Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical
+  J305     BNJ                      Connector_Generic:Conn_01x01             Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical
+  J306     XH2.54 4P                Connector_Generic:Conn_01x04             Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical
+  L601     SWPA4030S101MT           Device:L_Small                           Inductor_SMD:L_Sunlord_SWPA4030S
+  L706     FNR6045S680MT            Device:L_Small                           Inductor_SMD:L_Changjiang_FNR6045S
+  L707     FNR6045S680MT            Device:L_Small                           Inductor_SMD:L_Changjiang_FNR6045S
+  L708     FNR6045S680MT            Device:L_Small                           Inductor_SMD:L_Changjiang_FNR6045S
+  L709     FNR6045S680MT            Device:L_Small                           Inductor_SMD:L_Changjiang_FNR6045S
+  Q201     AO3401A                  Transistor_FET:AO3401A                   Package_TO_SOT_SMD:SOT-23
+  Q301     AO3401A                  Transistor_FET:AO3401A                   Package_TO_SOT_SMD:SOT-23
+  Q610     AO3401A                  Transistor_FET:AO3401A                   Package_TO_SOT_SMD:SOT-23
+  U1       TPA5581                  Amplifier_Operational:ADA4807-1          Package_TO_SOT_SMD:SOT-23-6
+  U1106    USBLC6-2P6               Power_Protection:USBLC6-2P6              Package_TO_SOT_SMD:SOT-666
+  U2       TPR7050                  Emoe_Analog_Devices:TPR7025              Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
+  U206     GAQY212GS                Emoe_Analog_Devices:GAQY212GS            Package_SO:SO-4_4.4x4.3mm_P2.54mm
+  U304     GAQY212GS                Emoe_Analog_Devices:GAQY212GS            Package_SO:SO-4_4.4x4.3mm_P2.54mm
+  U610     DAC8830IDR               Emoe_ADDA:AD5541                         Package_SO:SOIC-8_3.9x4.9mm_P1.27mm
+  U901     LHA7532B                 Emoe_ADDA:LHA7532B                       Package_SO:TSSOP-20_4.4x6.5mm_P0.65mm
+  U902     LP5907MFX-3.3            Regulator_Linear:LP5907MFX-3.3           Package_TO_SOT_SMD:SOT-23-5
+  Y901     SX3M4.9152M20F30TNN      Oscillator:ASE-xxxMHz                    Oscillator:Oscillator_SMD_Abracon_ASE-4Pin_3.2x2.5mm
+
+------------------------------------------------------------------------------
+[2] 删除的芯片/连接器/测试点明细
+------------------------------------------------------------------------------
+  FB601    GZ1608D601TF             Device:FerriteBead_Small                 Inductor_SMD:L_0603_1608Metric
+  J1001    2.54mm_1x6P              Connector_Generic:Conn_01x06             Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical
+  J1002    2.54mm_1x6P              Connector_Generic:Conn_01x06             Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical
+  Q604     MMBT3906                 Transistor_BJT:MMBT3906                  Package_TO_SOT_SMD:SOT-23
+  Q605     MMBT3906                 Transistor_BJT:MMBT3906                  Package_TO_SOT_SMD:SOT-23
+  Q606     MMBFJ112                 Transistor_FET:MMBFJ112                  Package_TO_SOT_SMD:SOT-23
+  Q607     MMBT3906                 Transistor_BJT:MMBT3906                  Package_TO_SOT_SMD:SOT-23
+  Q608     MMBT3906                 Transistor_BJT:MMBT3906                  Package_TO_SOT_SMD:SOT-23
+  Q609     MMBT3906                 Transistor_BJT:MMBT3906                  Package_TO_SOT_SMD:SOT-23
+  TP1008   TP                       Connector:TestPoint_Alt                  TestPoint:TestPoint_Pad_1.0x1.0mm
+  TP1009   TP                       Connector:TestPoint_Alt                  TestPoint:TestPoint_Pad_1.0x1.0mm
+  TP1010   TP                       Connector:TestPoint_Alt                  TestPoint:TestPoint_Pad_1.0x1.0mm
+  TP608    TP                       Connector:TestPoint_Alt                  TestPoint:TestPoint_Pad_1.0x1.0mm
+  TP801    TP                       Connector:TestPoint_Alt                  TestPoint:TestPoint_Pad_1.0x1.0mm
+  TP802    TP                       Connector:TestPoint_Alt                  TestPoint:TestPoint_Pad_1.0x1.0mm
+  TP803    TP                       Connector:TestPoint_Alt                  TestPoint:TestPoint_Pad_1.0x1.0mm
+  TP804    TP                       Connector:TestPoint_Alt                  TestPoint:TestPoint_Pad_1.0x1.0mm
+  U202     ADG1436YCPZ              Emoe_Analog_Devices:ADG2436              Package_CSP:LFCSP-16-1EP_4x4mm_P0.65mm_EP2.6x2.6mm
+  U407     LT5400-8                 Emoe_Analog_Devices:LT5400-8             Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm
+  U408     LT5400-7                 Emoe_Analog_Devices:LT5400-7             Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm
+  U409     ADA4523-1BCPZ            Emoe_OpAmps:ADA4523-1                    Package_CSP:LFCSP-8-1EP_3x3mm_P0.5mm_EP1.6x2.34mm
+  U507     LT5400-8                 Emoe_Analog_Devices:LT5400-8             Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm
+  U508     LT5400-7                 Emoe_Analog_Devices:LT5400-7             Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm
+  U509     ADA4523-1BCPZ            Emoe_OpAmps:ADA4523-1                    Package_CSP:LFCSP-8-1EP_3x3mm_P0.5mm_EP1.6x2.34mm
+
+------------------------------------------------------------------------------
+[3] 元件变化 —— 区分「仅值标注」与「型号/封装/库变化」
+------------------------------------------------------------------------------
+仅 value 文本变化: 67 项
+含 lib_id/footprint 等结构性变化: 42 项
+
+  C1005    value: '1uF'->'1uF 3216', lib_id: 'Device:C_Small'->'Device:C_Polarized_Small', footprint: 'Capacitor_SMD:C_0603_1608Metric'->'Capacitor_Tantalum_SMD:CP_EIA-3216-18_Kemet-A'
+  C1023    value: '100nF'->'10uF', footprint: 'Capacitor_SMD:C_0402_1005Metric'->'Capacitor_SMD:C_0805_2012Metric'
+  C403     value: '47pF'->'1nF C0G', footprint: 'Capacitor_SMD:C_0402_1005Metric'->'Capacitor_SMD:C_0603_1608Metric'
+  C406     value: '1nF'->'1nF C0G', footprint: 'Capacitor_SMD:C_0402_1005Metric'->'Capacitor_SMD:C_0603_1608Metric'
+  C503     value: '47pF'->'1nF C0G', footprint: 'Capacitor_SMD:C_0402_1005Metric'->'Capacitor_SMD:C_0603_1608Metric'
+  C506     value: '1nF'->'1nF C0G', footprint: 'Capacitor_SMD:C_0402_1005Metric'->'Capacitor_SMD:C_0603_1608Metric'
+  C604     value: '2.2uF'->'10uF', footprint: 'Capacitor_SMD:C_0603_1608Metric'->'Capacitor_SMD:C_0805_2012Metric'
+  C605     value: '2.2uF'->'10uF', footprint: 'Capacitor_SMD:C_0603_1608Metric'->'Capacitor_SMD:C_0805_2012Metric'
+  C708     value: 'NFM21PC105'->'EMZR250ARA221MF80G', lib_id: 'Device:C_Feedthrough'->'Device:C_Polarized_Small', footprint: 'Emoe_Filter_PowerLine:NFM21PC225B0J3D'->'Capacitor_SMD:CP_Elec_6.3x7.7', pin_count: 3->2
+  D602     value: '1N4148WS'->'1N4148W-7-F', footprint: 'Diode_SMD:D_SOD-323'->'Diode_SMD:D_SOD-123'
+  J1104    value: 'XH2.54mm_4P'->'TC2030-NL', lib_id: 'Connector_Generic:Conn_01x04'->'Connector:Conn_ARM_SWD_TagConnect_TC2030-NL', footprint: 'Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical'->'Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical', pin_count: 4->6
+  J701     value: 'KF2.54-4P'->'VH3.96 2P', lib_id: 'Connector_Generic:Conn_01x04'->'Connector_Generic:Conn_01x02', footprint: 'Emoe_Connector:KF2EDGR-2.5-4P'->'Connector_JST:JST_VH_B2P-VH-B_1x02_P3.96mm_Vertical', pin_count: 4->2
+  Q603     value: 'MMBT3906'->'AO3401A', lib_id: 'Transistor_BJT:MMBT3906'->'Transistor_FET:AO3401A'
+  R1007    footprint: 'Resistor_SMD:R_0805_2012Metric'->'Resistor_SMD:R_0603_1608Metric'
+  R1017    value: '10k'->'RT0603BRD07100RL', footprint: 'Resistor_SMD:R_0402_1005Metric'->'Resistor_SMD:R_0603_1608Metric'
+  R403     value: '10k'->'100R', footprint: 'Resistor_SMD:R_0402_1005Metric'->'Resistor_SMD:R_0603_1608Metric'
+  R404     value: '10k'->'100R', footprint: 'Resistor_SMD:R_0402_1005Metric'->'Resistor_SMD:R_0603_1608Metric'
+  R405     value: '1k'->'10R', footprint: 'Resistor_SMD:R_0402_1005Metric'->'Resistor_SMD:R_0603_1608Metric'
+  R503     value: '10k'->'100R', footprint: 'Resistor_SMD:R_0402_1005Metric'->'Resistor_SMD:R_0603_1608Metric'
+  R504     value: '10k'->'100R', footprint: 'Resistor_SMD:R_0402_1005Metric'->'Resistor_SMD:R_0603_1608Metric'
+  R505     value: '1k'->'10R', footprint: 'Resistor_SMD:R_0402_1005Metric'->'Resistor_SMD:R_0603_1608Metric'
+  R601     value: '4.7k'->'1k', footprint: 'Resistor_SMD:R_0402_1005Metric'->'Resistor_SMD:R_0603_1608Metric'
+  R608     value: '0R'->'100k', footprint: 'Resistor_SMD:R_0603_1608Metric'->'Resistor_SMD:R_0402_1005Metric'
+  TP1004   value: '2.54mm'->'TP', lib_id: 'Connector:TestPoint_2Pole'->'Connector:TestPoint_Alt', footprint: 'Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm'->'TestPoint:TestPoint_Pad_1.0x1.0mm', pin_count: 2->1
+  TP1005   value: '2.54mm'->'TP', lib_id: 'Connector:TestPoint_2Pole'->'Connector:TestPoint_Alt', footprint: 'Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm'->'TestPoint:TestPoint_Pad_1.0x1.0mm', pin_count: 2->1
+  U1003    value: 'ADA4807-1ARJZ'->'TPR7050', lib_id: 'Amplifier_Operational:ADA4807-1'->'Emoe_Analog_Devices:TPR7025', footprint: 'Package_TO_SOT_SMD:SOT-23-6'->'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm', pin_count: 6->8
+  U1004    value: 'LT5400-1'->'TPR7050', lib_id: 'Emoe_Analog_Devices:LT5400-1'->'Emoe_Analog_Devices:TPR7025', footprint: 'Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm'->'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm', pin_count: 9->8
+  U1005    value: 'ADA4523-1BCPZ'->'TPR7050', lib_id: 'Emoe_OpAmps:ADA4523-1'->'Emoe_Analog_Devices:TPR7025', footprint: 'Package_CSP:LFCSP-8-1EP_3x3mm_P0.5mm_EP1.6x2.34mm'->'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm', pin_count: 9->8
+  U401     value: 'OPA2189IDR'->'OPA210IDR', lib_id: 'Amplifier_Operational:ADA4522-2'->'Emoe_OpAmps:OPA1611'
+  U402     value: 'LT5400-7'->'OPA210IDR', lib_id: 'Emoe_Analog_Devices:LT5400-7'->'Emoe_OpAmps:OPA1611', footprint: 'Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm'->'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm', pin_count: 9->8
+  U403     value: 'MUX509IPWR'->'OPA210IDR', lib_id: 'Emoe_AnalogSwitch:MUX509'->'Emoe_OpAmps:OPA1611', footprint: 'Package_SO:TSSOP-16_4.4x5mm_P0.65mm'->'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm', pin_count: 16->8
+  U404     value: 'LT5400-6'->'OPA210IDR', lib_id: 'Emoe_Analog_Devices:LT5400-6'->'Emoe_OpAmps:OPA1611', footprint: 'Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm'->'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm', pin_count: 9->8
+  U405     value: 'LT5400-7'->'THP210DR', lib_id: 'Emoe_Analog_Devices:LT5400-7'->'Emoe_OpAmps:THP210', footprint: 'Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm'->'Package_SO:MSOP-8_3x3mm_P0.65mm', pin_count: 9->8
+  U406     value: 'ADA4523-1BCPZ'->'LHE5400-4', lib_id: 'Emoe_OpAmps:ADA4523-1'->'Emoe_Analog_Devices:LT5400-4', footprint: 'Package_CSP:LFCSP-8-1EP_3x3mm_P0.5mm_EP1.6x2.34mm'->'Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm'
+  U501     value: 'OPA2189IDR'->'OPA210IDR', lib_id: 'Amplifier_Operational:ADA4522-2'->'Emoe_OpAmps:OPA1611'
+  U502     value: 'LT5400-7'->'OPA210IDR', lib_id: 'Emoe_Analog_Devices:LT5400-7'->'Emoe_OpAmps:OPA1611', footprint: 'Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm'->'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm', pin_count: 9->8
+  U503     value: 'MUX509IPWR'->'OPA210IDR', lib_id: 'Emoe_AnalogSwitch:MUX509'->'Emoe_OpAmps:OPA1611', footprint: 'Package_SO:TSSOP-16_4.4x5mm_P0.65mm'->'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm', pin_count: 16->8
+  U504     value: 'LT5400-6'->'OPA210IDR', lib_id: 'Emoe_Analog_Devices:LT5400-6'->'Emoe_OpAmps:OPA1611', footprint: 'Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm'->'Package_SO:SOIC-8_3.9x4.9mm_P1.27mm', pin_count: 9->8
+  U505     value: 'LT5400-7'->'THP210DR', lib_id: 'Emoe_Analog_Devices:LT5400-7'->'Emoe_OpAmps:THP210', footprint: 'Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm'->'Package_SO:MSOP-8_3x3mm_P0.65mm', pin_count: 9->8
+  U506     value: 'ADA4523-1BCPZ'->'LHE5400-4', lib_id: 'Emoe_OpAmps:ADA4523-1'->'Emoe_Analog_Devices:LT5400-4', footprint: 'Package_CSP:LFCSP-8-1EP_3x3mm_P0.5mm_EP1.6x2.34mm'->'Package_SO:MSOP-8-1EP_3x3mm_P0.65mm_EP1.68x1.88mm'
+  U604     value: 'AD5541ARMZ'->'GAQY212GS', lib_id: 'Emoe_ADDA:AD5541ARMZ'->'Emoe_Analog_Devices:GAQY212GS', footprint: 'Package_SO:MSOP-10_3x3mm_P0.5mm'->'Package_SO:SO-4_4.4x4.3mm_P2.54mm', pin_count: 10->4
+  U608     value: 'LT5400-4'->'LHE5400-7', lib_id: 'Emoe_Analog_Devices:LT5400-4'->'Emoe_Analog_Devices:LT5400-7'
+
+------------------------------------------------------------------------------
+[4] 新增/删除的网络（已剔除 #PWR 电源符号占位网络）
+------------------------------------------------------------------------------
+
+新增网络 77 个:
+  -2V5                                     n=0    
+  /25mV_CAL                                n=0    
+  /Analog Input MUX Array CH2/MEAS_MODE_SEL n=0    
+  /Analog Input MUX Array/MEAS_MODE_SEL    n=0    
+  /Controller Unit/PE10                    n=0    
+  /Controller Unit/PE9                     n=0    
+  /PB3                                     n=0    
+  /Reference BRD/250mV_CAL                 n=0    
+  /VDACO                                   n=0    
+  /Voltage Controlled Current Source/CURR_SRC_PWR_SW n=0    
+  /Voltage Controlled Current Source/DAC_CAL_SW n=0    
+  N$114                                    n=0    
+  N$115                                    n=0    
+  N$119                                    n=0    
+  N$13                                     n=0    
+  N$139                                    n=0    
+  N$140                                    n=0    
+  N$146                                    n=0    
+  N$148                                    n=0    
+  N$149                                    n=0    
+  N$150                                    n=0    
+  N$159                                    n=0    
+  N$16                                     n=0    
+  N$160                                    n=0    
+  N$177                                    n=0    
+  N$178                                    n=0    
+  N$179                                    n=0    
+  N$195                                    n=0    
+  N$196                                    n=0    
+  N$197                                    n=0    
+  N$208                                    n=0    
+  N$209                                    n=0    
+  N$211                                    n=0    
+  N$212                                    n=0    
+  N$213                                    n=0    
+  N$225                                    n=0    
+  N$226                                    n=0    
+  N$228                                    n=0    
+  N$229                                    n=0    
+  N$230                                    n=0    
+  N$231                                    n=0    
+  N$232                                    n=0    
+  N$233                                    n=0    
+  N$234                                    n=0    
+  N$235                                    n=0    
+  N$236                                    n=0    
+  N$237                                    n=0    
+  N$263                                    n=0    
+  N$265                                    n=0    
+  N$266                                    n=0    
+  N$28                                     n=0    
+  N$289                                    n=0    
+  N$290                                    n=0    
+  N$291                                    n=0    
+  N$292                                    n=0    
+  N$293                                    n=0    
+  N$294                                    n=0    
+  N$307                                    n=0    
+  N$327                                    n=0    
+  N$328                                    n=0    
+  N$340                                    n=0    
+  N$359                                    n=0    
+  N$373                                    n=0    
+  N$387                                    n=0    
+  N$39                                     n=0    
+  N$404                                    n=0    
+  N$405                                    n=0    
+  N$425                                    n=0    
+  N$5                                      n=0    
+  N$59                                     n=0    
+  N$64                                     n=0    
+  N$66                                     n=0    
+  N$7                                      n=0    
+  N$73                                     n=0    
+  N$74                                     n=0    
+  N$77                                     n=0    
+  N$96                                     n=0    
+
+删除网络 82 个:
+  /+10V_VOUT                               n=0    
+  /ADC Channel Switch/REF_VOLT_1           n=0    
+  /Analog Input MUX Array/IN_MUX_REFSW     n=0    
+  /PE10                                    n=0    
+  /PE9                                     n=0    
+  /PGIA1/GAIN_CTL_A0                       n=0    
+  /PGIA1/GAIN_CTL_A1                       n=0    
+  /PGIA2/GAIN_CTL_A0                       n=0    
+  /PGIA2/GAIN_CTL_A1                       n=0    
+  /Reference BRD/100mV_CAL                 n=0    
+  /Reference BRD/1V_CAL                    n=0    
+  /Voltage Controlled Current Source/CSRC_PWR n=0    
+  /Voltage Controlled Current Source/DAC_LDAC n=0    
+  N$100                                    n=0    
+  N$117                                    n=0    
+  N$12                                     n=0    
+  N$120                                    n=0    
+  N$137                                    n=0    
+  N$14                                     n=0    
+  N$143                                    n=0    
+  N$144                                    n=0    
+  N$155                                    n=0    
+  N$157                                    n=0    
+  N$163                                    n=0    
+  N$205                                    n=0    
+  N$206                                    n=0    
+  N$218                                    n=0    
+  N$219                                    n=0    
+  N$221                                    n=0    
+  N$222                                    n=0    
+  N$224                                    n=0    
+  N$23                                     n=0    
+  N$241                                    n=0    
+  N$243                                    n=0    
+  N$244                                    n=0    
+  N$245                                    n=0    
+  N$246                                    n=0    
+  N$248                                    n=0    
+  N$249                                    n=0    
+  N$250                                    n=0    
+  N$251                                    n=0    
+  N$252                                    n=0    
+  N$253                                    n=0    
+  N$254                                    n=0    
+  N$255                                    n=0    
+  N$256                                    n=0    
+  N$258                                    n=0    
+  N$277                                    n=0    
+  N$278                                    n=0    
+  N$285                                    n=0    
+  N$296                                    n=0    
+  N$297                                    n=0    
+  N$298                                    n=0    
+  N$299                                    n=0    
+  N$301                                    n=0    
+  N$305                                    n=0    
+  N$334                                    n=0    
+  N$34                                     n=0    
+  N$351                                    n=0    
+  N$352                                    n=0    
+  N$355                                    n=0    
+  N$36                                     n=0    
+  N$367                                    n=0    
+  N$385                                    n=0    
+  N$386                                    n=0    
+  N$42                                     n=0    
+  N$420                                    n=0    
+  N$421                                    n=0    
+  N$429                                    n=0    
+  N$43                                     n=0    
+  N$430                                    n=0    
+  N$431                                    n=0    
+  N$432                                    n=0    
+  N$44                                     n=0    
+  N$45                                     n=0    
+  N$65                                     n=0    
+  N$68                                     n=0    
+  N$75                                     n=0    
+  N$76                                     n=0    
+  N$80                                     n=0    
+  N$82                                     n=0    
+  VDD                                      n=0    
+
+------------------------------------------------------------------------------
+[5] 网络重命名候选
+------------------------------------------------------------------------------
+  {"old": "N$108", "new": "N$104", "member_count": 2}
+  {"old": "N$109", "new": "N$105", "member_count": 2}
+  {"old": "N$133", "new": "N$129", "member_count": 2}
+  {"old": "N$154", "new": "N$147", "member_count": 3}
+  {"old": "N$164", "new": "N$162", "member_count": 2}
+  {"old": "N$201", "new": "N$210", "member_count": 3}
+  {"old": "N$214", "new": "N$227", "member_count": 2}
+  {"old": "N$220", "new": "N$238", "member_count": 2}
+  {"old": "N$330", "new": "N$332", "member_count": 2}
+  {"old": "N$337", "new": "N$339", "member_count": 2}
+  {"old": "N$40", "new": "N$35", "member_count": 3}
+  {"old": "N$353", "new": "N$360", "member_count": 3}
+  {"old": "N$354", "new": "N$361", "member_count": 4}
+  {"old": "N$356", "new": "N$362", "member_count": 2}
+  {"old": "N$368", "new": "N$374", "member_count": 2}
+  {"old": "N$369", "new": "N$375", "member_count": 2}
+  {"old": "N$389", "new": "N$390", "member_count": 3}
+  {"old": "N$428", "new": "N$424", "member_count": 3}
+  {"old": "N$52", "new": "N$47", "member_count": 2}
+  {"old": "N$84", "new": "N$81", "member_count": 2}
+  {"old": "N$101", "new": "N$97", "member_count": 6}
+  {"old": "N$102", "new": "N$98", "member_count": 2}
+
+------------------------------------------------------------------------------
+[6] 网络连接变化 —— 仅保留「真实器件引脚」增减（剔除 #PWR）
+------------------------------------------------------------------------------
+
+  ~ +12VA
+      - J1002.3
+      - J1105.2
+
+  ~ +15VA
+      + C1015.2
+      + C1026.2
+      + C1029.2
+      + C1032.2
+      + C407.1
+      + C411.1
+      + C413.1
+      - C1023.1
+      - C211.1
+      - C410.1
+      - C510.1
+      - C618.1
+      - J1002.1
+      - U1005.7
+      - U202.11
+      - U401.8
+      - U403.14
+      - U501.8
+      - U503.14
+      - U603.3
+
+  ~ +3.3V
+      + C1114.2
+      + J1102.1
+      + J1104.1
+      + R202.2
+      + R303.2
+      + R613.2
+      + R623.2
+      + U1106.5
+      - C606.1
+      - R405.1
+      - R505.1
+      - R734.1
+      - U604.10
+
+  ~ +5V5A
+      + C606.1
+      + C608.2
+      + C904.1
+      + C907.1
+      + C908.1
+      + U610.8
+      + U901.5
+      + U902.1
+      + U902.3
+      - C607.1
+      - C608.1
+      - U604.1
+
+  ~ +6VA
+      + C415.1
+      + C515.1
+      + R1009.2
+      + R411.2
+      + R511.2
+      + U1.6
+      + U405.3
+      + U505.3
+      - C412.1
+      - C414.1
+      - C512.1
+      - C514.1
+      - R1004.1
+      - R1017.2
+      - R403.1
+      - R404.1
+      - R503.1
+      - R504.1
+      - U1003.6
+      - U406.7
+
+  ~ -15VA
+      + C410.1
+      + C412.1
+      + C414.1
+      + C510.1
+      + C512.1
+      + C514.1
+      + U402.4
+      + U403.4
+      + U404.4
+      + U502.4
+      + U503.4
+      + U504.4
+      - C206.1
+      - C411.1
+      - C511.1
+      - C620.1
+      - U202.17
+      - U202.3
+      - U403.3
+      - U503.3
+
+  ~ -2V5A
+      - C413.1
+      - C415.1
+      - C513.1
+      - C515.1
+      - U1005.4
+      - U1005.9
+      - U406.4
+      - U406.9
+      - U409.4
+      - U409.9
+      - U506.4
+      - U506.9
+      - U509.4
+      - U509.9
+
+  ~ /+5V_VOUT
+      + C1033.2
+      + C1034.2
+      + R1011.1
+      + R1014.1
+      + R1016.1
+      + R1017.1
+      + TP1007.1
+      + U1002.3
+      - J1001.3
+      - R1009.2
+      - TP1002.1
+      - TP1004.1
+      - U1005.3
+
+  ~ /5V_VREF
+      + C1005.1
+      + C901.1
+      + R620.2
+      + U901.18
+      - C1005.2
+      - R620.1
+      - TP1001.1
+      - U1001.8
+
+  ~ /ADC BRD/ADC_CS
+      + U901.14
+
+  ~ /ADC BRD/ADC_MISO
+      + U901.12
+
+  ~ /ADC BRD/ADC_MOSI
+      + U901.13
+
+  ~ /ADC BRD/ADC_SCLK
+      + U901.11
+
+  ~ /ADC BRD/IN1_N
+      + C502.2
+      + C504.2
+      + R509.2
+      + R905.2
+      + U506.1
+      - C504.1
+      - C505.2
+      - R502.2
+      - U508.2
+
+  ~ /ADC BRD/IN1_P
+      + C504.1
+      + C505.2
+      + R510.1
+      + R904.1
+      + U506.4
+      - C502.2
+      - C504.2
+      - R501.2
+      - U502.2
+
+  ~ /ADC BRD/IN2_N
+      + C402.2
+      + C404.2
+      + R409.2
+      + R903.2
+      + U406.1
+      - C404.1
+      - C405.2
+      - R402.2
+      - U408.2
+
+  ~ /ADC BRD/IN2_P
+      + C404.1
+      + C405.2
+      + R410.1
+      + R902.1
+      + U406.4
+      - C402.2
+      - C404.2
+      - R401.2
+      - U402.2
+
+  ~ /ADC Channel Switch/PGIA_IN1+_CH1
+      + R114.1
+
+  ~ /ADC Channel Switch/PGIA_IN1+_CH3
+      + J206.4
+
+  ~ /ADC Channel Switch/PGIA_IN1+_CH4
+      + J306.4
+
+  ~ /ADC Channel Switch/PGIA_IN1-_CH1
+      + R117.1
+
+  ~ /ADC Channel Switch/PGIA_IN1-_CH3
+      + J206.1
+
+  ~ /ADC Channel Switch/PGIA_IN1-_CH4
+      + J306.1
+
+  ~ /ADC Channel Switch/PGIA_IN1_+
+      + R501.1
+      + R502.1
+      - TP801.1
+      - U501.3
+
+  ~ /ADC Channel Switch/PGIA_IN1_-
+      + R503.1
+      + R504.1
+      - TP803.1
+      - U501.5
+
+  ~ /ADC Channel Switch/PGIA_IN2+_CH2
+      - R201.2
+      - U204.16
+
+  ~ /ADC Channel Switch/PGIA_IN2+_CH3
+      - R301.2
+      - U302.16
+
+  ~ /ADC Channel Switch/PGIA_IN2+_CH4
+      + R114.2
+
+  ~ /ADC Channel Switch/PGIA_IN2-_CH2
+      - R201.1
+      - U204.8
+
+  ~ /ADC Channel Switch/PGIA_IN2-_CH3
+      - R301.1
+      - U302.8
+
+  ~ /ADC Channel Switch/PGIA_IN2-_CH4
+      + R117.2
+
+  ~ /ADC Channel Switch/PGIA_IN2_+
+      + R401.1
+      + R402.1
+      - TP802.1
+      - U401.3
+
+  ~ /ADC Channel Switch/PGIA_IN2_-
+      + R403.1
+      + R404.1
+      - TP804.1
+      - U401.5
+
+  ~ /Analog Input MUX Array/INPUT_MUX_AR_EN
+      - U202.12
+
+  ~ /CURR_GUARD
+      + R601.2
+      - R606.1
+      - TP604.1
+      - U606.6
+      - U606.7
+
+  ~ /Controller Unit/PD1
+      + R112.1
+      - R145.1
+
+  ~ /Controller Unit/SPI3_LDAC
+      - R149.1
+
+  ~ /LPUART1_RX
+      + U1106.4
+      - J1103.3
+
+  ~ /LPUART1_TX
+      + U1106.6
+      - J1103.2
+
+  ~ /NRST
+      + J1104.3
+
+  ~ /PD8
+      - R101.1
+
+  ~ /PE7
+      + R106.1
+      - R133.1
+
+  ~ /PE8
+      + R103.1
+      - R135.1
+
+  ~ /Reference BRD/2V5_VCM
+      + C401.1
+      + C501.1
+      + U405.2
+      + U505.2
+      - U402.3
+      - U408.3
+      - U502.3
+      - U508.3
+
+  ~ /SWCLK
+      + J1104.4
+      - J1104.3
+
+  ~ /Voltage Controlled Current Source/DAC_CS
+      + U610.4
+      - U604.5
+
+  ~ /Voltage Controlled Current Source/DAC_MOSI
+      + U610.6
+      - U604.7
+
+  ~ /Voltage Controlled Current Source/DAC_SCLK
+      + U610.5
+      - U604.6
+
+  ~ CLK_1.2M
+      - R712.2
+      - TP715.1
+      - U703.2
+      - U710.2
+
+  ~ CLK_2.4M
+      + R712.2
+      + TP715.1
+      + U703.2
+      + U710.2
+
+  ~ CURR_SRC_EXC
+      + U604.4
+      - D602.1
+      - TP608.1
+
+  ~ EXT_REF_SENSE1
+      + D104.2
+
+  ~ EXT_REF_SENSE2
+      + D103.2
+
+  ~ EXT_REF_TERM_1
+      + D101.2
+
+  ~ EXT_REF_TERM_2
+      + D102.2
+
+  ~ N$10
+      + U1001.1
+      + U1001.2
+      - U1001.3
+      - U1001.4
+
+  ~ N$103
+      + U1204.16
+      + U1205.4
+      + U1206.12
+      + U1206.4
+      + U1212.12
+      + U1212.4
+      - U1203.2
+      - U1205.1
+
+  ~ N$107
+      + C1025.2
+      + U1003.5
+      - U1204.16
+      - U1205.4
+      - U1206.12
+      - U1206.4
+      - U1212.12
+      - U1212.4
+
+  ~ N$11
+      + C1002.2
+      + R1002.1
+      - U1001.1
+      - U1001.2
+
+  ~ N$118
+      + FB102.1
+      + J102.1
+      - FB201.2
+      - J201.1
+
+  ~ N$130
+      + C301.1
+      + D301.2
+      + FB301.1
+      + U302.2
+      - U201.1
+      - U202.8
+
+  ~ N$131
+      + FB301.2
+      + J301.1
+      - U201.9
+      - U202.16
+
+  ~ N$134
+      + FB104.1
+      + J104.1
+      - FB301.2
+      - J301.1
+
+  ~ N$145
+      + C506.1
+      + R510.2
+      + U505.4
+      - U401.2
+      - U403.8
+
+  ~ N$15
+      + C1003.1
+      + R1003.2
+      + U1002.7
+      - R1020.1
+      - R1021.1
+      - U1002.5
+
+  ~ N$151
+      + R618.1
+      + TP610.1
+      + U609.16
+      + U609.8
+      - U501.7
+      - U502.4
+      - U503.13
+      - U504.4
+      - U505.4
+      - U507.4
+      - U508.4
+
+  ~ N$152
+      + D602.2
+      + Q601.3
+      + R610.1
+      - U501.6
+      - U503.9
+
+  ~ N$153
+      + D604.1
+      + Q601.1
+      + R611.2
+      - U501.2
+      - U503.8
+
+  ~ N$156
+      + R601.1
+      + R606.1
+      + TP604.1
+      + U606.6
+      + U606.7
+      - C105.1
+      - H106.1
+      - R116.2
+
+  ~ N$158
+      + R620.1
+      + U601.3
+      - Q601.1
+      - R611.2
+
+  ~ N$161
+      + D701.2
+      + L701.2
+      + U703.20
+      - R620.2
+      - U601.3
+
+  ~ N$17
+      + C1028.2
+      + U1004.5
+      - C1003.1
+      - R1003.2
+      - U1002.7
+
+  ~ N$18
+      + R1002.2
+      + R1005.1
+      + U1.4
+      - R1004.2
+      - U1003.5
+
+  ~ N$180
+      + C906.2
+      + U901.3
+      - C202.1
+      - FB202.2
+      - U204.10
+
+  ~ N$182
+      + Q201.2
+      + R202.1
+      + R203.1
+      - U202.9
+      - U203.9
+
+  ~ N$183
+      + D202.2
+
+  ~ N$184
+      + C202.1
+      + D203.2
+      + FB202.2
+      + U204.10
+      - FB203.2
+      - J203.1
+
+  ~ N$185
+      + FB203.2
+      + J203.1
+      - FB302.1
+      - J302.1
+
+  ~ N$186
+      + FB302.1
+      + J302.1
+      - U202.1
+      - U203.1
+
+  ~ N$187
+      + Q301.2
+      + R302.1
+      + R303.1
+      - C302.1
+      - FB302.2
+      - U302.10
+
+  ~ N$188
+      + U201.9
+      + U203.1
+      + U204.9
+      - C301.1
+      - FB301.1
+      - U302.2
+
+  ~ N$189
+      + C302.1
+      + D303.2
+      + FB302.2
+      + U302.10
+      - U301.9
+      - U302.9
+
+  ~ N$19
+      + C1031.2
+      + U1005.5
+      - TP1005.1
+      - U1004.8
+
+  ~ N$190
+      + J306.2
+      + U302.8
+      - U301.1
+      - U302.1
+
+  ~ N$191
+      + J306.3
+      + U302.16
+      - FB204.1
+      - J204.1
+
+  ~ N$192
+      + U301.1
+      + U302.1
+      - C204.1
+      - FB204.2
+      - U205.9
+
+  ~ N$193
+      + U301.9
+      + U302.9
+      - U202.10
+      - U204.1
+
+  ~ N$194
+      + C204.1
+      + D204.2
+      + FB204.2
+      + U205.9
+      + U206.4
+      - U202.2
+      - U204.9
+
+  ~ N$198
+      + J206.3
+      + U204.16
+      - C602.1
+      - C603.1
+      - R602.2
+      - R604.2
+      - U604.4
+
+  ~ N$199
+      + R403.2
+      + U402.3
+      - Q602.1
+      - R612.2
+
+  ~ N$20
+      + C1003.2
+      + R1006.2
+      + U1002.6
+      - U1004.1
+      - U1004.2
+
+  ~ N$200
+      + R407.1
+      + U402.2
+      + U402.6
+      - Q602.2
+      - U609.1
+
+  ~ N$202
+      + R503.2
+      + U502.3
+      - D601.1
+      - R607.2
+      - U602.2
+      - U602.6
+
+  ~ N$203
+      + R507.1
+      + U502.2
+      + U502.6
+      - D702.1
+      - L702.2
+      - U703.18
+
+  ~ N$204
+      + C602.1
+      + C603.1
+      + R602.2
+      + R604.1
+      + U610.3
+      - R718.2
+      - R720.1
+      - U707.5
+
+  ~ N$207
+      + Q602.3
+      + U605.1
+      + U606.3
+      - C711.1
+      - R705.2
+      - R708.1
+      - U702.3
+
+  ~ N$21
+      + R1018.1
+      + U1006.7
+      + U1006.8
+      - U1004.3
+      - U1004.4
+
+  ~ N$215
+      + C710.2
+      + FB703.2
+      + TP703.1
+      + U702.13
+      + U702.15
+      + U702.16
+      - C303.1
+      - FB303.1
+      - U303.1
+
+  ~ N$216
+      + C715.2
+      + U702.14
+      - FB304.1
+      - J304.1
+
+  ~ N$217
+      + C711.1
+      + R705.2
+      + R708.1
+      + U702.3
+      - C304.1
+      - FB304.2
+      - U303.9
+
+  ~ N$22
+      + U1006.2
+      + U1006.4
+      - R1002.2
+      - R1005.1
+      - U1003.4
+
+  ~ N$239
+      + L703.1
+      + U707.11
+      - U403.6
+      - U404.1
+      - U404.6
+      - U404.7
+
+  ~ N$24
+      + C1002.1
+      + R1007.2
+      + R1012.1
+      + U1.1
+      - U1006.6
+      - U1006.7
+
+  ~ N$240
+      + R730.1
+      + R731.1
+      + U710.11
+      - U403.11
+      - U404.2
+      - U404.3
+      - U404.5
+
+  ~ N$242
+      + R703.2
+      + U703.6
+      - U503.6
+      - U504.1
+      - U504.6
+      - U504.7
+
+  ~ N$25
+      + C1012.1
+      + U1007.5
+      + U1008.5
+      + U1008.6
+      - U1006.5
+      - U1006.8
+
+  ~ N$257
+      + R404.2
+      + U404.3
+      - R704.1
+      - U703.7
+      - U703.9
+
+  ~ N$259
+      + R504.2
+      + U504.3
+      - C727.2
+      - FB705.1
+      - U704.10
+      - U704.11
+      - U704.12
+
+  ~ N$26
+      + U1008.2
+      + U1008.3
+      - C1007.1
+      - U1003.3
+      - U1005.6
+
+  ~ N$260
+      + R405.1
+      + U401.2
+      + U401.6
+      - U401.1
+      - U402.1
+      - U403.4
+      - U404.8
+      - U405.8
+      - U407.8
+      - U408.1
+
+  ~ N$261
+      + R411.1
+      + U405.7
+      - U403.5
+      - U407.1
+      - U407.6
+      - U407.7
+
+  ~ N$262
+      + R405.2
+      + R406.2
+      + U406.2
+      - U403.12
+      - U407.2
+      - U407.3
+      - U407.5
+
+  ~ N$267
+      + C406.2
+      + U405.1
+      + U406.5
+      + U406.6
+      - C407.2
+      - U408.5
+      - U408.6
+      - U409.3
+
+  ~ N$268
+      + C403.2
+      + U405.8
+      + U406.7
+      + U406.8
+      - C406.2
+      - R402.1
+      - U409.6
+
+  ~ N$269
+      + C740.1
+      + FB708.1
+      + R715.1
+      + U706.1
+      + U706.2
+      - C406.1
+      - U408.7
+      - U408.8
+      - U409.2
+
+  ~ N$27
+      + U1008.1
+      + U1008.4
+      - R1009.1
+      - R1011.1
+      - TP1007.1
+      - U1007.5
+
+  ~ N$270
+      + D703.2
+      + L704.2
+      + U710.20
+      - R404.2
+      - U409.1
+
+  ~ N$271
+      + L704.1
+      + U710.1
+      - R505.2
+      - U503.2
+
+  ~ N$272
+      + R704.1
+      + U703.7
+      + U703.9
+      - U503.7
+      - U505.1
+      - U505.2
+
+  ~ N$273
+      + C726.2
+      + FB704.2
+      + TP704.1
+      + U704.1
+      + U704.13
+      + U704.2
+      + U704.3
+      + U704.5
+      - U503.10
+      - U505.5
+      - U505.6
+
+  ~ N$274
+      + C727.2
+      + FB705.1
+      + U704.10
+      + U704.11
+      + U704.12
+      - U505.3
+      - U505.7
+
+  ~ N$275
+      + R408.1
+      + U404.2
+      + U404.6
+      - C605.2
+      - FB601.2
+      - U603.4
+
+  ~ N$276
+      + R407.2
+      + R408.2
+      + U406.3
+      - C501.1
+      - U502.7
+      - U502.8
+      - U506.2
+
+  ~ N$279
+      + R904.2
+      + U901.20
+      - R503.2
+      - U506.1
+
+  ~ N$280
+      + C403.1
+      + R409.1
+      + U405.5
+      - C604.2
+      - FB601.1
+      - TP601.1
+      - U605.5
+      - U605.6
+      - U605.7
+      - U605.8
+
+  ~ N$281
+      + R505.1
+      + U501.2
+      + U501.6
+      - Q601.3
+      - R609.2
+      - TP605.1
+      - U605.2
+      - U605.3
+
+  ~ N$282
+      + R511.1
+      + U505.7
+      - C750.2
+      - R723.1
+
+  ~ N$283
+      + R505.2
+      + R506.2
+      + U506.2
+      - D704.1
+      - L705.2
+      - U710.18
+
+  ~ N$284
+      + R506.1
+      + U503.2
+      + U503.6
+      - U501.1
+      - U502.1
+      - U503.4
+      - U504.8
+      - U505.8
+      - U507.8
+      - U508.1
+
+  ~ N$286
+      + C506.2
+      + U505.1
+      + U506.5
+      + U506.6
+      - U503.12
+      - U507.2
+      - U507.3
+      - U507.5
+
+  ~ N$287
+      + C503.2
+      + U505.8
+      + U506.7
+      + U506.8
+      - C735.2
+      - FB706.1
+      - U705.10
+      - U705.9
+
+  ~ N$288
+      + C604.2
+      + L601.1
+      + TP601.1
+      + U605.6
+      + U605.7
+      + U605.8
+      - C736.2
+      - R714.1
+      - U705.7
+
+  ~ N$29
+      + R1004.1
+      + U1009.3
+      - C1002.1
+      - R1007.2
+      - U1003.1
+
+  ~ N$295
+      + R507.2
+      + R508.2
+      + U506.3
+      - C507.2
+      - U508.5
+      - U508.6
+      - U509.3
+
+  ~ N$30
+      + C1007.2
+      + R1001.2
+      + U1009.2
+      - C1008.1
+      - TP1004.2
+      - U1004.6
+      - U1004.7
+
+  ~ N$302
+      + C903.1
+      + C905.1
+      + FB901.2
+      + U901.15
+      + U902.5
+      - Q603.1
+      - Q607.2
+
+  ~ N$303
+      + C503.1
+      + R509.1
+      + U505.5
+      - C612.2
+      - TP606.1
+      - U607.1
+      - U607.5
+      - U608.4
+
+  ~ N$304
+      + R905.1
+      + U901.19
+      - C611.2
+      - R612.1
+      - TP607.1
+      - U607.7
+
+  ~ N$306
+      + R610.2
+      + U606.5
+      - R715.2
+      - R721.1
+      - U706.3
+
+  ~ N$308
+      + C760.1
+      + R730.2
+      + U710.12
+      - Q604.1
+      - Q607.3
+      - Q608.2
+
+  ~ N$309
+      + C611.2
+      + R612.1
+      + TP607.1
+      + U607.7
+      - Q602.3
+      - R608.1
+      - U605.1
+      - U606.3
+
+  ~ N$31
+      + C1101.1
+      + FB1101.2
+      + Y1101.4
+      - C1012.1
+      - R1022.1
+      - U1008.5
+      - U1008.6
+
+  ~ N$310
+      + C611.1
+      + R616.1
+      + U607.6
+      - R608.2
+      - U605.4
+
+  ~ N$311
+      + R715.2
+      + R721.1
+      + U706.3
+      - U608.5
+      - U608.6
+
+  ~ N$312
+      + Q603.2
+      + R608.1
+      + R613.1
+      - C612.1
+      - U607.2
+      - U608.2
+      - U608.3
+
+  ~ N$313
+      + C612.1
+      + U607.2
+      + U608.6
+
+  ~ N$314
+      + U608.2
+      + U608.3
+      + U608.4
+      - Q605.1
+      - Q608.3
+      - Q609.2
+
+  ~ N$315
+      + C612.2
+      + TP606.1
+      + U603.3
+      + U607.1
+      + U608.5
+      - C610.1
+      - R609.1
+      - U606.2
+
+  ~ N$316
+      + C610.1
+      + R609.1
+      + U606.2
+      - R617.1
+      - TP609.1
+      - U609.10
+      - U609.2
+
+  ~ N$317
+      + R906.2
+      + Y901.3
+      - R619.1
+      - U609.12
+
+  ~ N$318
+      + R617.1
+      + TP609.1
+      + U609.10
+      + U609.2
+      - C739.1
+      - FB707.2
+      - U706.5
+      - U706.7
+      - U706.8
+
+  ~ N$319
+      + R619.1
+      + U609.12
+      - C732.2
+      - C733.2
+      - C738.1
+      - FB707.1
+      - R718.1
+      - R719.1
+      - TP707.1
+      - U707.7-8
+
+  ~ N$32
+      + J1101.2
+      + R1104.2
+      - U1008.2
+      - U1008.3
+
+  ~ N$320
+      + C739.1
+      + FB707.2
+      + U706.5
+      + U706.7
+      + U706.8
+      - C707.2
+      - R703.1
+
+  ~ N$321
+      + C732.2
+      + C733.2
+      + C738.1
+      + FB707.1
+      + R718.1
+      + R719.1
+      + TP707.1
+      + U707.7-8
+      - R706.1
+      - R707.2
+      - U703.5
+
+  ~ N$322
+      + C707.2
+      + R703.1
+      - C743.1
+      - U707.3
+
+  ~ N$323
+      + R706.1
+      + R707.2
+      + U703.5
+      - C708.1
+      - C709.2
+      - FB703.2
+
+  ~ N$324
+      + C743.1
+      + U707.3
+      - R709.2
+      - U703.10
+
+  ~ N$325
+      + C704.2
+      + C721.2
+      + FB704.1
+      + L709.2
+      - C754.1
+      - R725.2
+      - R728.1
+      - U709.3
+
+  ~ N$326
+      + R709.2
+      + U703.10
+      - C758.2
+      - U709.14
+
+  ~ N$33
+      + R1101.1
+      + Y1101.1
+      - U1008.1
+      - U1008.4
+
+  ~ N$336
+      + D1101.2
+      + R1113.1
+      - D1102.2
+      - R1114.1
+
+  ~ N$338
+      + D1102.2
+      + R1114.1
+      - C1117.1
+      - U1102.73
+
+  ~ N$37
+      + C1007.1
+      + R1012.2
+      + U1.3
+      + U1009.6
+      - J1101.3
+      - R1104.2
+
+  ~ N$38
+      + R1102.1
+      + U1101.3
+      - R1101.1
+      - Y1101.1
+
+  ~ N$4
+      + U1006.5
+      + U1006.6
+      + U1007.3
+      - U1006.3
+      - U1006.4
+
+  ~ N$406
+      + C717.1
+      + R710.2
+      + U703.12
+      - D602.2
+      - Q605.3
+      - Q609.3
+      - R610.1
+      - R615.2
+
+  ~ N$407
+      + R717.2
+      + U707.14
+      - Q609.1
+      - R614.2
+      - R615.1
+
+  ~ N$408
+      + C730.2
+      + C731.2
+      + FB711.2
+      + R716.2
+      + R717.1
+      + U707.12-13
+      - C751.3
+      - C753.2
+      - U709.13
+      - U709.15
+      - U709.16
+
+  ~ N$409
+      + R719.2
+      + U707.2
+      - C751.1
+      - C752.2
+      - FB710.2
+
+  ~ N$410
+      + R1009.1
+      + U1.5
+      - R616.2
+      - U609.9
+
+  ~ N$411
+      + Q610.2
+      + R622.1
+      + R623.1
+      - C716.2
+      - R709.1
+
+  ~ N$412
+      + R723.2
+      + U710.6
+      - C717.1
+      - R710.2
+      - U703.12
+
+  ~ N$413
+      + C742.1
+      + U706.6
+      - R717.2
+      - U707.14
+
+  ~ N$414
+      + R724.1
+      + U710.7
+      + U710.9
+      - C730.2
+      - C731.2
+      - C737.3
+      - R716.2
+      - R717.1
+      - U707.12-13
+
+  ~ N$415
+      + R726.1
+      + R727.2
+      + U710.5
+      - C718.1
+      - C721.2
+      - FB704.2
+
+  ~ N$416
+      + R729.2
+      + U710.10
+      - R719.2
+      - U707.2
+
+  ~ N$417
+      + C1008.2
+      + U2.5
+      - R723.2
+      - U710.6
+
+  ~ N$418
+      + R734.2
+      + U712.14
+      + U712.2
+      - C742.1
+      - U706.6
+
+  ~ N$419
+      + R736.1
+      + U712.15
+      + U712.3
+      - R724.1
+      - U710.7
+      - U710.9
+
+  ~ N$422
+      + D705.2
+      + R738.1
+      - R734.2
+      - U712.14
+      - U712.2
+
+  ~ N$423
+      + C746.2
+      + FB709.1
+      + U708.10
+      + U708.9
+      - R736.1
+      - U712.15
+      - U712.3
+
+  ~ N$426
+      + C759.2
+      + R729.1
+      - D705.2
+      - R738.1
+
+  ~ N$427
+      + C701.2
+      + C766.2
+      + FB701.1
+      + L707.2
+      - C746.2
+      - FB709.1
+      - U708.10
+      - U708.9
+
+  ~ N$61
+      + C1014.1
+      + R1013.2
+      + U1007.7
+      - D1103.2
+      - R1115.1
+
+  ~ N$70
+      + U1105.2
+      + Y1101.3
+      - R1014.1
+      - TP1009.1
+      - U1007.3
+
+  ~ N$71
+      + R1105.1
+      + U1105.4
+      - R1104.1
+      - U1101.1
+
+  ~ N$78
+      + J1103.2
+      + U1106.1
+      - R1016.2
+      - U1007.2
+
+  ~ N$79
+      + C1011.2
+      + R1017.2
+      + U2.6
+      - R1106.2
+      - U1102.94
+
+  ~ N$8
+      + U1001.3
+      + U1001.4
+      - C1007.2
+      - R1001.2
+      - U1005.2
+
+  ~ N$9
+      + C1004.1
+      + U1001.6
+      + U1001.7
+      + U1002.5
+      - C1009.2
+      - R1010.2
+      - U1002.2
+
+  ~ N$99
+      + U1203.2
+      + U1205.1
+      - R142.1
+      - U101.12
+
+  ~ VBUS
+      + C708.1
+      + FB711.1
+      + J1105.2
+      + J701.2
+      - C737.1
+      - J701.3
+      - J701.4

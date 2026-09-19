@@ -1,0 +1,1663 @@
+{
+  "stats": {
+    "root": "D:\\MyProjects\\EmoeR_D\\NIM\\EmoeTEController\\0_HW\\EmoeTECDisplay_V0.1",
+    "sheet_count": 1,
+    "sheets": [
+      {
+        "path": "/",
+        "file": "D:\\MyProjects\\EmoeR_D\\NIM\\EmoeTEController\\0_HW\\EmoeTECDisplay_V0.1\\EmoeTECDisplay_V0.1.kicad_sch",
+        "title": "",
+        "symbols": 60,
+        "wires": 80,
+        "labels": 41,
+        "junctions": 8,
+        "no_connects": 0,
+        "hierarchical_sheets": 0,
+        "version": "20260306",
+        "generator": "eeschema 10.0"
+      }
+    ],
+    "symbol_count": 60,
+    "net_count": 17,
+    "named_net_count": 15,
+    "pin_connection_count": 109,
+    "issue_count": 21,
+    "severity_counts": {
+      "error": 2,
+      "warning": 19
+    }
+  },
+  "issues": [
+    {
+      "code": "ERC-power_pin_not_driven",
+      "severity": "error",
+      "title": "power_pin_not_driven",
+      "message": "Input Power pin not driven by any Output Power pins",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-power_pin_not_driven",
+      "severity": "error",
+      "title": "power_pin_not_driven",
+      "message": "Input Power pin not driven by any Output Power pins",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "R603",
+      "severity": "warning",
+      "title": "标题栏完全空缺",
+      "message": "图纸 / 的 title_block 缺少全部关键字段（title/date/rev/company）",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {
+        "missing": "title, date, rev, company"
+      },
+      "evidence": "declared"
+    },
+    {
+      "code": "ERC-multiple_net_names",
+      "severity": "warning",
+      "title": "multiple_net_names",
+      "message": "EXTOB_IO0 和 USBFS_D- 都连接到同一项上; 将使用 EXTOB_IO0 作为网表中的网络名称",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-multiple_net_names",
+      "severity": "warning",
+      "title": "multiple_net_names",
+      "message": "EXTOB_IO1 和 USBFS_D+ 都连接到同一项上; 将使用 EXTOB_IO1 作为网表中的网络名称",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-multiple_net_names",
+      "severity": "warning",
+      "title": "multiple_net_names",
+      "message": "EXTOB_IO2 和 PA7 都连接到同一项上; 将使用 EXTOB_IO2 作为网表中的网络名称",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-multiple_net_names",
+      "severity": "warning",
+      "title": "multiple_net_names",
+      "message": "EXTOB_IO3 和 PA4 都连接到同一项上; 将使用 EXTOB_IO3 作为网表中的网络名称",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-multiple_net_names",
+      "severity": "warning",
+      "title": "multiple_net_names",
+      "message": "GND 和 SPI2_CS 都连接到同一项上; 将使用 GND 作为网表中的网络名称",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-lib_symbol_mismatch",
+      "severity": "warning",
+      "title": "lib_symbol_mismatch",
+      "message": "符号 'VDD' 与来源库 'power' 中的符号存在差异",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-lib_symbol_mismatch",
+      "severity": "warning",
+      "title": "lib_symbol_mismatch",
+      "message": "符号 'VDD' 与来源库 'power' 中的符号存在差异",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-multiple_net_names",
+      "severity": "warning",
+      "title": "multiple_net_names",
+      "message": "LCD_DC 和 PB12 都连接到同一项上; 将使用 LCD_DC 作为网表中的网络名称",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-multiple_net_names",
+      "severity": "warning",
+      "title": "multiple_net_names",
+      "message": "LCD_BL 和 PC13 都连接到同一项上; 将使用 LCD_BL 作为网表中的网络名称",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-lib_symbol_mismatch",
+      "severity": "warning",
+      "title": "lib_symbol_mismatch",
+      "message": "符号 'VDD' 与来源库 'power' 中的符号存在差异",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-lib_symbol_mismatch",
+      "severity": "warning",
+      "title": "lib_symbol_mismatch",
+      "message": "符号 'VDD' 与来源库 'power' 中的符号存在差异",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-lib_symbol_mismatch",
+      "severity": "warning",
+      "title": "lib_symbol_mismatch",
+      "message": "符号 'VDD' 与来源库 'power' 中的符号存在差异",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-lib_symbol_mismatch",
+      "severity": "warning",
+      "title": "lib_symbol_mismatch",
+      "message": "符号 'VDD' 与来源库 'power' 中的符号存在差异",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-lib_symbol_mismatch",
+      "severity": "warning",
+      "title": "lib_symbol_mismatch",
+      "message": "符号 'VDD' 与来源库 'power' 中的符号存在差异",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-lib_symbol_mismatch",
+      "severity": "warning",
+      "title": "lib_symbol_mismatch",
+      "message": "符号 'VDD' 与来源库 'power' 中的符号存在差异",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-multiple_net_names",
+      "severity": "warning",
+      "title": "multiple_net_names",
+      "message": "VDD 和 LEDA 都连接到同一项上; 将使用 VDD 作为网表中的网络名称",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-multiple_net_names",
+      "severity": "warning",
+      "title": "multiple_net_names",
+      "message": "PB13 和 SPI2_SCK 都连接到同一项上; 将使用 PB13 作为网表中的网络名称",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    },
+    {
+      "code": "ERC-multiple_net_names",
+      "severity": "warning",
+      "title": "multiple_net_names",
+      "message": "PB15 和 SPI2_MOSI 都连接到同一项上; 将使用 PB15 作为网表中的网络名称",
+      "sheet_path": "/",
+      "ref": "",
+      "pin": "",
+      "net": "",
+      "details": {},
+      "evidence": "official"
+    }
+  ],
+  "nets": [
+    {
+      "name": "/EXTOB_IO0",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "SW101",
+          "pin": "2",
+          "pin_name": "2",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Switch:SW_Push",
+          "value": "SW_Push",
+          "footprint": "Button_Switch_SMD:SW_SPST_PTS810"
+        },
+        {
+          "ref": "R104",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "C101",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:C_Small",
+          "value": "100nF",
+          "footprint": "Capacitor_SMD:C_0603_1608Metric"
+        },
+        {
+          "ref": "D101",
+          "pin": "1",
+          "pin_name": "K",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Diode:ESD5Zxx",
+          "value": "ESD5Zxx",
+          "footprint": "Diode_SMD:D_SOD-523"
+        },
+        {
+          "ref": "J101",
+          "pin": "3",
+          "pin_name": "Pin_3",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        }
+      ],
+      "labels": [
+        "EXTOB_IO0",
+        "EXTOB_IO0",
+        "EXTOB_IO0",
+        "USBFS_D-",
+        "PA11"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/EXTOB_IO1",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "SW102",
+          "pin": "2",
+          "pin_name": "2",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Switch:SW_Push",
+          "value": "SW_Push",
+          "footprint": "Button_Switch_SMD:SW_SPST_PTS810"
+        },
+        {
+          "ref": "R103",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "D102",
+          "pin": "1",
+          "pin_name": "K",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Diode:ESD5Zxx",
+          "value": "ESD5Zxx",
+          "footprint": "Diode_SMD:D_SOD-523"
+        },
+        {
+          "ref": "C102",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:C_Small",
+          "value": "100nF",
+          "footprint": "Capacitor_SMD:C_0603_1608Metric"
+        },
+        {
+          "ref": "J101",
+          "pin": "5",
+          "pin_name": "Pin_5",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        }
+      ],
+      "labels": [
+        "EXTOB_IO1",
+        "EXTOB_IO1",
+        "USBFS_D+",
+        "PA12",
+        "EXTOB_IO1"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/EXTOB_IO2",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "R102",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "SW103",
+          "pin": "2",
+          "pin_name": "2",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Switch:SW_Push",
+          "value": "SW_Push",
+          "footprint": "Button_Switch_SMD:SW_SPST_PTS810"
+        },
+        {
+          "ref": "C103",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:C_Small",
+          "value": "100nF",
+          "footprint": "Capacitor_SMD:C_0603_1608Metric"
+        },
+        {
+          "ref": "D103",
+          "pin": "1",
+          "pin_name": "K",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Diode:ESD5Zxx",
+          "value": "ESD5Zxx",
+          "footprint": "Diode_SMD:D_SOD-523"
+        },
+        {
+          "ref": "J101",
+          "pin": "7",
+          "pin_name": "Pin_7",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        }
+      ],
+      "labels": [
+        "EXTOB_IO2",
+        "EXTOB_IO2",
+        "PA7",
+        "EXTOB_IO2"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/EXTOB_IO3",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "C104",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:C_Small",
+          "value": "100nF",
+          "footprint": "Capacitor_SMD:C_0603_1608Metric"
+        },
+        {
+          "ref": "D104",
+          "pin": "1",
+          "pin_name": "K",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Diode:ESD5Zxx",
+          "value": "ESD5Zxx",
+          "footprint": "Diode_SMD:D_SOD-523"
+        },
+        {
+          "ref": "J101",
+          "pin": "9",
+          "pin_name": "Pin_9",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "SW104",
+          "pin": "2",
+          "pin_name": "2",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Switch:SW_Push",
+          "value": "SW_Push",
+          "footprint": "Button_Switch_SMD:SW_SPST_PTS810"
+        },
+        {
+          "ref": "R101",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        }
+      ],
+      "labels": [
+        "EXTOB_IO3",
+        "PA4",
+        "EXTOB_IO3",
+        "EXTOB_IO3"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/LCD_BL",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "J101",
+          "pin": "10",
+          "pin_name": "Pin_10",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "R105",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "1k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        }
+      ],
+      "labels": [
+        "LCD_BL",
+        "PC13",
+        "LCD_BL"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/LCD_DC",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "J101",
+          "pin": "8",
+          "pin_name": "Pin_8",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "J102",
+          "pin": "7",
+          "pin_name": "Pin_7",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        }
+      ],
+      "labels": [
+        "LCD_DC",
+        "PB12",
+        "LCD_DC"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/LCD_RST",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "J102",
+          "pin": "11",
+          "pin_name": "Pin_11",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        },
+        {
+          "ref": "R108",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "1k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "C105",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:C_Small",
+          "value": "100nF",
+          "footprint": "Capacitor_SMD:C_0603_1608Metric"
+        }
+      ],
+      "labels": [
+        "LCD_RST"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/LEDK",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "J102",
+          "pin": "2",
+          "pin_name": "Pin_2",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        },
+        {
+          "ref": "R107",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10R",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        }
+      ],
+      "labels": [
+        "LEDK"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/NRST",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "J103",
+          "pin": "1",
+          "pin_name": "Pin_1",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic_MountingPin:Conn_01x04_MountingPin",
+          "value": "Conn_01x04_MountingPin",
+          "footprint": "Emoe_Connector_BTB:1.25-4PWTDK"
+        },
+        {
+          "ref": "J101",
+          "pin": "16",
+          "pin_name": "Pin_16",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        }
+      ],
+      "labels": [
+        "NRST",
+        "NRST"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/PB13",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "J101",
+          "pin": "14",
+          "pin_name": "Pin_14",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "J102",
+          "pin": "9",
+          "pin_name": "Pin_9",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        }
+      ],
+      "labels": [
+        "PB13",
+        "SPI2_SCK",
+        "SPI2_SCK"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/PB15",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "J101",
+          "pin": "6",
+          "pin_name": "Pin_6",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "J102",
+          "pin": "10",
+          "pin_name": "Pin_10",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        }
+      ],
+      "labels": [
+        "SPI2_MOSI",
+        "PB15",
+        "SPI2_MOSI"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/SWCLK",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "J101",
+          "pin": "13",
+          "pin_name": "Pin_13",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "J103",
+          "pin": "2",
+          "pin_name": "Pin_2",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic_MountingPin:Conn_01x04_MountingPin",
+          "value": "Conn_01x04_MountingPin",
+          "footprint": "Emoe_Connector_BTB:1.25-4PWTDK"
+        }
+      ],
+      "labels": [
+        "SWCLK",
+        "SWCLK"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "/SWDIO",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "J101",
+          "pin": "15",
+          "pin_name": "Pin_15",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "J103",
+          "pin": "3",
+          "pin_name": "Pin_3",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic_MountingPin:Conn_01x04_MountingPin",
+          "value": "Conn_01x04_MountingPin",
+          "footprint": "Emoe_Connector_BTB:1.25-4PWTDK"
+        }
+      ],
+      "labels": [
+        "SWDIO",
+        "SWDIO"
+      ],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "GND",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "J102",
+          "pin": "12",
+          "pin_name": "Pin_12",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        },
+        {
+          "ref": "#PWR0123",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "#PWR0102",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "J101",
+          "pin": "11",
+          "pin_name": "Pin_11",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "#PWR0103",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "SW101",
+          "pin": "1",
+          "pin_name": "1",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Switch:SW_Push",
+          "value": "SW_Push",
+          "footprint": "Button_Switch_SMD:SW_SPST_PTS810"
+        },
+        {
+          "ref": "J103",
+          "pin": "4",
+          "pin_name": "Pin_4",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic_MountingPin:Conn_01x04_MountingPin",
+          "value": "Conn_01x04_MountingPin",
+          "footprint": "Emoe_Connector_BTB:1.25-4PWTDK"
+        },
+        {
+          "ref": "#PWR0125",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "J102",
+          "pin": "1",
+          "pin_name": "Pin_1",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        },
+        {
+          "ref": "#PWR0121",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "J101",
+          "pin": "4",
+          "pin_name": "Pin_4",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "#PWR0110",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "J101",
+          "pin": "12",
+          "pin_name": "Pin_12",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "#PWR0112",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "J102",
+          "pin": "5",
+          "pin_name": "Pin_5",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        },
+        {
+          "ref": "J102",
+          "pin": "6",
+          "pin_name": "Pin_6",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        },
+        {
+          "ref": "#PWR0122",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "SW102",
+          "pin": "1",
+          "pin_name": "1",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Switch:SW_Push",
+          "value": "SW_Push",
+          "footprint": "Button_Switch_SMD:SW_SPST_PTS810"
+        },
+        {
+          "ref": "#PWR0104",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "#PWR0106",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "SW104",
+          "pin": "1",
+          "pin_name": "1",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Switch:SW_Push",
+          "value": "SW_Push",
+          "footprint": "Button_Switch_SMD:SW_SPST_PTS810"
+        },
+        {
+          "ref": "#PWR0105",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "SW103",
+          "pin": "1",
+          "pin_name": "1",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Switch:SW_Push",
+          "value": "SW_Push",
+          "footprint": "Button_Switch_SMD:SW_SPST_PTS810"
+        },
+        {
+          "ref": "#PWR0101",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "J101",
+          "pin": "1",
+          "pin_name": "Pin_1",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "J102",
+          "pin": "8",
+          "pin_name": "Pin_8",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        },
+        {
+          "ref": "C104",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:C_Small",
+          "value": "100nF",
+          "footprint": "Capacitor_SMD:C_0603_1608Metric"
+        },
+        {
+          "ref": "#PWR0117",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "#PWR0129",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "D102",
+          "pin": "2",
+          "pin_name": "A",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Diode:ESD5Zxx",
+          "value": "ESD5Zxx",
+          "footprint": "Diode_SMD:D_SOD-523"
+        },
+        {
+          "ref": "#PWR0115",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "C102",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:C_Small",
+          "value": "100nF",
+          "footprint": "Capacitor_SMD:C_0603_1608Metric"
+        },
+        {
+          "ref": "D104",
+          "pin": "2",
+          "pin_name": "A",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Diode:ESD5Zxx",
+          "value": "ESD5Zxx",
+          "footprint": "Diode_SMD:D_SOD-523"
+        },
+        {
+          "ref": "#PWR0131",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "Q101",
+          "pin": "2",
+          "pin_name": "E",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Transistor_BJT:MMBT3904",
+          "value": "MMBT3904",
+          "footprint": "Package_TO_SOT_SMD:SOT-23"
+        },
+        {
+          "ref": "#PWR0119",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "J103",
+          "pin": "MP",
+          "pin_name": "MountPin",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic_MountingPin:Conn_01x04_MountingPin",
+          "value": "Conn_01x04_MountingPin",
+          "footprint": "Emoe_Connector_BTB:1.25-4PWTDK"
+        },
+        {
+          "ref": "#PWR0124",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "C103",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:C_Small",
+          "value": "100nF",
+          "footprint": "Capacitor_SMD:C_0603_1608Metric"
+        },
+        {
+          "ref": "#PWR0116",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "#PWR0114",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "C101",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:C_Small",
+          "value": "100nF",
+          "footprint": "Capacitor_SMD:C_0603_1608Metric"
+        },
+        {
+          "ref": "#PWR0127",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "C105",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:C_Small",
+          "value": "100nF",
+          "footprint": "Capacitor_SMD:C_0603_1608Metric"
+        },
+        {
+          "ref": "#PWR0128",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        },
+        {
+          "ref": "D101",
+          "pin": "2",
+          "pin_name": "A",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Diode:ESD5Zxx",
+          "value": "ESD5Zxx",
+          "footprint": "Diode_SMD:D_SOD-523"
+        },
+        {
+          "ref": "D103",
+          "pin": "2",
+          "pin_name": "A",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Diode:ESD5Zxx",
+          "value": "ESD5Zxx",
+          "footprint": "Diode_SMD:D_SOD-523"
+        },
+        {
+          "ref": "#PWR0130",
+          "pin": "1",
+          "pin_name": "GND",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:GND",
+          "value": "GND",
+          "footprint": ""
+        }
+      ],
+      "labels": [
+        "SPI2_CS",
+        "SPI2_CS"
+      ],
+      "global_names": [],
+      "power_names": [
+        "GND"
+      ]
+    },
+    {
+      "name": "N$17",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "R105",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "1k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "R106",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "Q101",
+          "pin": "1",
+          "pin_name": "B",
+          "pin_type": "input",
+          "sheet_path": "/",
+          "lib_id": "Transistor_BJT:MMBT3904",
+          "value": "MMBT3904",
+          "footprint": "Package_TO_SOT_SMD:SOT-23"
+        }
+      ],
+      "labels": [],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "N$8",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "Q101",
+          "pin": "3",
+          "pin_name": "C",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Transistor_BJT:MMBT3904",
+          "value": "MMBT3904",
+          "footprint": "Package_TO_SOT_SMD:SOT-23"
+        },
+        {
+          "ref": "R107",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10R",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        }
+      ],
+      "labels": [],
+      "global_names": [],
+      "power_names": []
+    },
+    {
+      "name": "VDD",
+      "sheet_paths": [
+        "/"
+      ],
+      "conflict": false,
+      "conflict_names": [],
+      "pins": [
+        {
+          "ref": "#PWR0120",
+          "pin": "1",
+          "pin_name": "VDD",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:VDD",
+          "value": "VDD",
+          "footprint": ""
+        },
+        {
+          "ref": "J102",
+          "pin": "3",
+          "pin_name": "Pin_3",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        },
+        {
+          "ref": "J102",
+          "pin": "4",
+          "pin_name": "Pin_4",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_01x12",
+          "value": "Conn_01x12",
+          "footprint": "Emoe_Displays:ZJYS154KC-IG04"
+        },
+        {
+          "ref": "#PWR0111",
+          "pin": "1",
+          "pin_name": "VDD",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:VDD",
+          "value": "VDD",
+          "footprint": ""
+        },
+        {
+          "ref": "R104",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "R101",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "#PWR0107",
+          "pin": "1",
+          "pin_name": "VDD",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:VDD",
+          "value": "VDD",
+          "footprint": ""
+        },
+        {
+          "ref": "#PWR0108",
+          "pin": "1",
+          "pin_name": "VDD",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:VDD",
+          "value": "VDD",
+          "footprint": ""
+        },
+        {
+          "ref": "R102",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "R103",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "#PWR0109",
+          "pin": "1",
+          "pin_name": "VDD",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:VDD",
+          "value": "VDD",
+          "footprint": ""
+        },
+        {
+          "ref": "J101",
+          "pin": "2",
+          "pin_name": "Pin_2",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Connector_Generic:Conn_02x08_Odd_Even",
+          "value": "HX PZ2.54-2x8P TP",
+          "footprint": "Connector_PinSocket_2.00mm:PinSocket_2x08_P2.00mm_Vertical_SMD"
+        },
+        {
+          "ref": "#PWR0113",
+          "pin": "1",
+          "pin_name": "VDD",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:VDD",
+          "value": "VDD",
+          "footprint": ""
+        },
+        {
+          "ref": "R106",
+          "pin": "2",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "10k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        },
+        {
+          "ref": "#PWR0118",
+          "pin": "1",
+          "pin_name": "VDD",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:VDD",
+          "value": "VDD",
+          "footprint": ""
+        },
+        {
+          "ref": "#PWR0126",
+          "pin": "1",
+          "pin_name": "VDD",
+          "pin_type": "power_in",
+          "sheet_path": "/",
+          "lib_id": "power:VDD",
+          "value": "VDD",
+          "footprint": ""
+        },
+        {
+          "ref": "R108",
+          "pin": "1",
+          "pin_name": "",
+          "pin_type": "passive",
+          "sheet_path": "/",
+          "lib_id": "Device:R_Small_US",
+          "value": "1k",
+          "footprint": "Resistor_SMD:R_0603_1608Metric"
+        }
+      ],
+      "labels": [
+        "LEDA"
+      ],
+      "global_names": [],
+      "power_names": [
+        "VDD"
+      ]
+    }
+  ],
+  "erc_summary": {
+    "error": 2,
+    "warning": 18
+  }
+}

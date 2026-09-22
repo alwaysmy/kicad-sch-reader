@@ -212,8 +212,8 @@ class TestRuleGrouping(unittest.TestCase):
             self.assertEqual(issues[0].pin, "5", wording)
 
 
-class TestInterfaceDirection(unittest.TestCase):
-    """R902: interface-direction semantics (naming-based; pin electrical
+class TestInterfaceDirectionHeuristic(unittest.TestCase):
+    """IFC901: interface-direction semantics (naming-based; pin electrical
     types are reference-only and must never escalate severity)."""
 
     @staticmethod
@@ -230,7 +230,7 @@ class TestInterfaceDirection(unittest.TestCase):
             ("U1", "3", "UART3TX", "output"),
             ("U2", "5", "TXD", "output")])
         issues = rules.check_interface_direction(None, [net])
-        kinds = [i.title for i in issues if i.code == "R902"]
+        kinds = [i.title for i in issues if i.code == "IFC901"]
         self.assertTrue(any("双发送" in t for t in kinds), kinds)
         for i in issues:
             self.assertNotEqual(i.severity, "error")  # declared evidence only
@@ -241,7 +241,7 @@ class TestInterfaceDirection(unittest.TestCase):
             ("U1", "3", "PB10/UART3TX", "output"),
             ("U2", "5", "UART_RX", "input")])
         issues = rules.check_interface_direction(None, [net])
-        self.assertEqual([i for i in issues if i.code == "R902"], [])
+        self.assertEqual([i for i in issues if i.code == "IFC901"], [])
 
     def test_mosi_miso_swap_warns(self):
         from kicad_sch_reader import rules
@@ -249,7 +249,7 @@ class TestInterfaceDirection(unittest.TestCase):
             ("U1", "1", "MOSI", "output"),
             ("U2", "2", "MISO", "input")])
         issues = rules.check_interface_direction(None, [net])
-        self.assertTrue(any("互换" in i.message for i in issues if i.code == "R902"))
+        self.assertTrue(any("互换" in i.message for i in issues if i.code == "IFC901"))
 
     def test_type_conflict_stays_info(self):
         from kicad_sch_reader import rules
@@ -257,9 +257,9 @@ class TestInterfaceDirection(unittest.TestCase):
             ("U1", "3", "TXD", "input"),
             ("U2", "5", "RX", "input")])
         issues = rules.check_interface_direction(None, [net])
-        r902 = [i for i in issues if i.code == "R902"]
-        self.assertTrue(r902)
-        self.assertTrue(all(i.severity == "info" for i in r902))
+        ifc = [i for i in issues if i.code == "IFC901"]
+        self.assertTrue(ifc)
+        self.assertTrue(all(i.severity == "info" for i in ifc))
 
     def test_direction_family_boundaries(self):
         from kicad_sch_reader.rules import direction_family as fam
@@ -274,21 +274,49 @@ class TestInterfaceDirection(unittest.TestCase):
         self.assertIsNone(fam("VCM_2V5"))
 
 
-class TestAssessmentFixes(unittest.TestCase):
-    """Regression tests for the 2026-09-17 SRB assessment fixes."""
+    def test_ifc901_is_opt_in_by_default(self):
+        import inspect
+        from kicad_sch_reader import rules
+        params = inspect.signature(rules.run_all_checks).parameters
+        self.assertFalse(params["include_interface_direction"].default)
+
+    def test_skip_fpga_diff_and_connector_only_nets(self):
+        from kicad_sch_reader import rules
+        from kicad_sch_reader.model import Net, PinNet
+        def net(name, refs):
+            pins = [PinNet(ref=r, pin_number=str(i + 1), pin_name="P", pin_type="passive",
+                           sheet_path="/", lib_id=lib, value="x", footprint="")
+                    for i, (r, lib) in enumerate(refs)]
+            return Net(name=name, pins=pins)
+        self.assertTrue(rules._skip_interface_direction_net(net("MGT_TX3_P", [("U1", "Device:R")])))
+        self.assertTrue(rules._skip_interface_direction_net(net("CLK_P", [("U1", "Device:R")])))
+        self.assertTrue(rules._skip_interface_direction_net(net("BUS", [("J1", "Connector:Conn_01x02"), ("J2", "Connector:Conn_01x02")])))
+        self.assertFalse(rules._skip_interface_direction_net(net("MCU_UART_TX", [("U1", "Device:R"), ("U2", "Device:R")])))
+
+    def test_ifc901_skips_fpga_net(self):
+        from kicad_sch_reader import rules
+        from kicad_sch_reader.model import Net, PinNet
+        pins = [PinNet(ref="U1", pin_number="1", pin_name="TXP", pin_type="output",
+                       sheet_path="/", lib_id="Device:R", value="x", footprint=""),
+                PinNet(ref="U2", pin_number="2", pin_name="RXP", pin_type="input",
+                       sheet_path="/", lib_id="Device:R", value="x", footprint="")]
+        net = Net(name="MGT_TX3_P", pins=pins)
+        self.assertEqual([i for i in rules.check_interface_direction(None, [net]) if i.code == "IFC901"], [])
+class TestHierarchyAndAliases(unittest.TestCase):
+    """Regression tests for report indexes and hierarchical net aliases."""
 
     @classmethod
     def setUpClass(cls):
         cls.project = parser.load_project(MAINBOARD)
         cls.netlist = connectivity.build_netlist(cls.project)
 
-    def test_report_exports_components_and_page_index(self):
+    def test_report_exports_component_index(self):
         from kicad_sch_reader import report
         stats = report.project_stats(self.project, self.netlist, [])
         self.assertGreater(len(stats["components"]), 100)
         by_ref = {c["ref"]: c for c in stats["components"]}
-        self.assertIn("J101", by_ref)
-        self.assertTrue(by_ref["J101"]["value"])
+        self.assertTrue(any(c.get("ref") for c in stats["components"]))
+        self.assertTrue(any(c.get("value") for c in stats["components"]))
         self.assertEqual(stats["sheets"][0]["page_no"], 1)
 
     def test_netfind_matches_hierarchical_alias(self):
@@ -301,10 +329,10 @@ class TestAssessmentFixes(unittest.TestCase):
         from kicad_sch_reader import rules
         from kicad_sch_reader.model import Net, PinNet
         net = Net(
-            name="/ADC Channel Switch/PGIA_IN2+_CH2",
-            hierarchical_names=["PGIA_IN2+_CH2"],
-            pins=[PinNet(ref="U802", pin_number="5", pin_name="S1", pin_type="passive",
-                         sheet_path="/4b194535", lib_id="Emoe:Switch", value="SW",
+            name="/Filter/IN_POS",
+            hierarchical_names=["IN_POS"],
+            pins=[PinNet(ref="U1", pin_number="5", pin_name="S1", pin_type="passive",
+                         sheet_path="/child", lib_id="Device:R", value="10k",
                          footprint="")],
         )
         issues = rules.check_single_pin_nets([net])

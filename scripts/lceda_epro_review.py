@@ -3,7 +3,7 @@
 """LCEDA Professional `.epro`（ZIP 导出）工程审查器。
 
 该脚本以 lceda-sch-reader 的解析/连通域函数为基础，补齐 `.epro` 导出格式
-与 CBB（复用模块）展开逻辑，并对 LIA_DigitalBoard_RevA 做板级设计审查。
+与 CBB（复用模块）展开逻辑。
 
 只读：仅读取 .epro 压缩包，不修改任何工程文件。
 """
@@ -385,7 +385,7 @@ POWER_RE = _PowerMatcher()
 
 def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
                 trace_nets=None, trace_refs=None, trace_skip_power=False,
-                power_net_patterns=None):
+                power_net_patterns=None, include_interface_direction=False):
     db = EproDB(epro_path)
     if not db.boards:
         if db.schematics:
@@ -395,8 +395,17 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         raise SystemExit(
             f".epro 中 project.json 没有 boards/schematics 数据（可能是仅有 PCB 的导出包）：{epro_path}")
     if board_name is None:
-        candidates = [n for n in db.boards if "LIA" in n or "锁定" in n]
-        board_name = candidates[0] if candidates else list(db.boards)[0]
+        boards = list(db.boards)
+        if len(boards) == 1:
+            board_name = boards[0]
+        else:
+            details = ", ".join(
+                b + " (" + str(len(db.schematics.get(db.boards[b].get("schematic"), {}).get("sheets", []))) + " pages)"
+                for b in boards
+            )
+            raise SystemExit(
+                "multiple boards detected; pass --board explicitly. candidates: " + details
+            )
     main_board = db.boards.get(board_name)
     if not main_board:
         raise SystemExit(f"board not found: {board_name}")
@@ -634,7 +643,7 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         if comp.get("designator"):
             comp_lookup[comp["designator"]].append(comp)
 
-    # R902: 接口方向语义核对 —— 网络名/MCU 复用引脚名（如 PB10/UART3TX）
+    # IFC901: 接口方向语义核对 —— 网络名/MCU 复用引脚名（如 PB10/UART3TX）
     # 中的方向词做声明级核对；引脚电气类型 LCEDA 侧缺失，不参与判定。
     from kicad_sch_reader.rules import analyze_direction_group
     dir_groups = defaultdict(list)
@@ -644,12 +653,14 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         dir_groups[afind(lceda_reader.net_tokens(local_net)[0])].append(
             {"ref": str(des), "pin": str(pinname), "pin_name": str(pinname),
              "pin_type": "", "sheet": title, "net": str(local_net)})
+    if not include_interface_direction:
+        dir_groups = {}
     for _group, dir_members in dir_groups.items():
         if len(dir_members) < 2:
             continue
         net_display = sorted({m["net"] for m in dir_members})[0]
         for f in analyze_direction_group(net_display, dir_members):
-            findings.append((f["severity"], "R902", dir_members[0]["sheet"], "",
+            findings.append((f["severity"], "IFC901", dir_members[0]["sheet"], "",
                              f["message"]))
 
     def member_detail(member):
@@ -1006,7 +1017,9 @@ def _write_markdown(report, findings, path):
 def main(argv=None):
     ap = argparse.ArgumentParser(description="LCEDA .epro CBB-aware design review")
     ap.add_argument("epro", help=".epro 文件")
-    ap.add_argument("--board", help="审查的板名（默认自动选择含 LIA/锁定 的板）")
+    ap.add_argument("--board", help="审查的板名（缺省使用第一块板）")
+    ap.add_argument("--list-boards", action="store_true", help="list boards with page counts and exit")
+    ap.add_argument("--interface-direction", action="store_true", help="启用 IFC901 接口方向语义启发式检查（默认关闭）")
     ap.add_argument("--out-md")
     ap.add_argument("--out-json")
     ap.add_argument("--trace-net", action="append", default=[], help="追踪网络并列出 CBB 内部器件")
@@ -1014,9 +1027,20 @@ def main(argv=None):
     ap.add_argument("--trace-skip-power", action="store_true", help="trace-ref 时跳过电源/地网络")
     ap.add_argument("--power-net", action="append", default=[], help="补充电源网络命名正则（非规范命名时使用）")
     args = ap.parse_args(argv)
+    if args.list_boards:
+        db = EproDB(args.epro)
+        rows = []
+        for name in db.boards:
+            sch = db.schematics.get(db.boards[name].get("schematic"), {})
+            pages = sch.get("sheets", [])
+            titles = [p.get("display_title") or p.get("name") or str(p.get("id")) for p in pages]
+            rows.append({"name": name, "pages": len(pages), "schematic": sch.get("name"), "page_titles": titles[:8]})
+        print(json.dumps(rows, ensure_ascii=False, indent=2))
+        return
     review_epro(args.epro, board_name=args.board, out_md=args.out_md, out_json=args.out_json,
                 trace_nets=args.trace_net, trace_refs=args.trace_ref,
-                trace_skip_power=args.trace_skip_power, power_net_patterns=args.power_net)
+                trace_skip_power=args.trace_skip_power, power_net_patterns=args.power_net,
+                include_interface_direction=args.interface_direction)
 
 
 if __name__ == "__main__":

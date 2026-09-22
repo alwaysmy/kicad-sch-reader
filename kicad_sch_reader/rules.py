@@ -696,7 +696,7 @@ def _is_power_like(net: Net) -> bool:
     )
 
 
-# ---------------- R902: interface direction semantics ----------------
+# ---------------- IFC901: interface direction semantics ----------------
 #
 # Signal-direction words (TX/RX, MOSI/MISO, SDO/SDI, DOUT/DIN) are checked as
 # *declared* evidence: net/label names and composite MCU pin names
@@ -722,7 +722,7 @@ _DIR_WORD_RE = re.compile(
 
 _OUT_LOCAL = {"tx", "sdo", "dout"}
 _IN_LOCAL = {"rx", "sdi", "din"}
-_R902_TITLES = {
+_IFC901_TITLES = {
     "collision_out": "接口方向语义冲突（双发送）",
     "collision_in": "接口方向语义冲突（全接收）",
     "mosi_swap": "MOSI/MISO 命名互换嫌疑",
@@ -795,12 +795,28 @@ def analyze_direction_group(net_name: str, members: List[dict]) -> List[dict]:
     return findings
 
 
+def _skip_interface_direction_net(net: Net) -> bool:
+    name = (net.name or "").upper()
+    if not name:
+        return True
+    for token in ("IO_L", "MGT", "GT", "LVDS", "SERDES", "DQS"):
+        if token in name:
+            return True
+    if name.endswith("_P") or name.endswith("_N"):
+        return True
+    members = [p for p in net.pins if not (p.ref.startswith("#") or p.lib_id.startswith("power:"))]
+    if members and all((p.lib_id or "").lower().find("connector") >= 0 or p.ref.startswith(("J", "CN")) for p in members):
+        return True
+    return False
+
 def check_interface_direction(project: Project, netlist: Iterable[Net]) -> List[Issue]:
-    """R902: interface-direction semantics over net/label names and composite
+    """IFC901: interface-direction semantics over net/label names and composite
     MCU pin names.  Deliberately *not* based on pin electrical types except as
     an informational cross-check (symbol types are frequently sloppy)."""
     issues: List[Issue] = []
     for net in netlist:
+        if _skip_interface_direction_net(net):
+            continue
         members = [{"ref": p.ref, "pin": p.pin_number, "pin_name": p.pin_name,
                     "pin_type": p.pin_type}
                    for p in net.pins
@@ -809,9 +825,9 @@ def check_interface_direction(project: Project, netlist: Iterable[Net]) -> List[
             continue
         for f in analyze_direction_group(net.name, members):
             issues.append(Issue(
-                code="R902",
+                code="IFC901",
                 severity=f["severity"],
-                title=_R902_TITLES[f["kind"]],
+                title=_IFC901_TITLES[f["kind"]],
                 message=f["message"],
                 net=net.name,
                 evidence="declared",
@@ -856,6 +872,7 @@ def run_all_checks(
     netlist: List[Net],
     erc_markers: Optional[List[dict]] = None,
     config: Optional[dict] = None,
+    include_interface_direction: bool = False,
 ) -> List[Issue]:
     issues: List[Issue] = []
     issues.extend(check_duplicate_references(project))
@@ -871,7 +888,8 @@ def run_all_checks(
     issues.extend(check_title_blocks(project))
     issues.extend(check_polar_devices(project, netlist))
     issues.extend(check_dnp_inventory(project))
-    issues.extend(check_interface_direction(project, netlist))
+    if include_interface_direction:
+        issues.extend(check_interface_direction(project, netlist))
     if erc_markers:
         issues.extend(erc_markers_to_issues(erc_markers))
     issues.sort(key=lambda i: i.sort_key())

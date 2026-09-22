@@ -48,7 +48,7 @@
   IRCrossLink / IRSystem / 证据等级。
 - `kicad_sch_reader/parser.py`：KiCad parser。
 - `scripts/lceda_epro_review.py`：LCEDA .epro parser + CBB 展开适配。
-- `kicad_sch_reader/rules.py`：确定性规则 R101...R902。
+- `kicad_sch_reader/rules.py`：确定性规则 R101...IFC901。
 - `scripts/multi_project_cross_check.py`：多工程跨板候选检查。
 - `skill/SKILL.md`：LLM 手册查询、power 判断、证据要求。
 

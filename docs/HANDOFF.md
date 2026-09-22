@@ -309,17 +309,17 @@ python scripts\multi_project_cross_check.py ^
 
 当前 `git status` 中与本项目相关的修改只有：
 - `CHANGELOG.md`（新增 0.1.4 / 0.1.5 条目）
-- `DEVELOPMENT.md`（规则表 R801/R902、R103/R304/R701 描述更新）
-- `scripts/lceda_epro_review.py`（新增 R902 接口方向语义核对，+18 行，纯插入）
+- `DEVELOPMENT.md`（规则表 R801/IFC901、R103/R304/R701 描述更新）
+- `scripts/lceda_epro_review.py`（新增 IFC901 接口方向语义核对，+18 行，纯插入）
 
 以上都是**新增内容**，没有删除或回退之前的 CBB、trace、多单元、power、多工程改动。
-`git diff` 确认 `scripts/lceda_epro_review.py` 仅在 `comp_lookup` 构造后插入 R902
+`git diff` 确认 `scripts/lceda_epro_review.py` 仅在 `comp_lookup` 构造后插入 IFC901
 分析块，原有函数与数据结构保持不变。
 
 ### 9.3 复核验证结果
 
 - `python -m unittest discover -s tests -v`：41 tests OK（含 CBB 展开、trace、
-  KiCad 规则、R902 新测试等）
+  KiCad 规则、IFC901 新测试等）
 - `scripts/multi_project_cross_check.py` 重跑：
   - MainBoard `J102` 对 PowerBoard `J103`：`detected`，score=1.0，exact=16/16
   - 迁移到 Circuit IR 后，candidate / detected / evidence 语义仍保留
@@ -344,7 +344,7 @@ python scripts\multi_project_cross_check.py ^
 
 ```powershell
 git add CHANGELOG.md DEVELOPMENT.md scripts/lceda_epro_review.py docs/HANDOFF.md
-git commit -m "Add R902 interface direction semantics and LCEDA review integration"
+git commit -m "Add IFC901 interface direction semantics and LCEDA review integration"
 ```
 
 如果需要把之前已整合的改动一并确认，可查看：

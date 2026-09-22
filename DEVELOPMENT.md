@@ -172,7 +172,7 @@ KiCad 把同一多单元器件的每个 unit 存为独立 `symbol` 节点（同 
 | R603 | warning/info | declared | 标题栏字段缺失（title/date/rev/company） |
 | R701 | info | structural | DNP 器件清单（按图纸分组一行，TP*/H* 计数合并） |
 | R801 | info | structural | 极性器件（D*/LED*/TVS*）引脚极性未解析清单 |
-| R902 | warning/info | declared | 接口方向语义：TX/RX/MOSI 命名与 MCU 复用引脚名核对（双发送/全接收/MOSI-MISO 互换→warning；电气类型矛盾→仅 info，符号类型常不规范不作判定依据） |
+| IFC901 | warning/info | declared | 接口方向语义：TX/RX/MOSI 命名与 MCU 复用引脚名核对（双发送/全接收/MOSI-MISO 互换→warning；电气类型矛盾→仅 info，符号类型常不规范不作判定依据） |
 | ERC-* | 随官方 | official | kicad-cli ERC JSON 转写（ref/pin 归属兼容中英文 item 描述） |
 
 审查规则可通过 `review --config review_rules.json` 按 code 覆盖启停与

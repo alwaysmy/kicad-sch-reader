@@ -408,7 +408,7 @@ repos/
 ### P2-4　`cli.py` / `rules.py` 单文件偏大，命令与实现耦合
 
 - `cli.py` 876 行：20 个子命令的业务逻辑（trace BFS、link-check 比较、bridges 配对）全在 CLI 层；
-- `rules.py` 851 行：14 条规则 + 配置加载 + R902 词法分析。
+- `rules.py` 851 行：14 条规则 + 配置加载 + IFC901 词法分析。
 
 Library 调用方（MCP server）只能重复 import 内部函数，无法 `from kicad_sch_reader import review`。`mcp_server.py` 已经在重新实现 review 组装逻辑（`_tool_review`），这是重复。
 

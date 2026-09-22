@@ -19,6 +19,15 @@ MAIN = ROOT / "examples" / "Lock-In-Amplifier_MainBoard_V0.1"
 POWER = ROOT / "examples" / "Lock-In-Amplifier_PowerBoard_V0.1"
 EPRO = ROOT / "examples" / "LIA_DigitalBoard_RevA" / "ProPrj_XC7A35TCSG325_EmoeSOM_2026-05-18.epro"
 
+def _main_board():
+    from lceda_epro_review import EproDB
+    db = EproDB(str(EPRO))
+    for name in db.boards:
+        if "EmoeSOM_A7_DDR_RevA" in name:
+            return name
+    return next(iter(db.boards), None)
+
+
 
 @unittest.skipUnless(MAIN.exists() and POWER.exists(), "KiCad example fixtures missing")
 class TestCircuitIRKiCad(unittest.TestCase):
@@ -97,6 +106,7 @@ class TestCircuitIRLceda(unittest.TestCase):
         cls.tmp = tempfile.TemporaryDirectory()
         report = review_epro(
             str(EPRO),
+            board_name=_main_board(),
             out_md=str(Path(cls.tmp.name) / "lia.md"),
             out_json=str(Path(cls.tmp.name) / "lia.json"),
         )

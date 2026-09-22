@@ -458,7 +458,8 @@ def cmd_review(args) -> None:
             erc_note = f"KiCad ERC 未运行（{type(exc).__name__}: {exc}）"
     issues = rules.run_all_checks(project, netlist, markers,
                                   config=rules.load_config(args.config)
-                                  if getattr(args, "config", "") else None)
+                                  if getattr(args, "config", "") else None,
+                                  include_interface_direction=getattr(args, "interface_direction", False))
 
     name = project.root.parent.name or project.root_sheet.file.stem
     out_md = args.out_md or str(Path.cwd() / f"{name}.review.md")
@@ -563,7 +564,7 @@ def cmd_link_check(args) -> None:
                     entry = {"pin": pin, "a_net": a_net, "b_net": b_net}
                     fa = rules.direction_family(a_net or "")
                     fb = rules.direction_family(b_net or "")
-                    if fa and fb and fa == fb and fa in ("tx", "rx") and a_net != b_net:
+                    if getattr(args, "direction_hints", False) and fa and fb and fa == fb and fa in ("tx", "rx") and a_net != b_net:
                         entry["dir_note"] = (
                             f"两端均为{'发送' if fa == 'tx' else '接收'}({fa.upper()})语义，"
                             f"确认对端应为{'接收' if fa == 'tx' else '发送'}，约束方向勿写反")
@@ -826,6 +827,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("--out-json", default="")
     p.add_argument("--no-erc", action="store_true", help="不调用 kicad-cli ERC")
     p.add_argument("--config", default="", help="review_rules.json 路径（规则启停/级别覆盖）")
+    p.add_argument("--interface-direction", action="store_true", help="启用 IFC901 接口方向语义启发式规则（默认不跑）")
     p.set_defaults(func=cmd_review)
 
     p = sub.add_parser("erc", help="调用 kicad-cli 执行 ERC")
@@ -861,6 +863,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     add_json(p)
     p.add_argument("input_a")
     p.add_argument("input_b")
+    p.add_argument("--direction-hints", action="store_true", help="link-check 附加 TX/RX 方向提示（默认关闭）")
     p.set_defaults(func=cmd_link_check)
 
     p = sub.add_parser("interfaces", help="接口方向核对表（TX/RX/MOSI 语义 + 约束方向清单）")

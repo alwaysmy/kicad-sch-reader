@@ -4,9 +4,9 @@
 
 ## [0.1.5] - 2026-09-03
 
-### 新增 R902 接口方向语义核对 + interfaces 约束清单命令
+### 新增 IFC901 接口方向语义核对 + interfaces 约束清单命令
 
-- **R902 接口方向语义**（declared 证据，warning/info，永不 error）：
+- **IFC901 接口方向语义**（declared 证据，warning/info，永不 error）：
   - 方向词库 TX/RX（本地视角）与 MOSI/MISO/SDO/SDI/DOUT/DIN（主从/收发
     视角），从网络名/标签名与 MCU 复用引脚名（`PB10/UART3TX`）提取；
   - 双发送/全接收冲突：同一网络 ≥2 个不同器件引脚名同为发送语义（或全
@@ -22,7 +22,7 @@
   "主端out/从端in"。FPGA 引脚在原理图上无方向，此表即约束文件核对清单。
 - **link-check 方向语义标注**：跨板连接器对逐 pin 差异中，两端网络名同为
   TX（或同为 RX）语义且名字不同 → 输出 `⚠ 两端均为发送语义` 提示。
-- LCEDA `.epro` 审查同步接入 R902（复用 `analyze_direction_group`，
+- LCEDA `.epro` 审查同步接入 IFC901（复用 `analyze_direction_group`，
   基于 pin_net_map 的 MCU 复用引脚名；LCEDA 无电气类型不参与判定）。
   SOM 板实测 73 条方向词网络零误报（findings 保持 55）。
 
@@ -30,7 +30,7 @@
 
 - 单元测试 38/38（新增 TestInterfaceDirection 5 项：双发送告警、健康
   TX→RX 对通过、MOSI/MISO 互换、类型矛盾仅 info、词法边界）
-- 11 工程批量：各板 issues 与 0.1.4 基线完全一致（jetson 646，R902 0 条）
+- 11 工程批量：各板 issues 与 0.1.4 基线完全一致（jetson 646，IFC901 0 条）
 - LIA MainBoard `interfaces` 实测：/ADC_MOSI、/ADC_MISO 跨板网络与
   N$106/N$114（ADS127L11 引脚名 MOSI/MISO）主从推断正确
 

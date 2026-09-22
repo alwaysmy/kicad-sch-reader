@@ -22,6 +22,15 @@ from lceda_epro_review import review_epro  # noqa: E402
 
 EPRO = ROOT / "examples" / "LIA_DigitalBoard_RevA" / "ProPrj_XC7A35TCSG325_EmoeSOM_2026-05-18.epro"
 
+def _main_board():
+    from lceda_epro_review import EproDB
+    db = EproDB(str(EPRO))
+    for name in db.boards:
+        if "EmoeSOM_A7_DDR_RevA" in name:
+            return name
+    return next(iter(db.boards), None)
+
+
 
 @unittest.skipUnless(EPRO.exists(), "LIA_DigitalBoard_RevA .epro fixture missing")
 class TestCbbExpansion(unittest.TestCase):
@@ -30,6 +39,7 @@ class TestCbbExpansion(unittest.TestCase):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.report = review_epro(
             str(EPRO),
+            board_name=_main_board(),
             out_md=str(Path(cls.tmp.name) / "lia.review.md"),
             out_json=str(Path(cls.tmp.name) / "lia.review.json"),
             trace_nets=["VCC_1V5", "VCC_1V0"],
@@ -158,6 +168,15 @@ class TestCbbExpansion(unittest.TestCase):
             "MULTI_UNIT_UNVERIFIED",
             {f["code"] for f in self.report["findings"]},
         )
+
+    def test_multiple_boards_require_explicit_board(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(SystemExit):
+                review_epro(
+                    str(EPRO),
+                    out_md=str(Path(tmp) / "x.md"),
+                    out_json=str(Path(tmp) / "x.json"),
+                )
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

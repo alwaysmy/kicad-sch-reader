@@ -91,10 +91,10 @@ KiCad 侧的真实情况（实测 examples 工程与 KiCad 10 官方 demos）：
 
 借鉴 `lceda-sch-reader` 的“连通域精确方案”，但按 KiCad 格式重新表达：
 
-1. 坐标量化为 0.001 mm 网格（`qpoint`），消除浮点尾差；
-2. DSU 建立导线端点、junction、标签、NC 点的物理域；
+1. 坐标量化为 0.000001 mm 数值网格（`qpoint`），消除浮点尾差；这是数值规整，不是邻近导线吸附容差；
+2. DSU 建立导线端点、junction、标签的物理域；junction/标签按精确线段包含关系连通。NC 是标注，不移除真实连线；
 3. 每个引脚坐标注册为节点，但只有满足以下条件之一才报告为已连接：
-   - 该点存在导线/junction/标签/NC 几何；或
+   - 该点存在导线/junction/标签几何；或
    - 该点上有 ≥2 个引脚（引脚直接接触，如电容脚直接顶在电源符号上）。
 4. 同页同名普通标签/分层标签按名称归并（KiCad 局部标签语义）；
 5. 父子图纸：父图 sheet-pin 坐标域与子图同名 hierarchical label 域合并；
@@ -271,3 +271,13 @@ python scripts\multi_project_cross_check.py ^
 - [ ] PDF 位置映射：把 Issue 反查回图纸坐标，供图形化审查工具高亮
 - [ ] 包发布到 PyPI 与 GitHub Actions CI
 - [ ] 与 `lceda-sch-reader` 共用审查报告 schema，形成跨 EDA 统一审查层
+
+
+## 连接完整性回归（2026-10-03）
+
+- 子图展开由当前父实例路径 + sheet UUID 决定；不能把同一文件保存的全部实例路径分别加入每个父图。符号覆盖使用完整根 UUID / 祖先路径，不能只比较叶 UUID。
+- 嵌入库决定实际 pin 库存；placed `pin` 记录是 UUID 元数据，不代表穷尽引脚。缺失库直接失败，不从 symbol 原点推测 pin 位置。
+- 普通标签也带完整 sheet 名路径；标签与 sheet 名内的字面 `/` 均转义为 `{slash}`。IR 对仍然重复的网络名拒绝 first-match 查询。
+- 官方验收在 `kicad_sch_reader/validation.py`：按实例身份核对 pin 库存，比较每个连接分区。名为 `N$` 或 `Net-*` 的两个不同图不能仅凭名字被判等。
+- ERC 仅接受退出码 0/5（5 为有违规）；每次使用新临时报告，校验 JSON 结构，再按请求复制输出。执行失败、未知结构、陈旧报告不能返回空成功。
+- `tests/test_integrity.py` 为独立公共回归，`tests/test_official_cli.py` 为 KiCad 10 原生对照。真实用户工程只在外部路径运行，不进入 Git 或补丁。

@@ -13,6 +13,10 @@ from typing import Iterable, Iterator, List, Optional, Sequence, Union
 Node = Union[str, List["Node"]]
 
 
+class _Delimiter(str):
+    """Keep syntax separate from a quoted literal parenthesis."""
+
+
 def tokenize(text: str) -> List[str]:
     """Tokenize an s-expression source.
 
@@ -30,12 +34,13 @@ def tokenize(text: str) -> List[str]:
             i += 1
             continue
         if c in "()":
-            tokens.append(c)
+            tokens.append(_Delimiter(c))
             i += 1
             continue
         if c == '"':
             i += 1
             buf: List[str] = []
+            closed = False
             while i < n:
                 c = text[i]
                 if c == "\\" and i + 1 < n:
@@ -45,9 +50,12 @@ def tokenize(text: str) -> List[str]:
                     continue
                 if c == '"':
                     i += 1
+                    closed = True
                     break
                 buf.append(c)
                 i += 1
+            if not closed:
+                raise ValueError("unterminated quoted string")
             tokens.append("".join(buf))
             continue
         j = i
@@ -60,24 +68,18 @@ def tokenize(text: str) -> List[str]:
 
 def _parse_from(tokens: Sequence[str], pos: int) -> tuple[Node, int]:
     token = tokens[pos]
-    if token != "(":
+    if not isinstance(token, _Delimiter):
         return token, pos + 1
-    pos += 1
-    if pos >= len(tokens):
-        raise ValueError("unterminated list")
-    head = tokens[pos]
+    if token == ")":
+        raise ValueError("unexpected closing parenthesis")
     pos += 1
     body: List[Node] = []
     while pos < len(tokens):
         token = tokens[pos]
-        if token == ")":
-            return [head] + body, pos + 1
-        if token == "(":
-            child, pos = _parse_from(tokens, pos)
-            body.append(child)
-        else:
-            body.append(token)
-            pos += 1
+        if isinstance(token, _Delimiter) and token == ")":
+            return body, pos + 1
+        child, pos = _parse_from(tokens, pos)
+        body.append(child)
     raise ValueError("unterminated list")
 
 

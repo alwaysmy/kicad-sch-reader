@@ -13,7 +13,12 @@ sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "repos" / "lceda-sch-reader"))
 
 from kicad_sch_reader import circuit_ir, parser  # noqa: E402
-from lceda_epro_review import review_epro  # noqa: E402
+try:
+    from lceda_epro_review import review_epro  # noqa: E402
+except ModuleNotFoundError as exc:
+    if exc.name != "lceda_reader":
+        raise
+    review_epro = None
 
 MAIN = ROOT / "examples" / "Lock-In-Amplifier_MainBoard_V0.1"
 POWER = ROOT / "examples" / "Lock-In-Amplifier_PowerBoard_V0.1"
@@ -99,7 +104,7 @@ class TestCircuitIRKiCad(unittest.TestCase):
         self.assertEqual(declared[0].confidence, circuit_ir.CONFIDENCE_DECLARED)
         self.assertEqual(declared[0].exact_pins, 2)
 
-@unittest.skipUnless(EPRO.exists(), "LIA_DigitalBoard_RevA .epro fixture missing")
+@unittest.skipUnless(EPRO.exists() and review_epro is not None, "LIA_DigitalBoard_RevA .epro fixture missing")
 class TestCircuitIRLceda(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

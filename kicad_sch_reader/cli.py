@@ -450,11 +450,14 @@ def cmd_review(args) -> None:
     netlist = _netlist(project)
     markers: List[dict] = []
     erc_note = None
+    erc_status = {"status": "skipped" if args.no_erc else "pending"}
     if not args.no_erc:
         try:
             markers = kicad_cli.run_erc(project.root_sheet.file)
+            erc_status = {"status": "completed", "violations": len(markers)}
             erc_note = f"KiCad ERC 已运行: {_erc_summary_dict(markers)}"
         except Exception as exc:  # pragma: no cover - depends on local KiCad install
+            erc_status = {"status": "failed", "error": f"{type(exc).__name__}: {exc}"}
             erc_note = f"KiCad ERC 未运行（{type(exc).__name__}: {exc}）"
     issues = rules.run_all_checks(project, netlist, markers,
                                   config=rules.load_config(args.config)
@@ -475,9 +478,10 @@ def cmd_review(args) -> None:
     report.write_markdown(out_md, project, netlist, issues, erc_summary=_erc_summary_dict(markers) if markers else None,
                           extra_notes=notes)
     report.write_json(out_json, project, netlist, issues,
-                      erc_summary=_erc_summary_dict(markers) if markers else None)
+                      erc_summary=_erc_summary_dict(markers) if markers else None,
+                      erc_status=erc_status)
     counts = rules.severity_counts(issues)
-    print(f"review done: issues={len(issues)} ({counts})")
+    print(f"review generated: issues={len(issues)} ({counts}); ERC={erc_status['status']}")
     print(f"markdown: {out_md}")
     print(f"json:     {out_json}")
     if args.json:

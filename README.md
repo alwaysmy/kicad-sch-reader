@@ -61,13 +61,20 @@ python kicad-sch-reader.py --json netfind examples\Lock-In-Amplifier_PowerBoard_
 
 ## 测试与验收
 
-- `tests/test_reader.py`：以 `examples/` 两个 KiCad 工程为夹具的单元测试
-- `tests/validate_examples.py`：与 `kicad-cli` 官方网表逐引脚交叉验证
+公共测试不依赖用户工程文件。可选的私有夹具可放在仓库外，通过
+`KICAD_READER_EXAMPLES` 指向其父目录；不存在的夹具会明确跳过。
 
-```bat
-python -m unittest tests.test_reader -v
-python tests\validate_examples.py
+```sh
+python -m unittest discover -v
+# 可选原生回归，要求 KiCad 10；也可用 KICAD_CLI 指定可执行文件
+KICAD_CLI=/path/to/kicad-cli python -m unittest tests.test_official_cli -v
+# 任意真实工程的严格验收：检查全部物理引脚，以及网络分区的漏连/误短接
+python tests/validate_examples.py /path/to/root.kicad_sch --work-dir /tmp/kicad-validation
 ```
+
+验收不再使用网络名相似度或 95% 阈值：覆盖缺失、多余引脚、拆网或误并网
+任一非零都会失败。未命名网络和层级同名网络也比较实际成员集合；NC/悬空
+引脚作为独立分区参与完整引脚库存核对。网络命名差异不会掩盖拓扑错误。
 
 ## LCEDA `.epro` / CBB 审查（附带工具）
 
@@ -101,9 +108,12 @@ python scripts\multi_project_cross_check.py ^
 
 - 网络命名已按 KiCad 官方约定生成：电源/全局名不带前缀，普通标签为
   `/Label`，分层标签为 `/Sheet Name/Label`；未命名网络为 `N$`。
-- `kicad-cli` 不可用时审查仍可运行，仅缺少官方 ERC 结果。
+- `kicad-cli` 不可用或执行失败时，可生成纯 Python 审查；JSON 的 `erc_status` 明确标记 `failed`，不会把缺失/陈旧报告当作零违规。`--no-erc` 标记为 `skipped`。
 - KiCad 文本变量（如 `${...}`）暂不展开。
-- 本工具只读，不会修改任何工程文件。
+- 本工具只读，不会修改任何工程文件；ERC 默认报告写入临时目录。
+- 缺少嵌入符号库、无效坐标、损坏语法、循环层级会报错；不会把未知引脚放到元件原点。
+- 内部节点连线按 KiCad 10 原生实测：导线内部需要显式 junction 或标签锚点；没有 junction 的 T 端点/引脚不会自动短接到导线。KiCad 9 对未分段 junction 的导出行为不同，不能承诺所有旧版本导出完全等价。
+- 总线/总线别名、继承库、文本变量、重复引脚 jumper 等高级格式语义仍需后续覆盖；本轮不是全部 KiCad 语义验收。跨页多单元器件若页码缺失或重复，严格验证会明确失败，避免猜测物理实例身份。
 
 更多细节见 `DEVELOPMENT.md`、`docs/shared-circuit-ir.md`、
 `docs/kicad-tools-survey.md`、`docs/lceda-sch-reader-design-review.md`。

@@ -317,7 +317,10 @@ class BoardIR:
         for comp in self.components:
             self._by_ref.setdefault(comp.ref, comp)
         self._net_by_name: Dict[str, IRNet] = {}
+        self._ambiguous_net_names = set()
         for net in self.nets:
+            if net.name in self._net_by_name:
+                self._ambiguous_net_names.add(net.name)
             self._net_by_name.setdefault(net.name, net)
 
     @property
@@ -332,7 +335,12 @@ class BoardIR:
         return self._by_ref.get(ref)
 
     def net(self, name: str) -> Optional[IRNet]:
+        if name in self._ambiguous_net_names:
+            raise ValueError(f"ambiguous net name {name!r}; use nets_named()")
         return self._net_by_name.get(name)
+
+    def nets_named(self, name: str) -> List[IRNet]:
+        return [net for net in self.nets if net.name == name]
 
     def pin_net(self, ref: str, pin: str) -> Optional[str]:
         comp = self._by_ref.get(ref)
@@ -531,10 +539,15 @@ def board_from_kicad(project: KiCadProject, netlist: Optional[List[KiCadNet]] = 
 
     comp_by_ref: Dict[str, IRComponent] = {}
     symbol_meta: Dict[Tuple[str, str], Tuple[str, str, str]] = {}
+    seen_units = set()
     for sym in project.all_symbols():
         ref = sym.ref
         if not ref or ref.startswith("#"):
             continue
+        identity = (ref, sym.unit)
+        if identity in seen_units:
+            raise ValueError(f"ambiguous repeated reference/unit: {ref}.{sym.unit}")
+        seen_units.add(identity)
         comp = comp_by_ref.get(ref)
         if comp is None:
             comp = IRComponent(
@@ -876,6 +889,9 @@ def diff_boards(old: "BoardIR", new: "BoardIR") -> dict:
     *candidate* statement about two files — deciding that they really are
     consecutive revisions is design knowledge.
     """
+
+    if old._ambiguous_net_names or new._ambiguous_net_names:
+        raise ValueError("cannot diff boards with ambiguous net names")
 
     def comp_snapshot(c: IRComponent) -> dict:
         return {

@@ -289,10 +289,11 @@ def write_markdown(path, project: Project, netlist: List[Net], issues: List[Issu
 
 
 def write_json(path, project: Project, netlist: List[Net], issues: List[Issue],
-               erc_summary: Optional[dict] = None) -> None:
+               erc_summary: Optional[dict] = None, erc_status: Optional[dict] = None) -> None:
     stats = project_stats(project, netlist, issues)
     payload = {
         "stats": stats,
+        "erc_status": erc_status or {"status": "not_requested"},
         "sheets": stats["sheets"],
         "components": stats["components"],
         "power_rails": stats["power_rails"],

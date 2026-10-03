@@ -8,6 +8,7 @@ aborting a whole-project review.
 from __future__ import annotations
 
 import re
+import math
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -43,6 +44,18 @@ def _flag(node, name: str, default: bool) -> bool:
     return _text(item[1]).lower() == "yes"
 
 
+def _xy(node):
+    if node is None or len(node) < 3:
+        raise ValueError("electrical item is missing its position")
+    try:
+        values = [float(_text(v)) for v in node[1:4]]
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"invalid electrical coordinate: {node}") from exc
+    if not all(math.isfinite(v) for v in values):
+        raise ValueError(f"non-finite electrical coordinate: {node}")
+    return values[0], values[1], values[2] if len(values) > 2 else 0.0
+
+
 def _parse_lib_pin(node) -> Optional[LibPin]:
     """Parse both KiCad 10 (``pin passive line (number "1")``) and the
     older KiCad 6..9 layout (``pin "1" (type passive) (name ...)``)."""
@@ -56,17 +69,19 @@ def _parse_lib_pin(node) -> Optional[LibPin]:
     first_atom = _text(node[1]) if len(node) > 1 else ""
     # KiCad 10 puts the electrical type in the second atom ("passive", "power_in"...)
     # Older files put the pin number there.
-    if first_atom and not first_atom[0].isdigit() and first_atom[0] not in "+-~":
-        number = _text(number_node[1]) if number_node is not None and len(number_node) > 1 else ""
+    if number_node is not None:
+        number = _text(number_node[1]) if len(number_node) > 1 else ""
         electrical_type = first_atom
     else:
         number = first_atom
-        electrical_type = (
-            _text(type_node[1]) if type_node is not None and len(type_node) > 1 else "unknown"
-        )
+        electrical_type = sexpr.prop(node, "type", "unknown")
     name = _text(name_node[1]) if name_node is not None and len(name_node) > 1 else ""
-    pos = sexpr.xy(at_node) if at_node is not None else (0.0, 0.0, 0.0)
-    hidden = sexpr.first(node, "hide") is not None
+    if not number or at_node is None:
+        raise ValueError("library pin is missing its number or position")
+    pos = _xy(at_node)
+    hide_node = sexpr.first(node, "hide")
+    hidden = "hide" in node[1:] or (hide_node is not None and
+             (len(hide_node) == 1 or _text(hide_node[1]) == "yes"))
     # Empirical KiCad 10 fact (validated against kicad-cli netlist on the
     # example projects and a minimal rotation test bench): the pin `at` y
     # coordinate in the symbol definition has the opposite sign of the
@@ -161,6 +176,8 @@ def transform_point(p: tuple[float, float], rotation: float, mirror: str) -> tup
     un-rotated frame and rotation stays clockwise (90 -> (y, -x)).
     """
     x, y = p
+    if not math.isfinite(rotation) or rotation % 90 != 0:
+        raise ValueError(f"unsupported symbol rotation: {rotation}")
     rot = int(rotation) % 360
     if rot == 90:
         x, y = y, -x
@@ -181,15 +198,14 @@ def transform_point(p: tuple[float, float], rotation: float, mirror: str) -> tup
 def parse_symbol_instance(
     node, lib_symbols: Dict[str, LibSymbol], sheet_path: str = "/",
     instance_overrides: Optional[Dict[str, Dict[str, dict]]] = None,
+    root_uuid: str = "", project_name: str = "",
 ) -> Optional[SymbolInstance]:
     if not sexpr.is_node(node, "symbol"):
         return None
     lib_id_node = sexpr.first(node, "lib_id")
     lib_id = _text(lib_id_node[1]) if lib_id_node is not None and len(lib_id_node) > 1 else ""
     at_node = sexpr.first(node, "at")
-    if at_node is None:
-        return None
-    x, y, rotation = sexpr.xy(at_node)
+    x, y, rotation = _xy(at_node)
     unit_node = sexpr.first(node, "unit")
     body_node = sexpr.first(node, "body_style")
     unit = _text(unit_node[1]) if unit_node is not None and len(unit_node) > 1 else "1"
@@ -205,23 +221,35 @@ def parse_symbol_instance(
     # child sheet carry ``(instances (project ... (path /root/sheet_uuid
     # (reference "R311") (unit 1))))``.  Apply the entry whose path leaf
     # matches this sheet instance.
-    instances_node = next(sexpr.find_all(node, "instances"), None)
+    instances_node = sexpr.first(node, "instances")
     if instances_node is not None:
-        leaf = sheet_path.rstrip("/").rsplit("/", 1)[-1] if sheet_path != "/" else ""
-        for proj in sexpr.children(instances_node, "project"):
-            for p in sexpr.children(proj, "path"):
-                if len(p) < 2:
+        matches = []
+        projects = list(sexpr.children(instances_node, "project"))
+        named = [p for p in projects if len(p) > 1 and _text(p[1]) == project_name]
+        if named:
+            projects = named
+        for proj in projects:
+            for item in sexpr.children(proj, "path"):
+                if len(item) < 2:
                     continue
-                p_leaf = _text(p[1]).rstrip("/").rsplit("/", 1)[-1]
-                if not leaf or p_leaf != leaf:
-                    continue
-                ref_node = sexpr.first(p, "reference")
-                if ref_node is not None and len(ref_node) > 1:
-                    props["Reference"] = _text(ref_node[1])
-                unit_node = sexpr.first(p, "unit")
-                if unit_node is not None and len(unit_node) > 1:
-                    unit = _text(unit_node[1])
-                break
+                raw = "/" + _text(item[1]).strip("/")
+                # Paths carry the root UUID, followed by the entire instance
+                # ancestry. Matching only the leaf aliases nested reuse.
+                parts = raw.strip("/").split("/")
+                if root_uuid:
+                    relative = "/" + "/".join(parts[1:]) if parts[0] == root_uuid else raw
+                else:
+                    relative = "/" + "/".join(parts[1:])
+                if relative == sheet_path or raw == sheet_path:
+                    matches.append(item)
+        overrides = {(sexpr.prop(p, "reference"), sexpr.prop(p, "unit", unit))
+                     for p in matches}
+        if len(overrides) > 1:
+            raise ValueError(f"ambiguous symbol instance overrides at {sheet_path}")
+        if overrides:
+            reference, unit = next(iter(overrides))
+            if reference:
+                props["Reference"] = reference
     uuid_node = sexpr.first(node, "uuid")
     symbol = SymbolInstance(
         ref=props.get("Reference", ""),
@@ -241,50 +269,23 @@ def parse_symbol_instance(
     )
 
     lib = lib_symbols.get(lib_id)
-    if lib is not None:
-        symbol.power = lib.is_power
-    lib_pins = lib.pins_for(unit, body_style) if lib else []
-    pin_positions: Dict[str, tuple[float, float]] = {}
+    if lib is None:
+        raise ValueError(f"missing embedded library symbol {lib_id!r} for {symbol.ref} at {sheet_path}")
+    symbol.power = lib.is_power
+    lib_pins = lib.pins_for(unit, body_style)
+    pin_nodes = {_text(p[1]): p for p in sexpr.children(node, "pin") if len(p) > 1}
+    if pin_nodes and not lib_pins:
+        raise ValueError(f"missing pin geometry for {symbol.ref} ({lib_id}, unit {unit}, body {body_style})")
+    # Placed (pin ...) records contain UUID metadata, not pin geometry or an
+    # exhaustive pin inventory. The embedded library is authoritative.
     for lp in lib_pins:
         lx, ly = transform_point(lp.pos, rotation, mirror)
-        pin_positions[lp.number] = (x + lx, y + ly)
-
-    seen: set[str] = set()
-    for pin_node in sexpr.children(node, "pin"):
-        if len(pin_node) < 2:
-            continue
-        number = _text(pin_node[1])
-        if not number or number in seen:
-            continue
-        lp = next((p for p in lib_pins if p.number == number), None)
-        if lib is not None and lib_pins and lp is None:
-            # Multi-unit symbols may still carry the other units' pin UUIDs in
-            # the file.  Those pins are not electrically active on this unit;
-            # keeping them (and defaulting to the origin) would create bogus
-            # shared-pin nets.
-            continue
-        seen.add(number)
-        if lib is None or lp is None:
-            # Power symbols (and a few legacy symbols) define their connection
-            # point at the instance origin.
-            pos = (x, y)
-            name = ""
-            etype = "power_in" if lib_id.startswith("power:") else "unknown"
-        else:
-            pos = pin_positions.get(number, (x, y))
-            name = lp.name
-            etype = lp.electrical_type or "unknown"
-        uuid_node = sexpr.first(pin_node, "uuid")
-        symbol.pins.append(
-            PinInstance(
-                number=number,
-                name=name,
-                electrical_type=etype,
-                pos=pos,
-                uuid=_text(uuid_node[1]) if uuid_node is not None and len(uuid_node) > 1 else "",
-                hidden=bool(lp.hidden) if lp is not None else False,
-            )
-        )
+        pn = pin_nodes.get(lp.number)
+        symbol.pins.append(PinInstance(
+            number=lp.number, name=lp.name, electrical_type=lp.electrical_type,
+            pos=(x + lx, y + ly), uuid=sexpr.prop(pn, "uuid") if pn else "",
+            hidden=lp.hidden,
+        ))
     return symbol
 
 
@@ -294,9 +295,7 @@ def parse_sheet_ref(node) -> Optional[SheetRef]:
     at_node = sexpr.first(node, "at")
     size_node = sexpr.first(node, "size")
     uuid_node = sexpr.first(node, "uuid")
-    if at_node is None:
-        return None
-    x, y, _ = sexpr.xy(at_node)
+    x, y, _ = _xy(at_node)
     sx = sexpr.to_float(size_node[1]) if size_node is not None and len(size_node) > 1 else 0.0
     sy = sexpr.to_float(size_node[2]) if size_node is not None and len(size_node) > 2 else 0.0
     props = {
@@ -311,7 +310,7 @@ def parse_sheet_ref(node) -> Optional[SheetRef]:
         pname = _text(p[1])
         direction = _text(p[2]) if len(p) > 2 else ""
         pat = sexpr.first(p, "at")
-        px, py, _ = sexpr.xy(pat) if pat is not None else (0.0, 0.0, 0.0)
+        px, py, _ = _xy(pat)
         pins.append(SheetPin(name=pname, direction=direction, pos=(px, py)))
 
     raw_paths: List[str] = []
@@ -332,7 +331,7 @@ def parse_sheet_ref(node) -> Optional[SheetRef]:
     # Keep paths that really point at this sheet uuid together with their page
     # numbers; the project loader uses them as PDF page map.
     paths = [p for p in raw_paths if uuid and (p == f"/{uuid}" or p.endswith(f"/{uuid}"))]
-    pages = {p: path_pages[p] for p in paths if p in path_pages}
+    pages = path_pages
     first_page = next((v for v in path_pages.values() if v), "")
     return SheetRef(
         name=props.get("Sheetname", ""),
@@ -347,10 +346,13 @@ def parse_sheet_ref(node) -> Optional[SheetRef]:
     )
 
 
-def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
-    text = file.read_text(encoding="utf-8", errors="replace")
+def parse_sheet_file(file: Path, sheet_path: str = "/", *,
+                     root_uuid: str = "", project_name: str = "") -> SheetData:
+    text = file.read_text(encoding="utf-8")
     nodes = sexpr.parse(text)
-    root = nodes[0] if nodes and sexpr.is_node(nodes[0], "kicad_sch") else []
+    if len(nodes) != 1 or not sexpr.is_node(nodes[0], "kicad_sch"):
+        raise ValueError(f"expected one kicad_sch document in {file}")
+    root = nodes[0]
 
     sheet = SheetData(path=sheet_path, file=file)
     for child in sexpr.children(root):
@@ -380,6 +382,13 @@ def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
                 sheet.title_fields[fname] = _text(field_node[1])
         sheet.title = sheet.title_fields.get("title", "")
 
+    if sheet_path == "/":
+        for instance in sexpr.children(sexpr.first(root, "sheet_instances"), "path"):
+            if len(instance) > 1 and _text(instance[1]) == "/":
+                page = sexpr.prop(instance, "page")
+                if page.isdigit():
+                    sheet.page_no = int(page)
+
     sheet.lib_symbols = parse_lib_symbols(root)
     instance_overrides = parse_lib_instances(root)
 
@@ -387,18 +396,21 @@ def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
         kind = child[0]
         if kind == "symbol":
             symbol = parse_symbol_instance(child, sheet.lib_symbols, sheet_path,
-                                           instance_overrides)
+                                           instance_overrides, root_uuid or sheet.uuid,
+                                           project_name or file.stem)
             if symbol is not None:
                 sheet.symbols.append(symbol)
         elif kind == "wire":
             pts = sexpr.first(child, "pts")
             xys = list(sexpr.children(pts, "xy")) if pts is not None else []
-            if len(xys) >= 2:
+            if len(xys) != 2:
+                raise ValueError(f"wire requires two endpoints in {file}")
+            if len(xys) == 2:
                 uuid_node = sexpr.first(child, "uuid")
                 sheet.wires.append(
                     Wire(
-                        p1=sexpr.pair_xy(xys[0]),
-                        p2=sexpr.pair_xy(xys[1]),
+                        p1=_xy(xys[0])[:2],
+                        p2=_xy(xys[1])[:2],
                         uuid=_text(uuid_node[1]) if uuid_node is not None and len(uuid_node) > 1 else "",
                     )
                 )
@@ -406,7 +418,7 @@ def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
             if len(child) < 2:
                 continue
             at_node = sexpr.first(child, "at")
-            x, y, rot = sexpr.xy(at_node) if at_node is not None else (0.0, 0.0, 0.0)
+            x, y, rot = _xy(at_node)
             shape_node = sexpr.first(child, "shape")
             uuid_node = sexpr.first(child, "uuid")
             sheet.labels.append(
@@ -422,7 +434,7 @@ def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
         elif kind == "junction":
             at_node = sexpr.first(child, "at")
             if at_node is not None:
-                x, y, _ = sexpr.xy(at_node)
+                x, y, _ = _xy(at_node)
                 uuid_node = sexpr.first(child, "uuid")
                 sheet.junctions.append(
                     Junction(pos=(x, y), uuid=_text(uuid_node[1]) if uuid_node is not None and len(uuid_node) > 1 else "")
@@ -430,7 +442,7 @@ def parse_sheet_file(file: Path, sheet_path: str = "/") -> SheetData:
         elif kind == "no_connect":
             at_node = sexpr.first(child, "at")
             if at_node is not None:
-                x, y, _ = sexpr.xy(at_node)
+                x, y, _ = _xy(at_node)
                 uuid_node = sexpr.first(child, "uuid")
                 sheet.no_connects.append(
                     NoConnect(pos=(x, y), uuid=_text(uuid_node[1]) if uuid_node is not None and len(uuid_node) > 1 else "")
@@ -526,34 +538,44 @@ def load_project(input_path) -> Project:
     root_file = resolve_root_file(input_path)
     project = Project(root=root_file.parent)
     visited: set[str] = set()
-    queue: list[tuple[str, Path]] = [("/", root_file)]
+    queue = [("/", root_file, ())]
+    root_uuid = ""
     page_by_path: Dict[str, int] = {"/": 1}
     while queue:
-        path, file = queue.pop(0)
+        path, file, ancestors = queue.pop(0)
+        file = file.resolve()
+        if file in ancestors:
+            raise ValueError(f"recursive schematic hierarchy: {file} at {path}")
         key = str(Path(path))
         if key in visited:
             continue
         visited.add(key)
-        sheet = parse_sheet_file(file, path)
-        sheet.page_no = page_by_path.get(path, 0)
+        sheet = parse_sheet_file(file, path, root_uuid=root_uuid, project_name=root_file.stem)
+        if path == "/":
+            root_uuid = sheet.uuid
+        if path != "/" or not sheet.page_no:
+            sheet.page_no = page_by_path.get(path, 0)
         project.sheets[path] = sheet
         project.sheet_order.append(path)
         project.files.append(file.resolve())
         for ref in sheet.sheets:
-            child_paths = ref.paths or [f"{path.rstrip('/')}/{ref.uuid}"]
-            # Normalise the ref so first_path() is correct for hierarchy joins.
-            ref.paths = child_paths
+            if not ref.uuid:
+                raise ValueError(f"sheet reference without UUID in {file}")
+            # Expand exactly the child of THIS parent instance. Stored
+            # instance lists may contain paths belonging to other parents.
+            child_path = f"{path.rstrip('/')}/{ref.uuid}"
+            ref.paths = [child_path]
             child_file = Path(ref.file)
-            candidates = [root_file.parent / child_file]
-            if not child_file.is_absolute():
-                candidates.append(file.parent / child_file)
-            resolved = next((c for c in candidates if c.exists()), candidates[0])
-            for child_path in child_paths:
-                page_text = ref.pages.get(child_path, "") or ref.page
-                if str(page_text).isdigit():
-                    page_by_path[child_path] = int(page_text)
-                if child_path not in visited:
-                    queue.append((child_path, resolved))
+            candidates = [file.parent / child_file, root_file.parent / child_file]
+            resolved = next((c for c in candidates if c.is_file()), candidates[0])
+            raw_parent = f"/{root_uuid}{path.rstrip('/')}"
+            raw_child = f"/{root_uuid}{child_path}"
+            page_text = ref.pages.get(raw_child, ref.pages.get(raw_parent, "")) or ref.page
+            if str(page_text).isdigit():
+                page_by_path[child_path] = int(page_text)
+            if child_path in visited or any(p == child_path for p, _, _ in queue):
+                raise ValueError(f"duplicate sheet instance path {child_path}")
+            queue.append((child_path, resolved, ancestors + (file,)))
     return project
 
 

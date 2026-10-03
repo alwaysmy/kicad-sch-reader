@@ -48,9 +48,6 @@ class LibSymbol:
             combined[pin.number] = pin
         if combined:
             return list(combined.values())
-        # Any unit is better than nothing (rare malformed/legacy libraries).
-        if self.units:
-            return next(iter(self.units.values()))
         return []
 
 

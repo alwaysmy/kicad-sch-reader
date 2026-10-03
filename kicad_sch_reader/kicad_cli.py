@@ -11,6 +11,7 @@ import json
 import os
 import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 from typing import Dict, List, Optional
 
@@ -53,7 +54,8 @@ def _run(args: List[str], timeout: int = 300) -> subprocess.CompletedProcess:
         errors="replace",
         timeout=timeout,
     )
-    if proc.returncode != 0 and "--exit-code-violations" not in args:
+    accepted = {0, 5} if "--exit-code-violations" in args else {0}
+    if proc.returncode not in accepted:
         detail = proc.stderr.strip() or proc.stdout.strip()
         raise KicadCliError(f"kicad-cli {' '.join(args)} failed: {detail}")
     return proc
@@ -64,31 +66,46 @@ def run_erc(root_sch, output_json: Optional[str] = None, severity: str = "all") 
 
     *severity* may be ``all``, ``error`` or ``warning``.
     """
-    tmp = output_json or str(Path(root_sch).with_suffix("").with_suffix(".erc.json"))
-    args = ["sch", "erc", "--format", "json", "--severity-all", "--exit-code-violations"]
-    args += ["-o", tmp, str(root_sch)]
-    proc = _run(args)
-    # With --exit-code-violations kicad-cli returns a non-zero code whenever
-    # violations exist; that is a successful ERC run as far as we are concerned.
-    del proc
-    path = Path(tmp)
-    if not path.exists():
-        return []
-    data = json.loads(path.read_text(encoding="utf-8"))
-    if isinstance(data, list):
-        return data
-    if isinstance(data, dict) and "markers" in data:
-        return list(data["markers"])
-    if isinstance(data, dict) and "sheets" in data:
-        # KiCad 10 schema: violations live under sheets[].violations.
-        flattened: List[dict] = []
-        for sheet in data["sheets"]:
-            for violation in sheet.get("violations", []):
-                item = dict(violation)
-                item.setdefault("sheet_path", sheet.get("path", ""))
-                flattened.append(item)
-        return flattened
-    return []
+    if severity not in {"all", "error", "warning"}:
+        raise ValueError(f"invalid ERC severity: {severity}")
+    # A fresh temporary destination prevents reusing a report from an earlier
+    # invocation, and does not write sidecars into the source project.
+    with tempfile.TemporaryDirectory(prefix="kicad-erc-") as td:
+        path = Path(td) / "report.json"
+        args = ["sch", "erc", "--format", "json", f"--severity-{severity}",
+                "--exit-code-violations", "-o", str(path), str(root_sch)]
+        proc = _run(args)
+        if proc.returncode not in (0, 5):
+            raise KicadCliError(f"ERC execution failed ({proc.returncode}): {proc.stderr or proc.stdout}")
+        if not path.is_file():
+            raise KicadCliError("ERC produced no fresh JSON report")
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            if isinstance(data, list) and all(isinstance(v, dict) for v in data):
+                markers = data
+            elif isinstance(data, dict) and isinstance(data.get("markers"), list):
+                markers = data["markers"]
+            elif isinstance(data, dict) and isinstance(data.get("sheets"), list):
+                markers = []
+                for sheet in data["sheets"]:
+                    violations = sheet["violations"]
+                    if not isinstance(violations, list):
+                        raise ValueError("violations must be a list")
+                    for violation in violations:
+                        item = dict(violation)
+                        item.setdefault("sheet_path", sheet.get("path", ""))
+                        markers.append(item)
+            else:
+                raise ValueError("unrecognized ERC report schema")
+            if not all(isinstance(v, dict) for v in markers):
+                raise ValueError("ERC markers must be objects")
+            if proc.returncode == 5 and not markers:
+                raise ValueError("ERC reports violations but contains no markers")
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            raise KicadCliError(f"invalid ERC JSON report: {exc}") from exc
+        if output_json is not None:
+            Path(output_json).write_text(path.read_text(encoding="utf-8"), encoding="utf-8")
+        return markers
 
 
 def export_netlist(root_sch, output_file: Optional[str] = None, fmt: str = "kicadsexpr") -> Path:

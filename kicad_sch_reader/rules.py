@@ -164,6 +164,23 @@ def _build_pin_net_index(netlist: Iterable[Net]) -> Dict[tuple, Net]:
     return out
 
 
+def check_wired_no_connects(project: Project, netlist: Iterable[Net]) -> List[Issue]:
+    """Report NC annotations that contradict preserved electrical geometry."""
+    index = _build_pin_net_index(netlist)
+    issues = []
+    for sym in project.all_symbols():
+        for pin in sym.pins:
+            net = index.get((sym.sheet_path, sym.ref, pin.number))
+            if pin.no_connect and net is not None:
+                issues.append(Issue(
+                    code="R305", severity="warning", evidence="structural",
+                    title="NC 标记与实际连线冲突",
+                    message=f"{sym.ref}.{pin.number} 标记为 NC，但仍连接到网络 {net.name}；NC 不会断开导线",
+                    sheet_path=sym.sheet_path, ref=sym.ref, pin=pin.number, net=net.name,
+                ))
+    return issues
+
+
 def check_floating_pins(project: Project, netlist: Iterable[Net]) -> List[Issue]:
     pin_net = _build_pin_net_index(netlist)
     issues: List[Issue] = []
@@ -880,6 +897,7 @@ def run_all_checks(
     issues.extend(check_missing_fields(project))
     issues.extend(check_floating_pins(project, netlist))
     issues.extend(check_nc_pin_inventory(project))
+    issues.extend(check_wired_no_connects(project, netlist))
     issues.extend(check_single_pin_nets(netlist))
     issues.extend(check_net_name_conflicts(netlist))
     issues.extend(check_net_naming(netlist))

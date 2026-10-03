@@ -18,7 +18,12 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "repos" / "lceda-sch-reader"))
 
-from lceda_epro_review import review_epro  # noqa: E402
+try:
+    from lceda_epro_review import review_epro  # noqa: E402
+except ModuleNotFoundError as exc:
+    if exc.name != "lceda_reader":
+        raise
+    review_epro = None
 
 EPRO = ROOT / "examples" / "LIA_DigitalBoard_RevA" / "ProPrj_XC7A35TCSG325_EmoeSOM_2026-05-18.epro"
 
@@ -32,7 +37,7 @@ def _main_board():
 
 
 
-@unittest.skipUnless(EPRO.exists(), "LIA_DigitalBoard_RevA .epro fixture missing")
+@unittest.skipUnless(EPRO.exists() and review_epro is not None, "LIA_DigitalBoard_RevA .epro fixture missing")
 class TestCbbExpansion(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

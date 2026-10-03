@@ -8,6 +8,7 @@ project acceptance criteria.
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 import unittest
@@ -19,11 +20,12 @@ sys.path.insert(0, str(ROOT))
 from kicad_sch_reader import connectivity, parser  # noqa: E402
 from kicad_sch_reader.rules import run_all_checks  # noqa: E402
 
-EXAMPLES = ROOT / "examples"
+EXAMPLES = Path(os.environ.get("KICAD_READER_EXAMPLES", str(ROOT / "examples")))
 MAINBOARD = EXAMPLES / "Lock-In-Amplifier_MainBoard_V0.1"
 POWERBOARD = EXAMPLES / "Lock-In-Amplifier_PowerBoard_V0.1"
 
 
+@unittest.skipUnless(MAINBOARD.exists(), "private KiCad example fixture missing")
 class TestMainBoard(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -52,6 +54,7 @@ class TestMainBoard(unittest.TestCase):
         self.assertEqual(duplicate_same_sheet, [])
 
 
+@unittest.skipUnless(POWERBOARD.exists(), "private KiCad example fixture missing")
 class TestPowerBoard(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -74,6 +77,7 @@ class TestPowerBoard(unittest.TestCase):
         self.assertGreaterEqual(len(issues), 1)
 
 
+@unittest.skipUnless(MAINBOARD.exists(), "private KiCad example fixture missing")
 class TestCLIFeatures(unittest.TestCase):
     def run_cli(self, *args):
         return subprocess.run(
@@ -302,6 +306,7 @@ class TestInterfaceDirectionHeuristic(unittest.TestCase):
                        sheet_path="/", lib_id="Device:R", value="x", footprint="")]
         net = Net(name="MGT_TX3_P", pins=pins)
         self.assertEqual([i for i in rules.check_interface_direction(None, [net]) if i.code == "IFC901"], [])
+@unittest.skipUnless(MAINBOARD.exists(), "private KiCad example fixture missing")
 class TestHierarchyAndAliases(unittest.TestCase):
     """Regression tests for report indexes and hierarchical net aliases."""
 

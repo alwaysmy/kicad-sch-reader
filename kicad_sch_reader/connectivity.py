@@ -25,7 +25,7 @@ from .model import (
 )
 
 Point = Tuple[int, int]  # quantized point key
-EPS_MM = 0.001  # position match tolerance (1 um)
+EPS_MM = 0.000001  # numerical grid (1 nm), not a proximity/snap tolerance
 
 
 def _path_depth(path: str) -> int:
@@ -77,17 +77,12 @@ def qpoint(x: float, y: float) -> Point:
     return (int(round(x / EPS_MM)), int(round(y / EPS_MM)))
 
 
-def _distance_to_segment(p: Tuple[float, float], a: Tuple[float, float], b: Tuple[float, float]) -> float:
-    ax, ay = a
-    bx, by = b
-    px, py = p
-    dx, dy = bx - ax, by - ay
-    if dx == 0 and dy == 0:
-        return ((px - ax) ** 2 + (py - ay) ** 2) ** 0.5
-    t = ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)
-    t = max(0.0, min(1.0, t))
-    cx, cy = ax + t * dx, ay + t * dy
-    return ((px - cx) ** 2 + (py - cy) ** 2) ** 0.5
+def _point_on_segment(p: Point, a: Point, b: Point) -> bool:
+    """Exact incidence on the quantized grid; never bridge nearby conductors."""
+    return ((p[0] - a[0]) * (b[1] - a[1]) ==
+            (p[1] - a[1]) * (b[0] - a[0]) and
+            min(a[0], b[0]) <= p[0] <= max(a[0], b[0]) and
+            min(a[1], b[1]) <= p[1] <= max(a[1], b[1]))
 
 
 def build_sheet_graph(sheet: SheetData):
@@ -126,28 +121,11 @@ def build_sheet_graph(sheet: SheetData):
     for nc in sheet.no_connects:
         k = qpoint(*nc.pos)
         ensure(k, nc.pos)
-        geometry_keys.add(k)
         nc_keys.add(k)
 
     for label in sheet.labels:
         k = qpoint(*label.pos)
-        if k not in dsu.parent:
-            # A label may legally sit in the middle of a wire; snap it to the
-            # closest segment instead of declaring it dangling immediately.
-            best = None
-            best_d = 0.01
-            for a, b in wire_segments:
-                d = _distance_to_segment(label.pos, a, b)
-                if d < best_d:
-                    best_d = d
-                    best = (a, b)
-            if best is not None:
-                k = qpoint(*label.pos)
-                ensure(k, label.pos)
-                dsu.union(k, qpoint(*best[0]))
-                dsu.union(k, qpoint(*best[1]))
-            else:
-                ensure(k, label.pos)
+        ensure(k, label.pos)
         geometry_keys.add(k)
         label_keys.setdefault(k, []).append(label)
 
@@ -157,9 +135,29 @@ def build_sheet_graph(sheet: SheetData):
     # pin-to-pin contact, e.g. a capacitor pin touching a power symbol).
     for sym in sheet.symbols:
         for pin in sym.pins:
+            if pin.electrical_type.lower() in ("no_connect", "not_connected"):
+                continue
             k = qpoint(*pin.pos)
             ensure(k, pin.pos)
             pin_keys.setdefault(k, []).append((pin, sym))
+
+    # Sheet pins are electrical anchors even without a wire endpoint.
+    for ref in sheet.sheets:
+        for pin in ref.pins:
+            k = qpoint(*pin.pos)
+            ensure(k, pin.pos)
+            geometry_keys.add(k)
+
+    # KiCad 10 only joins a segment interior via an explicit junction or a
+    # label anchor. A bare T endpoint / pin touching an unsplit wire is not
+    # connected (verified with native CLI); do not invent a junction there.
+    anchors = {qpoint(*j.pos) for j in sheet.junctions} | set(label_keys)
+    for k in anchors:
+        for a, b in wire_segments:
+            ka, kb = qpoint(*a), qpoint(*b)
+            if _point_on_segment(k, ka, kb):
+                dsu.union(k, ka)
+                geometry_keys.add(k)
 
     return dsu, positions, pin_keys, nc_keys, label_keys, geometry_keys
 
@@ -209,15 +207,11 @@ def build_local_nets(project: Project):
             for pin in sym.pins:
                 k = qpoint(*pin.pos)
                 key = (sym.ref, pin.number, k)
-                if k in nc_keys:
-                    pin.no_connect = True
-                    pin_net_key[path][key] = None
-                    continue
+                # An NC marker is an annotation, not an electrical eraser.
+                # Preserve contradictory real wiring for ERC/review to flag.
+                pin.no_connect = (k in nc_keys or pin.electrical_type.lower()
+                                  in ("no_connect", "not_connected"))
                 if pin.electrical_type.lower() in ("no_connect", "not_connected"):
-                    # Only `no_connect`/`not_connected` pins are intentionally
-                    # unconnected.  `free` pins are ERC-neutral but still
-                    # electrically connectable (TVS/ESD devices use them).
-                    pin.no_connect = True
                     pin_net_key[path][key] = None
                     continue
                 shared_pin_point = len(pin_keys.get(k, [])) >= 2
@@ -437,7 +431,7 @@ def build_netlist(project: Project) -> List[Net]:
             depth = _path_depth(local.sheet_path)
             for lname in set(local.labels):
                 if lname:
-                    group.label_entries.append((depth, lname))
+                    group.label_entries.append((depth, lname, local.sheet_path))
             group.point_count += len(local.points)
 
     named_or_pinned_groups = [
@@ -448,14 +442,16 @@ def build_netlist(project: Project) -> List[Net]:
     # KiCad-compatible hierarchical naming: /<Sheetname>/<label> for child
     # sheets, /<label> for the root sheet.
     sheet_names: Dict[str, str] = {"/": ""}
-    for path in project.sheet_order:
-        if path == "/":
-            continue
-        for parent in project.sheets.values():
-            for ref in parent.sheets:
-                if ref.first_path == path:
-                    sheet_names[path] = ref.name
-                    break
+    for parent_path in project.sheet_order:
+        for ref in project.sheets[parent_path].sheets:
+            parent_name = sheet_names.get(parent_path, "")
+            sheet_names[ref.first_path] = "/".join(x for x in (parent_name, ref.name.replace("/", "{slash}")) if x)
+
+    def scoped_name(path: str, label: str) -> str:
+        # KiCad escapes slash characters within literal names.
+        label = label.replace("/", "{slash}")
+        prefix = sheet_names.get(path, "")
+        return f"/{prefix}/{label}" if prefix else f"/{label}"
 
     nets: List[Net] = []
     for order, group in enumerate(sorted(named_or_pinned_groups, key=lambda n: sorted(n.pins[0].ref if n.pins else ""))):
@@ -486,13 +482,13 @@ def build_netlist(project: Project) -> List[Net]:
                 hd = min(_path_depth(x) for x in paths)
                 hier_best = (hd, hname)
             if local_best is not None and (hier_best is None or local_best[0] < hier_best[0]):
-                group.name = local_best[1] if local_best[1].startswith("/") else f"/{local_best[1]}"
+                group.name = scoped_name(local_best[2], local_best[1])
             elif hier_best is not None:
                 hname = hier_best[1]
                 paths = sorted(group.hier_sources.get(hname, {"/"}))
                 path = paths[0] if paths else "/"
                 sheet_name = sheet_names.get(path, "")
-                group.name = f"/{sheet_name}/{hname}" if sheet_name else f"/{hname}"
+                group.name = scoped_name(path, hname)
             else:
                 group.name = f"N${order + 1}"
         nets.append(group)

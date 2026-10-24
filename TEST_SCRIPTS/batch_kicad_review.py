@@ -130,17 +130,21 @@ def main() -> int:
                 existing["netlist_check"] = {
                     "common": val["common_pins"], "official": val["official_pins"],
                     "missing": val["missing_pins"], "extra": val["extra_pins"],
-                    "name_mismatches": val["name_mismatches"], "precision": val["precision"],
-                    "missing_samples": [f"{k[0]}.{k[1]}" for k in val["missing_samples"]],
-                    "extra_samples": [f"{k[0]}.{k[1]}" for k in val["extra_samples"]],
-                    "mismatch_samples": [
-                        f"{m[0][0]}.{m[0][1]}: ours={m[1]!r} official={m[2]!r}"
-                        for m in val["mismatch_samples"]
-                    ],
+                    "split_nets": val["split_nets"], "shorted_nets": val["shorted_nets"],
+                    "partition_mismatch": val["partition_mismatch_pins"],
+                    "missing_samples": [f"{k[1]}.{k[2]}" for k in val["missing_samples"]],
+                    "extra_samples": [f"{k[1]}.{k[2]}" for k in val["extra_samples"]],
                 }
-                flag = "PASS" if val["missing_pins"] == 0 and val["precision"] >= 0.95 else "WEAK"
+                clean = (val["missing_pins"] == 0 and val["extra_pins"] == 0
+                         and val["split_nets"] == 0 and val["shorted_nets"] == 0
+                         and val["partition_mismatch_pins"] == 0)
+                if val["common_pins"] == 0:
+                    flag = "N/A"   # un-annotated project: nothing comparable
+                else:
+                    flag = "PASS" if clean else "FAIL"
                 print(f"[netlist {flag}] {proj.name}: common={val['common_pins']}/{val['official_pins']} "
-                      f"missing={val['missing_pins']} precision={val['precision']}")
+                      f"missing={val['missing_pins']} extra={val['extra_pins']} "
+                      f"split={val['split_nets']} short={val['shorted_nets']}")
             except Exception as exc:
                 existing["netlist_check"] = {"error": f"{type(exc).__name__}: {exc}"}
                 print(f"[netlist SKIP] {proj.name}: {type(exc).__name__}: {exc}")
@@ -151,11 +155,11 @@ def main() -> int:
     ok_count = sum(1 for r in results if r.get("ok"))
     md = [f"# Batch KiCad review — {stamp}", "",
           f"- total: {len(results)}  ok: {ok_count}  failed: {failures}", "",
-          "| project | ver | sheets | symbols | nets | texts | issues(err) | netlist check |", 
+          "| project | ver | sheets | symbols | nets | texts | issues(err) | netlist check |",
           "| --- | --- | --- | --- | --- | --- | --- | --- |"]
     for r in results:
         nc = r.get("netlist_check", {})
-        ncs = (f"missing={nc['missing']} prec={nc['precision']}" if "missing" in nc
+        ncs = (f"missing={nc['missing']} extra={nc['extra']}" if "missing" in nc
                else nc.get("error", "-"))
         md.append(
             f"| {r['name']} | {','.join(r.get('file_version', []))} | {r.get('sheets','-')} "

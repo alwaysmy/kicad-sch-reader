@@ -34,7 +34,8 @@ def official_partitions(path, root_uuid="", *, include_unconnected=False):
         raw = sexpr.prop(sheet, 'tstamps') if sheet else ''
         if not ref or not raw or ref in paths:
             raise ValueError(f'ambiguous/missing official component identity: {ref}')
-        paths[ref] = _sheet_path(raw, root_uuid)
+        if not ref.endswith('?'):
+            paths[ref] = _sheet_path(raw, root_uuid)
     groups, names = [], []
     for net in sexpr.children(sexpr.first(root, 'nets'), 'net'):
         name = sexpr.prop(net, 'name')
@@ -43,7 +44,7 @@ def official_partitions(path, root_uuid="", *, include_unconnected=False):
         pins = set()
         for node in sexpr.children(net, 'node'):
             ref, pin = sexpr.prop(node, 'ref'), sexpr.prop(node, 'pin')
-            if ref.startswith('#'):
+            if ref.startswith('#') or ref.endswith('?'):
                 continue
             if ref not in paths or not pin:
                 raise ValueError(f'unknown official pin identity: {ref}.{pin}')
@@ -63,7 +64,8 @@ def _official_xml(text, root_uuid, include_unconnected):
         sheet = comp.find("sheetpath")
         if not ref or ref in paths or sheet is None or sheet.get("tstamps") is None:
             raise ValueError(f"ambiguous/missing official component identity: {ref}")
-        paths[ref] = _sheet_path(sheet.get("tstamps"), root_uuid)
+        if not ref.endswith("?"):
+            paths[ref] = _sheet_path(sheet.get("tstamps"), root_uuid)
     groups, names = [], []
     for net in root.findall("nets/net"):
         name = net.get("name", "")
@@ -72,7 +74,7 @@ def _official_xml(text, root_uuid, include_unconnected):
         pins = set()
         for node in net.findall("node"):
             ref, pin = node.get("ref", ""), node.get("pin", "")
-            if ref.startswith("#"):
+            if ref.startswith("#") or ref.endswith("?"):
                 continue
             if ref not in paths or not pin:
                 raise ValueError(f"unknown official pin identity: {ref}.{pin}")
@@ -82,10 +84,26 @@ def _official_xml(text, root_uuid, include_unconnected):
     return groups, names
 
 
+def _excluded_by_kicad(symbol) -> bool:
+    """Whether KiCad's own netlist exporter omits this symbol.
+
+    Empirically verified against kicad-cli exports (EmoeTECtrl V1.0): symbols
+    with ``dnp=yes`` AND ``in_bom=no`` AND ``on_board=no`` (all three) are
+    absent from the official netlist, while dnp-only or in_bom=no symbols
+    are still exported.  Mirror that exact rule so both partitions describe
+    the same physical pin set.  Un-annotated placeholders ("R?", "J?") are
+    also excluded: they carry no stable reference identity to compare by.
+    """
+    if symbol.ref.endswith("?"):
+        return True
+    return symbol.dnp and not symbol.in_bom and not symbol.on_board
+
+
 def reader_partitions(project, netlist, *, include_unconnected=False):
     by_ref = defaultdict(list)
     for symbol in project.all_symbols():
-        if symbol.ref and not symbol.ref.startswith('#'):
+        if symbol.ref and not symbol.ref.startswith('#') \
+                and not _excluded_by_kicad(symbol):
             by_ref[symbol.ref].append(symbol)
     paths = {}
     for ref, symbols in by_ref.items():
@@ -108,7 +126,8 @@ def reader_partitions(project, netlist, *, include_unconnected=False):
     groups, names = [], []
     for net in netlist:
         pins = frozenset((paths[p.ref], p.ref, p.pin_number)
-                        for p in net.pins if not p.ref.startswith('#'))
+                         for p in net.pins
+                         if not p.ref.startswith('#') and p.ref in paths)
         if pins:
             groups.append(pins); names.append(net.name)
     if include_unconnected:

@@ -94,7 +94,7 @@ class ParseIntegrity(unittest.TestCase):
 
     def test_missing_library_does_not_invent_origin_pins(self):
         # Missing library degrades (no raise): zero pins, lib_missing flag,
-        # and rule R610 reports the connectivity gap. The one hard invariant
+        # and rule RU610 reports the connectivity gap. The one hard invariant
         # kept from the raise-era is that no pin geometry is ever invented.
         s = self.parse_text('(kicad_sch '+PLACED.format(instances='')+')')
         sym = s.symbols[0]
@@ -255,7 +255,7 @@ class MalformedGeometryIntegrity(unittest.TestCase):
         s=SheetData(path='/',file=Path('synthetic'),symbols=[sym('R1',(0,0)),sym('R2',(10,0))],
                     wires=[Wire((0,0),(10,0))],no_connects=[NoConnect((0,0))])
         p=project(s);nets=c.build_netlist(p)
-        self.assertEqual([i.code for i in check_wired_no_connects(p,nets)],['R305'])
+        self.assertEqual([i.code for i in check_wired_no_connects(p,nets)],['RU305'])
 
     def test_hidden_electrical_nc_stack_is_not_a_network(self):
         pins=[PinInstance(str(i),'NC','no_connect',(0,0),hidden=True) for i in range(4)]

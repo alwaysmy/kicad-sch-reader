@@ -159,22 +159,22 @@ KiCad 把同一多单元器件的每个 unit 存为独立 `symbol` 节点（同 
 
 | 代码 | 级别 | evidence | 含义 |
 | --- | --- | --- | --- |
-| R101/R102 | error/warning | structural | 同页/跨页重复位号 |
-| R103 | info | heuristic | 位号格式/编号汇总（单条聚合；只枚举百位段内近距缺号，跨页 hundreds 空号只计数） |
-| R201/R202 | warning/info | declared | 缺封装 / 值为空 |
-| R301 | error/warning/info | structural | 引脚未连接且未标 NC（按 pin type 分级） |
-| R304 | info/warning | structural | NC 引脚人工确认清单（按器件分组一行；power_in 被 NC 仍逐脚并升级 warning） |
-| R302/R303 | warning | structural | 单引脚网络 / 无引脚标签 |
-| R305 | warning | structural | NC 标记与实际连线冲突（NC 是注释不是断开，保留电气几何并报告矛盾） |
-| R401 | error | structural | 同一物理域存在多个全局网络名 |
-| R402 | info | heuristic | 未命名（N$）网络占比提示 |
-| R501 | info | heuristic | 电源输入引脚网络上未发现去耦电容 |
-| R601/R602 | error/warning | structural | 图纸文件缺失 / sheet-pin 无对应子图标签 |
-| R603 | warning/info | declared | 标题栏字段缺失（title/date/rev/company） |
-| R610 | warning | structural | 符号库缺失：内嵌库与工程本地 .kicad_sym 均未提供引脚定义的器件（按图纸分组；这些器件不参与连通性） |
-| R701 | info | structural | DNP 器件清单（按图纸分组一行，TP*/H* 计数合并） |
-| R801 | info | structural | 极性器件（D*/LED*/TVS*）引脚极性未解析清单 |
-| IFC901 | warning/info | declared | 接口方向语义：TX/RX/MOSI 命名与 MCU 复用引脚名核对（双发送/全接收/MOSI-MISO 互换→warning；电气类型矛盾→仅 info，符号类型常不规范不作判定依据） |
+| RU101/RU102 | error/warning | structural | 同页/跨页重复位号 |
+| RU103 | info | heuristic | 位号格式/编号汇总（单条聚合；只枚举百位段内近距缺号，跨页 hundreds 空号只计数） |
+| RU201/RU202 | warning/info | declared | 缺封装 / 值为空 |
+| RU301 | error/warning/info | structural | 引脚未连接且未标 NC（按 pin type 分级） |
+| RU304 | info/warning | structural | NC 引脚人工确认清单（按器件分组一行；power_in 被 NC 仍逐脚并升级 warning） |
+| RU302/RU303 | warning | structural | 单引脚网络 / 无引脚标签 |
+| RU305 | warning | structural | NC 标记与实际连线冲突（NC 是注释不是断开，保留电气几何并报告矛盾） |
+| RU401 | error | structural | 同一物理域存在多个全局网络名 |
+| RU402 | info | heuristic | 未命名（N$）网络占比提示 |
+| RU501 | info | heuristic | 电源输入引脚网络上未发现去耦电容 |
+| RU601/RU602 | error/warning | structural | 图纸文件缺失 / sheet-pin 无对应子图标签 |
+| RU603 | warning/info | declared | 标题栏字段缺失（title/date/rev/company） |
+| RU610 | warning | structural | 符号库缺失：内嵌库与工程本地 .kicad_sym 均未提供引脚定义的器件（按图纸分组；这些器件不参与连通性） |
+| RU701 | info | structural | DNP 器件清单（按图纸分组一行，TP*/H* 计数合并） |
+| RU801 | info | structural | 极性器件（D*/LED*/TVS*）引脚极性未解析清单 |
+| RU901 | warning/info | declared | 接口方向语义：TX/RX/MOSI 命名与 MCU 复用引脚名核对（双发送/全接收/MOSI-MISO 互换→warning；电气类型矛盾→仅 info，符号类型常不规范不作判定依据） |
 | ERC-* | 随官方 | official | kicad-cli ERC JSON 转写（ref/pin 归属兼容中英文 item 描述） |
 
 审查规则可通过 `review --config review_rules.json` 按 code 覆盖启停与

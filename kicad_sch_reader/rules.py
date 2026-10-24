@@ -99,7 +99,7 @@ def check_duplicate_references(project: Project) -> List[Issue]:
         if key in seen_sheet:
             other = seen_sheet[key]
             issues.append(Issue(
-                code="R101",
+                code="RU101",
                 evidence="structural",
                 severity="error",
                 title="同一页内重复位号",
@@ -115,7 +115,7 @@ def check_duplicate_references(project: Project) -> List[Issue]:
         paths = sorted({s.sheet_path for s in syms})
         if len(paths) > 1:
             issues.append(Issue(
-                code="R102",
+                code="RU102",
                 evidence="structural",
                 severity="warning",
                 title="位号在多页重复",
@@ -135,7 +135,7 @@ def check_missing_fields(project: Project) -> List[Issue]:
             continue
         if sym.on_board and not sym.footprint:
             issues.append(Issue(
-                code="R201",
+                code="RU201",
                 evidence="declared",
                 severity="warning",
                 title="元件缺少封装",
@@ -145,7 +145,7 @@ def check_missing_fields(project: Project) -> List[Issue]:
             ))
         if not sym.value:
             issues.append(Issue(
-                code="R202",
+                code="RU202",
                 evidence="declared",
                 severity="info",
                 title="元件值/型号为空",
@@ -173,7 +173,7 @@ def check_wired_no_connects(project: Project, netlist: Iterable[Net]) -> List[Is
             net = index.get((sym.sheet_path, sym.ref, pin.number))
             if pin.no_connect and net is not None:
                 issues.append(Issue(
-                    code="R305", severity="warning", evidence="structural",
+                    code="RU305", severity="warning", evidence="structural",
                     title="NC 标记与实际连线冲突",
                     message=f"{sym.ref}.{pin.number} 标记为 NC，但仍连接到网络 {net.name}；NC 不会断开导线",
                     sheet_path=sym.sheet_path, ref=sym.ref, pin=pin.number, net=net.name,
@@ -195,7 +195,7 @@ def check_floating_pins(project: Project, netlist: Iterable[Net]) -> List[Issue]
             if sev is None:
                 continue
             issues.append(Issue(
-                code="R301",
+                code="RU301",
                 evidence="structural",
                 severity=sev,
                 title="引脚未连接到任何网络",
@@ -247,7 +247,7 @@ def check_single_pin_nets(netlist: Iterable[Net]) -> List[Issue]:
                 ))
                 continue
             issues.append(Issue(
-                code="R302",
+                code="RU302",
                 evidence="structural",
                 severity="info" if only_power else "warning",
                 title="单引脚网络",
@@ -262,7 +262,7 @@ def check_single_pin_nets(netlist: Iterable[Net]) -> List[Issue]:
             ))
         elif net.pin_count() == 0 and (net.labels or net.global_names or net.hierarchical_names or net.power_names):
             issues.append(Issue(
-                code="R303",
+                code="RU303",
                 evidence="structural",
                 severity="warning",
                 title="标签悬空",
@@ -281,7 +281,7 @@ def check_net_name_conflicts(netlist: Iterable[Net]) -> List[Issue]:
     for net in netlist:
         if net.has_conflict:
             issues.append(Issue(
-                code="R401",
+                code="RU401",
                 evidence="structural",
                 severity="error",
                 title="网络名冲突",
@@ -307,7 +307,7 @@ def check_power_decoupling(netlist: Iterable[Net]) -> List[Issue]:
             continue
         for p in power_pins[:8]:
             issues.append(Issue(
-                code="R501",
+                code="RU501",
                 evidence="heuristic",
                 severity="info",
                 title="电源引脚网络上未发现去耦电容",
@@ -338,7 +338,7 @@ def check_hierarchical_sheet_pins(project: Project) -> List[Issue]:
             for pin in ref.pins:
                 if child is None:
                     issues.append(Issue(
-                        code="R601",
+                        code="RU601",
                 evidence="structural",
                         severity="error",
                         title="分层图纸文件缺失",
@@ -348,7 +348,7 @@ def check_hierarchical_sheet_pins(project: Project) -> List[Issue]:
                     ))
                 elif pin.name not in child_names:
                     issues.append(Issue(
-                        code="R602",
+                        code="RU602",
                 evidence="structural",
                         severity="warning",
                         title="图纸引脚缺少对应分层标签",
@@ -384,7 +384,7 @@ def check_dnp_inventory(project: Project) -> List[Issue]:
         if len(notable) < len(syms):
             message += f"；其中 {len(syms) - len(notable)} 个为测试点/机械件，其余 {len(notable)} 个请确认 DNP 意图"
         issues.append(Issue(
-            code="R701",
+            code="RU701",
             severity="info",
             title="DNP 器件清单（按图纸汇总）",
             message=message,
@@ -478,7 +478,7 @@ def check_nc_pin_inventory(project: Project) -> List[Issue]:
                           if (p.electrical_type or "").lower() == "power_in"]
             for p in power_pins:
                 issues.append(Issue(
-                    code="R304",
+                    code="RU304",
                     severity="warning",
                     title="电源输入引脚被 NC（逐脚确认）",
                     message=(
@@ -498,7 +498,7 @@ def check_nc_pin_inventory(project: Project) -> List[Issue]:
             extra = f" …(+{len(nums) - 12})" if len(nums) > 12 else ""
             ptypes = {((p.electrical_type or "unknown").lower()) for p in plain}
             issues.append(Issue(
-                code="R304",
+                code="RU304",
                 severity="info",
                 title="NC 引脚确认清单（按器件汇总）",
                 message=(
@@ -515,7 +515,7 @@ def check_nc_pin_inventory(project: Project) -> List[Issue]:
 
 
 def check_missing_lib_symbols(project: Project) -> List[Issue]:
-    """R610: symbols whose pin geometry no library could provide.
+    """RU610: symbols whose pin geometry no library could provide.
 
     The parser degrades instead of failing the whole project (a project-local
     .kicad_sym may be missing on the review machine); every degraded instance
@@ -531,7 +531,7 @@ def check_missing_lib_symbols(project: Project) -> List[Issue]:
         shown = ", ".join(f"{s.ref}({s.lib_id})" for s in syms[:10])
         extra = f" …(+{len(syms) - 10})" if len(syms) > 10 else ""
         issues.append(Issue(
-            code="R610",
+            code="RU610",
             severity="warning",
             title="符号库缺失（连通性不完整）",
             message=(
@@ -554,7 +554,7 @@ def check_title_blocks(project: Project) -> List[Issue]:
         missing = [k for k in keys if not (fields.get(k) or "").strip()]
         if len(missing) == len(keys):
             issues.append(Issue(
-                code="R603",
+                code="RU603",
                 severity="warning",
                 title="标题栏完全空缺",
                 message=f"图纸 {path} 的 title_block 缺少全部关键字段（title/date/rev/company）",
@@ -564,7 +564,7 @@ def check_title_blocks(project: Project) -> List[Issue]:
             ))
         elif missing:
             issues.append(Issue(
-                code="R603",
+                code="RU603",
                 severity="info",
                 title="标题栏字段缺失",
                 message=f"图纸 {path} 的标题栏缺少: {', '.join(missing)}",
@@ -581,7 +581,7 @@ def check_reference_sequences(project: Project) -> List[Issue]:
 
     Purely informational and aggregated: one issue per problem class, never
     one row per prefix.  Missing numbers are only enumerated *within the same
-    hundred-block* (R201..R205 missing R203): page-hundreds numbering
+    hundred-block* (RU201..RU205 missing RU203): page-hundreds numbering
     (C2xx/C3xx/C7xx on different sheets) makes cross-block gaps meaningless,
     so those are counted but not listed.
     """
@@ -601,7 +601,7 @@ def check_reference_sequences(project: Project) -> List[Issue]:
         shown = ", ".join(sorted(nonstandard)[:8])
         extra = f" …(+{len(nonstandard) - 8})" if len(nonstandard) > 8 else ""
         issues.append(Issue(
-            code="R103",
+            code="RU103",
             severity="info",
             title="位号格式不规范",
             message=(
@@ -641,7 +641,7 @@ def check_reference_sequences(project: Project) -> List[Issue]:
         gap_details.append(f"{prefix}: {missing_total}{near_txt}")
     if gap_summaries:
         issues.append(Issue(
-            code="R103",
+            code="RU103",
             severity="info",
             title="位号编号不连续（汇总）",
             message=(
@@ -690,7 +690,7 @@ def check_polar_devices(project: Project, netlist: Iterable[Net]) -> List[Issue]
             parts.append(f"{p.number}({p.name or '?'})->{net_name}")
         detail = "; ".join(parts)
         issues.append(Issue(
-            code="R801",
+            code="RU801",
             severity="info",
             title="极性器件引脚极性未解析",
             message=(
@@ -723,7 +723,7 @@ def check_net_naming(netlist: Iterable[Net]) -> List[Issue]:
     biggest = sorted(unnamed, key=lambda n: -n.pin_count())[:5]
     detail = "; ".join(f"{n.name}({n.pin_count()} 脚)" for n in biggest)
     issues = [Issue(
-        code="R402",
+        code="RU402",
         severity="info",
         title="存在较多未命名网络",
         message=(
@@ -744,7 +744,7 @@ def _is_power_like(net: Net) -> bool:
     )
 
 
-# ---------------- IFC901: interface direction semantics ----------------
+# ---------------- RU901: interface direction semantics ----------------
 #
 # Signal-direction words (TX/RX, MOSI/MISO, SDO/SDI, DOUT/DIN) are checked as
 # *declared* evidence: net/label names and composite MCU pin names
@@ -770,7 +770,7 @@ _DIR_WORD_RE = re.compile(
 
 _OUT_LOCAL = {"tx", "sdo", "dout"}
 _IN_LOCAL = {"rx", "sdi", "din"}
-_IFC901_TITLES = {
+_RU901_TITLES = {
     "collision_out": "接口方向语义冲突（双发送）",
     "collision_in": "接口方向语义冲突（全接收）",
     "mosi_swap": "MOSI/MISO 命名互换嫌疑",
@@ -858,7 +858,7 @@ def _skip_interface_direction_net(net: Net) -> bool:
     return False
 
 def check_interface_direction(project: Project, netlist: Iterable[Net]) -> List[Issue]:
-    """IFC901: interface-direction semantics over net/label names and composite
+    """RU901: interface-direction semantics over net/label names and composite
     MCU pin names.  Deliberately *not* based on pin electrical types except as
     an informational cross-check (symbol types are frequently sloppy)."""
     issues: List[Issue] = []
@@ -873,9 +873,9 @@ def check_interface_direction(project: Project, netlist: Iterable[Net]) -> List[
             continue
         for f in analyze_direction_group(net.name, members):
             issues.append(Issue(
-                code="IFC901",
+                code="RU901",
                 severity=f["severity"],
-                title=_IFC901_TITLES[f["kind"]],
+                title=_RU901_TITLES[f["kind"]],
                 message=f["message"],
                 net=net.name,
                 evidence="declared",
@@ -894,7 +894,7 @@ def load_config(path) -> dict:
 
 
 def apply_config(issues: List[Issue], config: Optional[dict]) -> List[Issue]:
-    """Filter/override issues per ``{"rules": {"R501": {"enabled": false,
+    """Filter/override issues per ``{"rules": {"RU501": {"enabled": false,
     "severity": "warning"}}}``.  Unknown codes in the config are ignored."""
     if not config:
         return issues

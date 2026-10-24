@@ -50,7 +50,7 @@ class TestMainBoard(unittest.TestCase):
 
     def test_no_duplicate_issue_for_multi_unit_parts(self):
         issues = run_all_checks(self.project, self.netlist)
-        duplicate_same_sheet = [i for i in issues if i.code == "R101"]
+        duplicate_same_sheet = [i for i in issues if i.code == "RU101"]
         self.assertEqual(duplicate_same_sheet, [])
 
 
@@ -142,7 +142,7 @@ if __name__ == "__main__":
 
 
 class TestRuleGrouping(unittest.TestCase):
-    """Grouped reporting for high-noise rules (R103/R304/R701) + bilingual
+    """Grouped reporting for high-noise rules (RU103/RU304/RU701) + bilingual
     ERC pin attribution.  Uses in-memory synthetic projects."""
 
     @staticmethod
@@ -217,7 +217,7 @@ class TestRuleGrouping(unittest.TestCase):
 
 
 class TestInterfaceDirectionHeuristic(unittest.TestCase):
-    """IFC901: interface-direction semantics (naming-based; pin electrical
+    """RU901: interface-direction semantics (naming-based; pin electrical
     types are reference-only and must never escalate severity)."""
 
     @staticmethod
@@ -234,7 +234,7 @@ class TestInterfaceDirectionHeuristic(unittest.TestCase):
             ("U1", "3", "UART3TX", "output"),
             ("U2", "5", "TXD", "output")])
         issues = rules.check_interface_direction(None, [net])
-        kinds = [i.title for i in issues if i.code == "IFC901"]
+        kinds = [i.title for i in issues if i.code == "RU901"]
         self.assertTrue(any("双发送" in t for t in kinds), kinds)
         for i in issues:
             self.assertNotEqual(i.severity, "error")  # declared evidence only
@@ -245,7 +245,7 @@ class TestInterfaceDirectionHeuristic(unittest.TestCase):
             ("U1", "3", "PB10/UART3TX", "output"),
             ("U2", "5", "UART_RX", "input")])
         issues = rules.check_interface_direction(None, [net])
-        self.assertEqual([i for i in issues if i.code == "IFC901"], [])
+        self.assertEqual([i for i in issues if i.code == "RU901"], [])
 
     def test_mosi_miso_swap_warns(self):
         from kicad_sch_reader import rules
@@ -253,7 +253,7 @@ class TestInterfaceDirectionHeuristic(unittest.TestCase):
             ("U1", "1", "MOSI", "output"),
             ("U2", "2", "MISO", "input")])
         issues = rules.check_interface_direction(None, [net])
-        self.assertTrue(any("互换" in i.message for i in issues if i.code == "IFC901"))
+        self.assertTrue(any("互换" in i.message for i in issues if i.code == "RU901"))
 
     def test_type_conflict_stays_info(self):
         from kicad_sch_reader import rules
@@ -261,7 +261,7 @@ class TestInterfaceDirectionHeuristic(unittest.TestCase):
             ("U1", "3", "TXD", "input"),
             ("U2", "5", "RX", "input")])
         issues = rules.check_interface_direction(None, [net])
-        ifc = [i for i in issues if i.code == "IFC901"]
+        ifc = [i for i in issues if i.code == "RU901"]
         self.assertTrue(ifc)
         self.assertTrue(all(i.severity == "info" for i in ifc))
 
@@ -305,7 +305,7 @@ class TestInterfaceDirectionHeuristic(unittest.TestCase):
                 PinNet(ref="U2", pin_number="2", pin_name="RXP", pin_type="input",
                        sheet_path="/", lib_id="Device:R", value="x", footprint="")]
         net = Net(name="MGT_TX3_P", pins=pins)
-        self.assertEqual([i for i in rules.check_interface_direction(None, [net]) if i.code == "IFC901"], [])
+        self.assertEqual([i for i in rules.check_interface_direction(None, [net]) if i.code == "RU901"], [])
 @unittest.skipUnless(MAINBOARD.exists(), "private KiCad example fixture missing")
 class TestHierarchyAndAliases(unittest.TestCase):
     """Regression tests for report indexes and hierarchical net aliases."""
@@ -353,7 +353,7 @@ class TestHierarchyAndAliases(unittest.TestCase):
 
 
 class TestExternalLibAndDegradation(unittest.TestCase):
-    """Project-local .kicad_sym lookup + graceful degradation (R610)."""
+    """Project-local .kicad_sym lookup + graceful degradation (RU610)."""
 
     def _write(self, td, sch_text, sym_text=None):
         root = Path(td)
@@ -408,6 +408,6 @@ class TestExternalLibAndDegradation(unittest.TestCase):
             self.assertTrue(j1.lib_missing)
             self.assertEqual(j1.pins, [])
             nl = connectivity.build_netlist(proj)
-            r610 = [i for i in rules.run_all_checks(proj, nl) if i.code == "R610"]
+            r610 = [i for i in rules.run_all_checks(proj, nl) if i.code == "RU610"]
             self.assertEqual(len(r610), 1)
             self.assertIn("J1", r610[0].message)

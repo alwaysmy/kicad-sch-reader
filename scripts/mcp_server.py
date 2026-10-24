@@ -255,7 +255,7 @@ _TOOL_META = [
     ("parse", "解析 KiCad 工程（目录或根 .kicad_sch），返回图纸/元件/网络统计", {
         "project": {"type": "string", "description": "KiCad 工程目录或根 .kicad_sch"},
         "required": ["project"]}),
-    ("review", "运行设计审查（R101..R801 等规则 + 可选官方 ERC），返回全部 Issue 与证据级别", {
+    ("review", "运行设计审查（RU101..RU801 等规则 + 可选官方 ERC），返回全部 Issue 与证据级别", {
         "project": {"type": "string"},
         "no_erc": {"type": "boolean", "description": "跳过 kicad-cli ERC（默认 true）"},
         "config": {"type": "string", "description": "review_rules.json 路径"},

@@ -311,7 +311,7 @@ def parse_symbol_instance(
         # A symbol defined in a project-local library we could not load
         # (wrong nickname, missing file, unshipped lib) is a degraded-input
         # condition, not file corruption: keep the instance for BOM/field
-        # review, leave it pinless, and let rule R610 surface the gap.
+        # review, leave it pinless, and let rule RU610 surface the gap.
         symbol.lib_missing = True
         return symbol
     symbol.power = lib.is_power
@@ -586,7 +586,7 @@ def _load_project_sym_libs(project_dir: Path) -> Dict[str, LibSymbol]:
     (``multichannel_mixer`` -> ``multichannel_mixer.kicad_sym``), and symbol
     lib_ids carry the nickname as prefix, so indexing every parsed symbol by
     its full ``lib_id`` covers the standard layout without parsing the table.
-    Unparsable library files are skipped (the R610 rule will surface any
+    Unparsable library files are skipped (the RU610 rule will surface any
     symbol that stays unresolved).
     """
     out: Dict[str, LibSymbol] = {}

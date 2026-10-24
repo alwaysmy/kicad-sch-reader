@@ -831,7 +831,7 @@ def build_arg_parser() -> argparse.ArgumentParser:
     p.add_argument("--out-json", default="")
     p.add_argument("--no-erc", action="store_true", help="不调用 kicad-cli ERC")
     p.add_argument("--config", default="", help="review_rules.json 路径（规则启停/级别覆盖）")
-    p.add_argument("--interface-direction", action="store_true", help="启用 IFC901 接口方向语义启发式规则（默认不跑）")
+    p.add_argument("--interface-direction", action="store_true", help="启用 RU901 接口方向语义启发式规则（默认不跑）")
     p.set_defaults(func=cmd_review)
 
     p = sub.add_parser("erc", help="调用 kicad-cli 执行 ERC")

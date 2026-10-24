@@ -661,7 +661,7 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         if comp.get("designator"):
             comp_lookup[comp["designator"]].append(comp)
 
-    # IFC901: 接口方向语义核对 —— 网络名/MCU 复用引脚名（如 PB10/UART3TX）
+    # RU901: 接口方向语义核对 —— 网络名/MCU 复用引脚名（如 PB10/UART3TX）
     # 中的方向词做声明级核对；引脚电气类型 LCEDA 侧缺失，不参与判定。
     from kicad_sch_reader.rules import analyze_direction_group
     dir_groups = defaultdict(list)
@@ -678,7 +678,7 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
             continue
         net_display = sorted({m["net"] for m in dir_members})[0]
         for f in analyze_direction_group(net_display, dir_members):
-            findings.append((f["severity"], "IFC901", dir_members[0]["sheet"], "",
+            findings.append((f["severity"], "RU901", dir_members[0]["sheet"], "",
                              f["message"]))
 
     def member_detail(member):
@@ -872,7 +872,7 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
                 findings.append(("info", "SINGLE_PIN_NET", m["sheet"], m["ref"],
                                  f"网络 {net} 仅 {m['ref']}.{m['pin']} 一个引脚"))
 
-    # 3b) DNP inventory, one line per page (mirrors KiCad R701 grouping).
+    # 3b) DNP inventory, one line per page (mirrors KiCad RU701 grouping).
     dnp_by_page = defaultdict(list)
     for c in flat_components:
         if c.get("designator") and c.get("dnp"):
@@ -1071,7 +1071,7 @@ def main(argv=None):
     ap.add_argument("epro", help=".epro 文件")
     ap.add_argument("--board", help="审查的板名（缺省使用第一块板）")
     ap.add_argument("--list-boards", action="store_true", help="list boards with page counts and exit")
-    ap.add_argument("--interface-direction", action="store_true", help="启用 IFC901 接口方向语义启发式检查（默认关闭）")
+    ap.add_argument("--interface-direction", action="store_true", help="启用 RU901 接口方向语义启发式检查（默认关闭）")
     ap.add_argument("--out-md")
     ap.add_argument("--out-json")
     ap.add_argument("--trace-net", action="append", default=[], help="追踪网络并列出 CBB 内部器件")

@@ -93,8 +93,13 @@ class ParseIntegrity(unittest.TestCase):
             with self.subTest(s=s),self.assertRaises(ValueError):self.parse_text(s)
 
     def test_missing_library_does_not_invent_origin_pins(self):
-        with self.assertRaises(ValueError):
-            self.parse_text('(kicad_sch '+PLACED.format(instances='')+')')
+        # Missing library degrades (no raise): zero pins, lib_missing flag,
+        # and rule R610 reports the connectivity gap. The one hard invariant
+        # kept from the raise-era is that no pin geometry is ever invented.
+        s = self.parse_text('(kicad_sch '+PLACED.format(instances='')+')')
+        sym = s.symbols[0]
+        self.assertEqual(sym.pins, [])
+        self.assertTrue(sym.lib_missing)
 
     def test_missing_instance_pin_records_do_not_drop_library_pins(self):
         placed=PLACED.format(instances='').replace('(pin "1" (uuid "pin"))','')

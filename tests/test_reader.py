@@ -350,3 +350,64 @@ class TestHierarchyAndAliases(unittest.TestCase):
             [sys.executable, str(ROOT / "kicad-sch-reader.py"), *args],
             capture_output=True, text=True, encoding="utf-8", errors="replace",
             timeout=120, cwd=str(ROOT))
+
+
+class TestExternalLibAndDegradation(unittest.TestCase):
+    """Project-local .kicad_sym lookup + graceful degradation (R610)."""
+
+    def _write(self, td, sch_text, sym_text=None):
+        root = Path(td)
+        (root / "proj.kicad_sch").write_text(sch_text, encoding="utf-8")
+        if sym_text is not None:
+            (root / "mylib.kicad_sym").write_text(sym_text, encoding="utf-8")
+        return root / "proj.kicad_sch"
+
+    SYM_LIB = (
+        '(kicad_symbol_lib (version 20231120) (generator "libs-test")\n'
+        ' (symbol "Jack" (pin_names (offset 1.016)) (in_bom yes) (on_board yes)\n'
+        '  (symbol "Jack_1_1"\n'
+        '   (pin passive line (at -5.08 0 0) (length 2.54)\n'
+        '    (name "A" (effects (font (size 1.27 1.27))))\n'
+        '    (number "1" (effects (font (size 1.27 1.27)))))\n'
+        '   (pin passive line (at 5.08 0 180) (length 2.54)\n'
+        '    (name "B" (effects (font (size 1.27 1.27))))\n'
+        '    (number "2" (effects (font (size 1.27 1.27))))))))\n'
+    )
+
+    def _sch(self, lib_id):
+        return f"""(kicad_sch (version 20250114) (generator eeschema)
+ (uuid 00000000-0000-0000-0000-000000000001) (paper "A4")
+ (symbol (lib_id "{lib_id}") (at 10 10 0) (unit 1)
+  (in_bom yes) (on_board yes) (dnp no)
+  (uuid 00000000-0000-0000-0000-000000000002)
+  (property "Reference" "J1" (at 10 10 0))
+  (property "Value" "X" (at 10 10 0))
+  (pin "1" (uuid 00000000-0000-0000-0000-000000000003))
+  (pin "2" (uuid 00000000-0000-0000-0000-000000000004)))
+ (sheet_instances (path "/" (page "1"))))"""
+
+    def test_external_kicad_sym_resolves_pins(self):
+        import tempfile
+        from kicad_sch_reader import parser as P
+        with tempfile.TemporaryDirectory() as td:
+            root = self._write(td, self._sch("mylib:Jack"), self.SYM_LIB)
+            proj = P.load_project(root)
+            j1 = proj.root_sheet.symbols[0]
+            self.assertFalse(j1.lib_missing)
+            self.assertEqual(len(j1.pins), 2)
+            # lib files name symbols without the nickname; lookup is prefixed
+            self.assertIn("mylib:Jack", P._load_project_sym_libs(root.parent))
+
+    def test_missing_lib_degrades_with_r610(self):
+        import tempfile
+        from kicad_sch_reader import connectivity, parser as P, rules
+        with tempfile.TemporaryDirectory() as td:
+            root = self._write(td, self._sch("nowhere:Gone"))  # no lib file
+            proj = P.load_project(root)                        # must not raise
+            j1 = proj.root_sheet.symbols[0]
+            self.assertTrue(j1.lib_missing)
+            self.assertEqual(j1.pins, [])
+            nl = connectivity.build_netlist(proj)
+            r610 = [i for i in rules.run_all_checks(proj, nl) if i.code == "R610"]
+            self.assertEqual(len(r610), 1)
+            self.assertIn("J1", r610[0].message)

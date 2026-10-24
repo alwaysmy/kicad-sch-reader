@@ -90,28 +90,63 @@ def _parse_lib_pin(node) -> Optional[LibPin]:
                   pos=(pos[0], -pos[1]), hidden=hidden)
 
 
+def _parse_symbol_def(sym) -> Optional[LibSymbol]:
+    """Parse one ``(symbol "Lib:Name" ...)`` definition node.
+
+    Shared by embedded ``lib_symbols`` sections and standalone ``.kicad_sym``
+    library files (identical internal structure).
+    """
+    if len(sym) < 2:
+        return None
+    lib_id = _text(sym[1])
+    symbol = LibSymbol(lib_id=lib_id)
+    for sub in sexpr.children(sym, "symbol"):
+        if len(sub) < 2:
+            continue
+        match = _SUB_UNIT_RE.search(_text(sub[1]))
+        key = f"{match.group(1)}_{match.group(2)}" if match else "0_0"
+        pins = [p for p in (_parse_lib_pin(n) for n in sexpr.children(sub, "pin")) if p]
+        if pins:
+            symbol.units[key] = pins
+    # Authoritative power-symbol marker (works for project-local power
+    # libraries like "myproj:GND", not just the standard "power:" lib).
+    symbol.is_power = sexpr.first(sym, "power") is not None
+    return symbol
+
+
 def parse_lib_symbols(root) -> Dict[str, LibSymbol]:
     out: Dict[str, LibSymbol] = {}
     libs = sexpr.first(root, "lib_symbols")
     if libs is None:
         return out
     for sym in sexpr.children(libs, "symbol"):
-        if len(sym) < 2:
+        parsed = _parse_symbol_def(sym)
+        if parsed is not None:
+            out[parsed.lib_id] = parsed
+    return out
+
+
+def parse_kicad_sym_lib(file: Path) -> Dict[str, LibSymbol]:
+    """Parse a standalone ``.kicad_sym`` project library.
+
+    Symbols inside a library file are named WITHOUT the library nickname
+    (``Audio-Jack-2_Switch_1``); schematic lib_ids carry it
+    (``multichannel_mixer:Audio-Jack-2_Switch_1``).  The conventional
+    nickname equals the file stem, so index each symbol under
+    ``<stem>:<name>`` and additionally under its bare name as fallback for
+    non-standard layouts.
+    """
+    nodes = sexpr.parse(file.read_text(encoding="utf-8"))
+    out: Dict[str, LibSymbol] = {}
+    for node in nodes:
+        if not sexpr.is_node(node, "kicad_symbol_lib"):
             continue
-        lib_id = _text(sym[1])
-        symbol = LibSymbol(lib_id=lib_id)
-        for sub in sexpr.children(sym, "symbol"):
-            if len(sub) < 2:
+        for sym in sexpr.children(node, "symbol"):
+            parsed = _parse_symbol_def(sym)
+            if parsed is None:
                 continue
-            match = _SUB_UNIT_RE.search(_text(sub[1]))
-            key = f"{match.group(1)}_{match.group(2)}" if match else "0_0"
-            pins = [p for p in (_parse_lib_pin(n) for n in sexpr.children(sub, "pin")) if p]
-            if pins:
-                symbol.units[key] = pins
-        # Authoritative power-symbol marker (works for project-local power
-        # libraries like "myproj:GND", not just the standard "power:" lib).
-        symbol.is_power = sexpr.first(sym, "power") is not None
-        out[lib_id] = symbol
+            out.setdefault(parsed.lib_id, parsed)
+            out.setdefault(f"{file.stem}:{parsed.lib_id}", parsed)
     return out
 
 
@@ -199,6 +234,7 @@ def parse_symbol_instance(
     node, lib_symbols: Dict[str, LibSymbol], sheet_path: str = "/",
     instance_overrides: Optional[Dict[str, Dict[str, dict]]] = None,
     root_uuid: str = "", project_name: str = "",
+    external_libs: Optional[Dict[str, LibSymbol]] = None,
 ) -> Optional[SymbolInstance]:
     if not sexpr.is_node(node, "symbol"):
         return None
@@ -269,8 +305,15 @@ def parse_symbol_instance(
     )
 
     lib = lib_symbols.get(lib_id)
+    if lib is None and external_libs:
+        lib = external_libs.get(lib_id)
     if lib is None:
-        raise ValueError(f"missing embedded library symbol {lib_id!r} for {symbol.ref} at {sheet_path}")
+        # A symbol defined in a project-local library we could not load
+        # (wrong nickname, missing file, unshipped lib) is a degraded-input
+        # condition, not file corruption: keep the instance for BOM/field
+        # review, leave it pinless, and let rule R610 surface the gap.
+        symbol.lib_missing = True
+        return symbol
     symbol.power = lib.is_power
     lib_pins = lib.pins_for(unit, body_style)
     pin_nodes = {_text(p[1]): p for p in sexpr.children(node, "pin") if len(p) > 1}
@@ -347,7 +390,8 @@ def parse_sheet_ref(node) -> Optional[SheetRef]:
 
 
 def parse_sheet_file(file: Path, sheet_path: str = "/", *,
-                     root_uuid: str = "", project_name: str = "") -> SheetData:
+                     root_uuid: str = "", project_name: str = "",
+                     external_libs: Optional[Dict[str, LibSymbol]] = None) -> SheetData:
     text = file.read_text(encoding="utf-8")
     nodes = sexpr.parse(text)
     if len(nodes) != 1 or not sexpr.is_node(nodes[0], "kicad_sch"):
@@ -397,7 +441,8 @@ def parse_sheet_file(file: Path, sheet_path: str = "/", *,
         if kind == "symbol":
             symbol = parse_symbol_instance(child, sheet.lib_symbols, sheet_path,
                                            instance_overrides, root_uuid or sheet.uuid,
-                                           project_name or file.stem)
+                                           project_name or file.stem,
+                                           external_libs=external_libs)
             if symbol is not None:
                 sheet.symbols.append(symbol)
         elif kind == "wire":
@@ -534,9 +579,30 @@ def resolve_root_file(input_path) -> Path:
     raise FileNotFoundError(f"not a KiCad schematic or project directory: {input_path}")
 
 
+def _load_project_sym_libs(project_dir: Path) -> Dict[str, LibSymbol]:
+    """Load project-local ``.kicad_sym`` libraries for external lookup.
+
+    ``sym-lib-table`` nicknames conventionally equal the file stem
+    (``multichannel_mixer`` -> ``multichannel_mixer.kicad_sym``), and symbol
+    lib_ids carry the nickname as prefix, so indexing every parsed symbol by
+    its full ``lib_id`` covers the standard layout without parsing the table.
+    Unparsable library files are skipped (the R610 rule will surface any
+    symbol that stays unresolved).
+    """
+    out: Dict[str, LibSymbol] = {}
+    lib_files = sorted(project_dir.glob("*.kicad_sym"))
+    for lib_file in lib_files:
+        try:
+            out.update(parse_kicad_sym_lib(lib_file))
+        except (OSError, ValueError):
+            continue
+    return out
+
+
 def load_project(input_path) -> Project:
     root_file = resolve_root_file(input_path)
     project = Project(root=root_file.parent)
+    external_libs = _load_project_sym_libs(root_file.parent)
     visited: set[str] = set()
     queue = [("/", root_file, ())]
     root_uuid = ""
@@ -550,7 +616,9 @@ def load_project(input_path) -> Project:
         if key in visited:
             continue
         visited.add(key)
-        sheet = parse_sheet_file(file, path, root_uuid=root_uuid, project_name=root_file.stem)
+        sheet = parse_sheet_file(file, path, root_uuid=root_uuid,
+                                 project_name=root_file.stem,
+                                 external_libs=external_libs)
         if path == "/":
             root_uuid = sheet.uuid
         if path != "/" or not sheet.page_no:

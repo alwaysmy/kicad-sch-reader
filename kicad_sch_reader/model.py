@@ -78,6 +78,10 @@ class SymbolInstance:
     on_board: bool = True
     dnp: bool = False
     power: bool = False
+    # True when neither the embedded library nor a project-local .kicad_sym
+    # could provide this symbol's pin geometry: the instance is kept for
+    # BOM/field review but contributes no connectivity (rule R610 reports it).
+    lib_missing: bool = False
     properties: Dict[str, str] = field(default_factory=dict)
     pins: List[PinInstance] = field(default_factory=list)
     sheet_path: str = "/"

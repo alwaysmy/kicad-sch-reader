@@ -514,6 +514,37 @@ def check_nc_pin_inventory(project: Project) -> List[Issue]:
     return issues
 
 
+def check_missing_lib_symbols(project: Project) -> List[Issue]:
+    """R610: symbols whose pin geometry no library could provide.
+
+    The parser degrades instead of failing the whole project (a project-local
+    .kicad_sym may be missing on the review machine); every degraded instance
+    is reported here because its connectivity is silently absent from the
+    netlist — exactly what a reviewer must know before trusting trace results.
+    """
+    per_sheet: Dict[str, List[SymbolInstance]] = defaultdict(list)
+    for sym in project.all_symbols():
+        if sym.lib_missing and not sym.is_power_symbol:
+            per_sheet[sym.sheet_path].append(sym)
+    issues: List[Issue] = []
+    for path, syms in sorted(per_sheet.items()):
+        shown = ", ".join(f"{s.ref}({s.lib_id})" for s in syms[:10])
+        extra = f" …(+{len(syms) - 10})" if len(syms) > 10 else ""
+        issues.append(Issue(
+            code="R610",
+            severity="warning",
+            title="符号库缺失（连通性不完整）",
+            message=(
+                f"{len(syms)} 个符号的内嵌库与工程本地 .kicad_sym 均未提供引脚定义: "
+                f"{shown}{extra}；这些器件不参与连通性分析，网络/悬空结论对它们无效"
+            ),
+            sheet_path=path,
+            details={"refs": ", ".join(s.ref for s in syms)},
+            evidence="structural",
+        ))
+    return issues
+
+
 def check_title_blocks(project: Project) -> List[Issue]:
     """Flag incomplete title blocks (title/date/rev/company)."""
     issues: List[Issue] = []
@@ -906,6 +937,7 @@ def run_all_checks(
     issues.extend(check_title_blocks(project))
     issues.extend(check_polar_devices(project, netlist))
     issues.extend(check_dnp_inventory(project))
+    issues.extend(check_missing_lib_symbols(project))
     if include_interface_direction:
         issues.extend(check_interface_direction(project, netlist))
     if erc_markers:

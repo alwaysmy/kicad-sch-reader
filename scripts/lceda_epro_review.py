@@ -30,6 +30,21 @@ sys.path.insert(0, str(BASE / "repos" / "lceda-sch-reader"))
 import lceda_reader  # noqa: E402
 
 
+def _setup_stdout() -> None:
+    """把 stdout/stderr 固定为 UTF-8（与 kicad_sch_reader/cli.py 一致）。
+
+    机器可读输出（如 --list-boards 的 JSON）必须是 UTF-8。Windows 上
+    stdout 默认取 locale 编码（本机 cp936），重定向到文件或被子进程捕获后
+    得到 GBK 字节，不是合法 UTF-8，JSON 消费方会直接解析失败。
+    stderr 同样处理：多板拒绝时的候选清单走 stderr。
+    """
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+
+
 # ---------------------------------------------------------------- .epro backend
 
 class EproDB:
@@ -366,6 +381,9 @@ def _fmt_component(db, c):
         "footprint": attrs.get("Footprint") or c.get("attrs", {}).get("Footprint"),
         "reuse": c.get("attrs", {}).get("Reuse Block") if isinstance(c.get("attrs"), dict) else None,
         "uid": c.get("attrs", {}).get("Unique ID") if isinstance(c.get("attrs"), dict) else None,
+        # DNP 判定来自 lceda_reader 的实例属性（Add into BOM=no /
+        # Convert to PCB=no），供 DNP_LIST 清单与单脚网豁免使用。
+        "dnp": bool(c.get("dnp")),
     }
 
 
@@ -838,11 +856,38 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
                 pass
 
     # 3) Nets: single pin nets and CBB port summary.
+    # DNP（Add into BOM=no / Convert to PCB=no）器件未贴装：其引脚上的单脚
+    # 网络不构成"遗漏连接"风险，改用 SINGLE_PIN_NET_DNP 标注预留件来源
+    # （与 KiCad 侧审查纪律一致——DNP 是设计意图，清单另行分组输出）。
+    dnp_refs = {c["designator"] for c in flat_components
+                if c.get("designator") and c.get("dnp")}
     for net, members in sorted(net_members.items()):
         if net and len(members) == 1:
             m = members[0]
-            findings.append(("info", "SINGLE_PIN_NET", m["sheet"], m["ref"],
-                             f"网络 {net} 仅 {m['ref']}.{m['pin']} 一个引脚"))
+            if m["ref"] in dnp_refs:
+                findings.append(("info", "SINGLE_PIN_NET_DNP", m["sheet"], m["ref"],
+                                 f"网络 {net} 仅 {m['ref']}.{m['pin']} 一个引脚"
+                                 f"（器件 DNP 预留，未贴装不算悬空风险）"))
+            else:
+                findings.append(("info", "SINGLE_PIN_NET", m["sheet"], m["ref"],
+                                 f"网络 {net} 仅 {m['ref']}.{m['pin']} 一个引脚"))
+
+    # 3b) DNP inventory, one line per page (mirrors KiCad R701 grouping).
+    dnp_by_page = defaultdict(list)
+    for c in flat_components:
+        if c.get("designator") and c.get("dnp"):
+            dnp_by_page[c.get("sheet", "")].append(c)
+    for page, comps in sorted(dnp_by_page.items()):
+        notable = [c for c in comps
+                   if not str(c.get("designator", "")).upper().startswith(("TP", "H", "FID", "MARK"))]
+        shown = ", ".join(f"{c['designator']}({c.get('device_title') or c.get('value') or '?'})"
+                          for c in comps[:16])
+        extra = f" …(+{len(comps) - 16})" if len(comps) > 16 else ""
+        msg = f"{len(comps)} 个器件标记为不贴装（DNP）: {shown}{extra}"
+        if len(notable) < len(comps):
+            msg += (f"；其中 {len(comps) - len(notable)} 个为测试点/机械/标记件，"
+                    f"其余 {len(notable)} 个请确认 DNP 意图")
+        findings.append(("info", "DNP_LIST", page, "", msg))
 
     # 4) BOM summary.
     bom = defaultdict(lambda: {"qty": 0, "refs": []})
@@ -886,9 +931,15 @@ def review_epro(epro_path, board_name=None, out_md=None, out_json=None,
         ],
     }
 
-    if out_md:
-        out_md = Path(out_md)
-        out_json = Path(out_json or out_md.with_suffix(".json"))
+    if out_md or out_json:
+        # 两个输出成对生成：给出任一个，另一个按同目录同名推导。
+        # 显式给出的路径必须被尊重，不得被下面的默认路径覆盖。
+        if out_md:
+            out_md = Path(out_md)
+            out_json = Path(out_json) if out_json else out_md.with_suffix(".json")
+        else:
+            out_json = Path(out_json)
+            out_md = out_json.with_suffix(".md")
     else:
         stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         safe_board = re.sub(r"[^0-9A-Za-z_\-\u4e00-\u9fff]+", "_", board_name)
@@ -1015,6 +1066,7 @@ def _write_markdown(report, findings, path):
 
 
 def main(argv=None):
+    _setup_stdout()
     ap = argparse.ArgumentParser(description="LCEDA .epro CBB-aware design review")
     ap.add_argument("epro", help=".epro 文件")
     ap.add_argument("--board", help="审查的板名（缺省使用第一块板）")

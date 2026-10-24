@@ -165,11 +165,13 @@ KiCad 把同一多单元器件的每个 unit 存为独立 `symbol` 节点（同 
 | R301 | error/warning/info | structural | 引脚未连接且未标 NC（按 pin type 分级） |
 | R304 | info/warning | structural | NC 引脚人工确认清单（按器件分组一行；power_in 被 NC 仍逐脚并升级 warning） |
 | R302/R303 | warning | structural | 单引脚网络 / 无引脚标签 |
+| R305 | warning | structural | NC 标记与实际连线冲突（NC 是注释不是断开，保留电气几何并报告矛盾） |
 | R401 | error | structural | 同一物理域存在多个全局网络名 |
 | R402 | info | heuristic | 未命名（N$）网络占比提示 |
 | R501 | info | heuristic | 电源输入引脚网络上未发现去耦电容 |
 | R601/R602 | error/warning | structural | 图纸文件缺失 / sheet-pin 无对应子图标签 |
 | R603 | warning/info | declared | 标题栏字段缺失（title/date/rev/company） |
+| R610 | warning | structural | 符号库缺失：内嵌库与工程本地 .kicad_sym 均未提供引脚定义的器件（按图纸分组；这些器件不参与连通性） |
 | R701 | info | structural | DNP 器件清单（按图纸分组一行，TP*/H* 计数合并） |
 | R801 | info | structural | 极性器件（D*/LED*/TVS*）引脚极性未解析清单 |
 | IFC901 | warning/info | declared | 接口方向语义：TX/RX/MOSI 命名与 MCU 复用引脚名核对（双发送/全接收/MOSI-MISO 互换→warning；电气类型矛盾→仅 info，符号类型常不规范不作判定依据） |
@@ -180,17 +182,33 @@ severity。
 
 ## 5. 验证方法
 
-1. `python -m unittest tests.test_reader -v`：结构不变量 + 旋转实验台。
-2. `python tests/validate_examples.py`：
-   - 用 `kicad-cli sch export netlist` 生成官方网表；
-   - 逐引脚比对 `(ref, pin) -> net`；
-   - 忽略 `#PWR*`（官方网表不含电源符号）与 `unconnected-*` 伪网络；
-   - 网络名比较时忽略 `/Sheet/Label` 前缀，`{slash}` 转义还原，
-     `N$` vs `Net-(...)` 单脚网豁免（见 `names_match`）；
-   - 验收阈值：missing pins = 0，名称匹配 precision ≥ 0.95。
+1. `python -m unittest discover -s tests -v`：结构不变量 + 旋转实验台 +
+   连通性完整性（`test_integrity.py`）+ 官方 CLI 对照（`test_official_cli.py`）。
+2. 分区验证（`kicad_sch_reader/validation.py`，显式传工程）：
+
+   ```bat
+   python testsalidate_examples.py <工程目录或根图> --work-dir <输出目录>
+   ```
+
+   - 用 `kicad-cli sch export netlist` 生成官方网表，双方按
+     `(sheet_path, ref, pin)` 物理引脚身份建**分区图**（与网络名无关）；
+   - 比较 missing/extra 引脚、split（官方一网被我拆）、short（我一网
+     被官方拆）、partition mismatch；任一非零即 FAIL；
+   - reader 侧排除 KiCad 导出器不输出的符号：`#PWR*`、以及
+     `dnp=yes 且 in_bom=no 且 on_board=no` 三条件全中的器件（实测规则，
+     见 `_excluded_by_kicad`）；`unconnected-*` 伪网络同理不比较；
+   - 验收阈值：missing=extra=split=short=partition_mismatch=0；
+   - 未注位号（`R?`/`J?`）两侧都跳过（无稳定引用身份可比），全未注
+     工程在批量脚本中报 N/A；
+   - **已知限制（2026-10-25 实测，存量非回归）**：jetson(235)/video(117)/
+     pic_programmer(1) 存在 split——我方对层级标签 join 的粒度与官方
+     不同（如 pic 根图局部标签 `VPP/MCLR` 与子图 hlabel `VPP-MCLR`
+     经 sheet-pin 的别名桥接）。旧按名比较器剥 `/Sheet/` 前缀后比对，
+     把这类 split 掩盖成 precision=1.0；分区比较如实暴露。修复方向：
+     sheet-pin 名与子图 hlabel 名的别名桥接规则对齐官方（路线图）。
 3. `python TEST_SCRIPTS/batch_kicad_review.py`：对本机多个真实工程
    （KiCad 10 demos + 跨 KiCad 6..9 用户工程）批量 parse/review +
-   官方网表交叉验证，结果带时间戳写入 `TEST_SCRIPTS/results/`。
+   官方网表分区验证，结果带时间戳写入 `TEST_SCRIPTS/results/`。
 4. `review` 命令生成报告后人工抽查关键网络（如 `GND`、`AFE_OUT_P`）。
 
 ## 6. 如何新增审查规则

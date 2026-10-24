@@ -2,6 +2,59 @@
 
 本项目采用语义化版本。所有重要变更按时间倒序记录。
 
+## [0.1.6] - 2026-10-25
+
+### 修复（2026-10-24 同步审查发现）
+
+- **multichannel 回归（连通性分支引入）**：解析器对"缺内嵌库符号"硬
+  raise，但工程本地 `.kicad_sym` 库（sym-lib-table 引用）是 KiCad 正常
+  用法，导致 multichannel 等官方 demo 整个工程不可解析。现在：
+  - 新增 `parse_kicad_sym_lib()`：加载工程目录 `*.kicad_sym`，按
+    `<文件名>:<符号名>` 索引（库文件内符号名不带库名前缀，实测确认）；
+  - 内嵌库 → 工程本地库都未命中时**优雅降级**为无引脚符号
+    （`lib_missing` 标记），不再毁掉整个工程；
+  - 新规则 **R610**（warning，按图纸分组）：报告库缺失器件——它们的
+    连通性静默缺失，审查者必须知道；
+  - multichannel 实测恢复：J6/J7/J1/J8/J9 从本地库解析出引脚，
+    官方网表分区验证 280/280 全对。
+- **分区验证 DNP 对齐**：官方网表导出器不输出 `dnp=yes 且 in_bom=no
+  且 on_board=no` 三条件全中的符号（实测 EmoeTECtrl V1.0：5 个位号
+  35 脚精确吻合；仅 dnp 或仅 in_bom=no 的仍导出）。`reader_partitions`
+  按同一规则过滤，EmoeTECtrl 验证从 35 条幽灵 extra 恢复 566/566 全过。
+- **batch 脚本网表验证修复**：`batch_kicad_review.py` 仍读旧 API 的
+  `name_mismatches`/`precision` 键 → KeyError 被 catch 后整段静默 SKIP。
+  改用分区 API 键（missing/extra/split/short/partition_mismatch），
+  PASS 判据同步更新。修复后首次真实运行，暴露两类存量事实：
+  - 未注位号（`R?`）工程（CH340E/USB测试夹具）此前被歧义检查拒绝 →
+    两侧跳过 `?` 结尾位号，全未注工程报 N/A；
+  - jetson(235)/video(117)/pic_programmer(1) 存在 split：我方层级标签
+    join 粒度与官方不同。**存量非回归**——旧按名比较器剥 `/Sheet/`
+    前缀后比对，把这些 split 掩盖成 precision=1.0；分区比较如实暴露。
+    已记入 DEVELOPMENT §5 已知限制与路线图（sheet-pin/hlabel 别名
+    桥接规则对齐官方）。
+- 文档：DEVELOPMENT §5 验证方法改为分区验证描述（含 DNP 排除规则）、
+  规则表补 R305/R610；HANDOFF 的 validate 命令更新为显式传参形式。
+
+### LCEDA `.epro` 审查：DNP 语义化（补齐与 NC 的不对称）
+
+- `_fmt_component` 保留 `dnp` 字段（此前直接丢弃）；
+- 新增 **DNP_LIST** 清单（info，按页分组一行，测试点/机械/标记件计数
+  合并——对齐 KiCad R701 形态）；实测数字板 9 页各一条，19 个 DNP
+  器件全部入清单；
+- **SINGLE_PIN_NET** 豁免 DNP 成员：DNP 器件的单脚网改报
+  `SINGLE_PIN_NET_DNP`（注明"未贴装不算悬空风险"），与 KiCad 侧
+  "DNP 是设计意图"的审查纪律一致；
+- 提交此前工作区遗留的 UTF-8 stdout 修复（`--list-boards` 等 JSON 输出
+  在重定向/子进程捕获下必须是 UTF-8）与 `--out-md/--out-json` 成对
+  推导修复。
+
+### 验证
+
+- 单元测试 100/100（新增 R610 降级/外置库回归；test_integrity 的缺库用例改钉新契约：零引脚+lib_missing+R610）
+- 分区验证：MainBoard 771/771、PowerBoard 324/324、multichannel
+  280/280、EmoeTECtrl 566/566、最新版 LIA MainBoard 771/771 全过
+- 批量 11 工程：multichannel 恢复 ok，其余与分支合并后基线一致
+
 ## [0.1.5] - 2026-09-03
 
 ### 新增 IFC901 接口方向语义核对 + interfaces 约束清单命令

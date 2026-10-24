@@ -169,7 +169,7 @@ def _is_power_net(net, extra_patterns=None):
 
 ```bat
 python -m unittest discover -s tests -v
-python tests\validate_examples.py
+python tests/validate_examples.py <工程目录> --work-dir <输出目录>
 ```
 
 另：本线程最后一次尝试给 `tests/test_lceda_epro.py` 增加"多单元自动识别"断言时失败，因为当前线程没有文件编辑工具 `str_replace_editor`。该测试补充还没写入，接手线程需要补：

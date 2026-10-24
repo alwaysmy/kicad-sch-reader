@@ -69,3 +69,23 @@ reports/pw_test_*
 reports/cf_test_*
 reports/rc_test_*
 reports/validation/
+
+# LCEDA 在线工程导出（由 Run API Gateway 扩展产出，属本地取数中间物）
+lceda_exports/
+
+# --- 2026-10-25 root scratch hygiene (agent/session one-off artifacts) ---
+# Underscore-prefixed scratch scripts/outputs at any depth
+_*.py
+_*.txt
+_*.json
+_*.ps1
+_*.md
+_*/
+# DSH launcher/install logs and scripts
+dsh-*
+# One-off research/bench artifacts at repo root
+EVERYTHING_IPC_RESEARCH.md
+everything_transport_bench.py
+install-rust-portable.ps1
+TEST_RESULTS/
+examples.review.json

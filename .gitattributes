@@ -1,0 +1,12 @@
+# Normalize text files to LF in the repo; working tree stays native.
+# Prevents recurring whole-file CRLF churn (see 715ff95 and earlier .gitignore diffs).
+* text=auto
+*.png binary
+*.jpg binary
+*.pdf binary
+*.epro binary
+*.zip binary
+*.kicad_pcb text
+*.kicad_sch text
+*.kicad_sym text
+*.net text
